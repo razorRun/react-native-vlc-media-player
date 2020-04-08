@@ -18,23 +18,24 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
 
     private static final String REACT_CLASS = "RCTVLCPlayer";
 
-    private static final String PROP_SRC = "src";
+    private static final String PROP_SRC = "source";
     private static final String PROP_SRC_URI = "uri";
     private static final String PROP_SRC_TYPE = "type";
-    private static final String PROP_RESIZE_MODE = "resizeMode";
     private static final String PROP_REPEAT = "repeat";
     private static final String PROP_PAUSED = "paused";
     private static final String PROP_MUTED = "muted";
     private static final String PROP_VOLUME = "volume";
-    private static final String PROP_PROGRESS_UPDATE_INTERVAL = "progressUpdateInterval";
     private static final String PROP_SEEK = "seek";
     private static final String PROP_RESUME = "resume";
     private static final String PROP_RATE = "rate";
-    private static final String PROP_PLAY_IN_BACKGROUND = "playInBackground";
-    private static final String PROP_DISABLE_FOCUS = "disableFocus";
+    private static final String PROP_POTISION = "position";
     private static final String PROP_VIDEO_ASPECT_RATIO = "videoAspectRatio";
-    public static final String PROP_SRC_IS_NETWORK = "isNetwork";
-    public static final String PROP_SRC_IS_ASSET = "isAsset";
+    private static final String PROP_SRC_IS_NETWORK = "isNetwork";
+    private static final String PROP_SNAPSHOT_PATH = "snapshotPath";
+    private static final String PROP_AUTO_ASPECT_RATIO = "autoAspectRatio";
+    private static final String PROP_CLEAR = "clear";
+
+
 
     @Override
     public String getName() {
@@ -60,23 +61,24 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
         return builder.build();
     }
 
+    @ReactProp(name = PROP_CLEAR)
+    public void setClear(final ReactVlcPlayerView videoView, final boolean clear) {
+        videoView.cleanUpResources();
+    }
+
+
     @ReactProp(name = PROP_SRC)
     public void setSrc(final ReactVlcPlayerView videoView, @Nullable ReadableMap src) {
         Context context = videoView.getContext().getApplicationContext();
         String uriString = src.hasKey(PROP_SRC_URI) ? src.getString(PROP_SRC_URI) : null;
         String extension = src.hasKey(PROP_SRC_TYPE) ? src.getString(PROP_SRC_TYPE) : null;
         boolean isNetStr = src.getBoolean(PROP_SRC_IS_NETWORK) ? src.getBoolean(PROP_SRC_IS_NETWORK) : false;
-
+        boolean autoplay = src.getBoolean("autoplay") ? src.getBoolean("autoplay") : true;
         if (TextUtils.isEmpty(uriString)) {
             return;
         }
-        videoView.setSrc(uriString, isNetStr);
+        videoView.setSrc(src);
 
-    }
-
-    @ReactProp(name = PROP_RESIZE_MODE)
-    public void setResizeMode(final ReactVlcPlayerView videoView, final String resizeModeOrdinalString) {
-        //videoView.setResizeModeModifier(convertToIntDef(resizeModeOrdinalString));
     }
 
     @ReactProp(name = PROP_REPEAT, defaultBoolean = false)
@@ -91,7 +93,7 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
 
     @ReactProp(name = PROP_MUTED, defaultBoolean = false)
     public void setMuted(final ReactVlcPlayerView videoView, final boolean muted) {
-        //videoView.setMutedModifier(muted);
+        videoView.setMutedModifier(muted);
     }
 
     @ReactProp(name = PROP_VOLUME, defaultFloat = 1.0f)
@@ -99,10 +101,6 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
         videoView.setVolumeModifier((int)volume);
     }
 
-    /*@ReactProp(name = PROP_PROGRESS_UPDATE_INTERVAL, defaultFloat = 250.0f)
-    public void setProgressUpdateInterval(final ReactVlcPlayerView videoView, final float progressUpdateInterval) {
-        //videoView.setProgressUpdateInterval(progressUpdateInterval);
-    }*/
 
     @ReactProp(name = PROP_SEEK)
     public void setSeek(final ReactVlcPlayerView videoView, final float seek) {
@@ -110,30 +108,39 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
         //videoView.seekTo(seek);
     }
 
-    @ReactProp(name = PROP_RESUME, defaultBoolean = false)
+    @ReactProp(name = PROP_AUTO_ASPECT_RATIO, defaultBoolean = false)
+    public void setAutoAspectRatio(final ReactVlcPlayerView videoView, final boolean autoPlay) {
+        videoView.setAutoAspectRatio(autoPlay);
+    }
+
+    @ReactProp(name = PROP_RESUME, defaultBoolean = true)
     public void setResume(final ReactVlcPlayerView videoView, final boolean autoPlay) {
         videoView.doResume(autoPlay);
     }
+
 
     @ReactProp(name = PROP_RATE)
     public void setRate(final ReactVlcPlayerView videoView, final float rate) {
         videoView.setRateModifier(rate);
     }
 
-    @ReactProp(name = PROP_PLAY_IN_BACKGROUND, defaultBoolean = false)
-    public void setPlayInBackground(final ReactVlcPlayerView videoView, final boolean playInBackground) {
-        videoView.setPlayInBackground(playInBackground);
+    @ReactProp(name = PROP_POTISION)
+    public void setPosition(final ReactVlcPlayerView videoView, final float potision) {
+        videoView.setPosition(potision);
     }
 
-    @ReactProp(name = PROP_DISABLE_FOCUS, defaultBoolean = false)
-    public void setDisableFocus(final ReactVlcPlayerView videoView, final boolean disableFocus) {
-        videoView.setDisableFocus(disableFocus);
-    }
+
 
     @ReactProp(name = PROP_VIDEO_ASPECT_RATIO)
     public void setVideoAspectRatio(final ReactVlcPlayerView videoView, final String aspectRatio) {
         videoView.setAspectRatio(aspectRatio);
     }
+
+    @ReactProp(name = PROP_SNAPSHOT_PATH)
+    public void setSnapshotPath(final ReactVlcPlayerView videoView, final String snapshotPath) {
+        videoView.doSnapshot(snapshotPath);
+    }
+
 
 
     private boolean startsWithValidScheme(String uriString) {
