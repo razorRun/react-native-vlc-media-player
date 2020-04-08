@@ -3,6 +3,9 @@
 A `<VLCPlayer>` component for react-native
 project clone from `react-native-yz-vlcplayer` as this repository is not maintained any more and does not support RN newer versions.
 
+## Supported RN Versions
+
+0.59,0.60,0.61 and up
 PODs are updated to works with 0.61 and up.(Tested in 0.61.5)
 
 ### Add it to your project
