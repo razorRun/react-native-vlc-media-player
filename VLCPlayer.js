@@ -24,6 +24,7 @@ export default class VLCPlayer extends Component {
     this._onBuffering = this._onBuffering.bind(this);
     this._onOpen = this._onOpen.bind(this);
     this._onLoadStart = this._onLoadStart.bind(this);
+    this.changeVideoAspectRatio = this.changeVideoAspectRatio.bind(this);
   }
   static defaultProps = {
     autoplay: true,
@@ -43,6 +44,14 @@ export default class VLCPlayer extends Component {
 
   snapshot(path) {
     this.setNativeProps({ snapshotPath: path });
+  }
+
+  autoAspectRatio(isAuto) {
+    this.setNativeProps({ autoAspectRatio: isAuto });
+  }
+
+  changeVideoAspectRatio(ratio) {
+    this.setNativeProps({ videoAspectRatio: ratio });
   }
 
   _assignRoot(component) {
@@ -167,6 +176,7 @@ VLCPlayer.propTypes = {
   snapshotPath: PropTypes.string,
   paused: PropTypes.bool,
 
+  autoAspectRatio: PropTypes.bool,
   videoAspectRatio: PropTypes.string,
   volume: PropTypes.number,
   disableFocus: PropTypes.bool,
