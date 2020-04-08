@@ -1,6 +1,6 @@
 {
-  "name": "react-native-vlcplayer",
-  "version": "1.0.0",
+  "name": "react-native-vlc-player",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,12 +12,13 @@
     "android",
     "ios",
     "react-native",
-    "mp4"
+    "mp4",
+    "rtsp"
   ],
-  "author": "",
+  "author": "rmilinda@gmail.com",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/razorRun/react-native-vlc-player"
   },
   "license": "MIT"
 }
