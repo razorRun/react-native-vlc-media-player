@@ -25,6 +25,9 @@ export default class VLCPlayer extends Component {
     this._onOpen = this._onOpen.bind(this);
     this._onLoadStart = this._onLoadStart.bind(this);
   }
+  static defaultProps = {
+    autoplay: true,
+  };
 
   setNativeProps(nativeProps) {
     this._root.setNativeProps(nativeProps);
