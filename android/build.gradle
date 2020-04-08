@@ -1,0 +1,30 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '25.0.0'
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        ndk {
+            //支持的abi    可选 精简的库
+            abiFilters 'armeabi-v7a'//,'x86_64','arm64-v8a','x86'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    provided fileTree(dir: 'libs', include: ['*.jar'])
+    compile "com.facebook.react:react-native:+"
+    compile 'com.yyl.vlc:vlc-android-sdk:3.0.10'
+    //compile 'de.mrmaffen:vlc-android-sdk:2.0.6'
+}

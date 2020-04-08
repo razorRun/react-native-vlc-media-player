@@ -1,0 +1,291 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0C1A0ECA1D07E18700441684 /* RCTVLCPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1A0EC81D07E18700441684 /* RCTVLCPlayerManager.m */; };
+		0CA30C481D07E0DB003B09F9 /* RCTVLCPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0CA30C471D07E0DB003B09F9 /* RCTVLCPlayer.h */; };
+		0CA30C4A1D07E0DB003B09F9 /* RCTVLCPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CA30C491D07E0DB003B09F9 /* RCTVLCPlayer.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0CA30C421D07E0DB003B09F9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				0CA30C481D07E0DB003B09F9 /* RCTVLCPlayer.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0C1A0EC81D07E18700441684 /* RCTVLCPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTVLCPlayerManager.m; sourceTree = "<group>"; };
+		0C1A0EC91D07E18700441684 /* RCTVLCPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTVLCPlayerManager.h; sourceTree = "<group>"; };
+		0CA30C441D07E0DB003B09F9 /* libRCTVLCPlayer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTVLCPlayer.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		0CA30C471D07E0DB003B09F9 /* RCTVLCPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTVLCPlayer.h; sourceTree = "<group>"; };
+		0CA30C491D07E0DB003B09F9 /* RCTVLCPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTVLCPlayer.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0CA30C411D07E0DB003B09F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0CA30C3B1D07E0DB003B09F9 = {
+			isa = PBXGroup;
+			children = (
+				0CA30C461D07E0DB003B09F9 /* RCTVLCPlayer */,
+				0CA30C451D07E0DB003B09F9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0CA30C451D07E0DB003B09F9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0CA30C441D07E0DB003B09F9 /* libRCTVLCPlayer.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0CA30C461D07E0DB003B09F9 /* RCTVLCPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				0C1A0EC81D07E18700441684 /* RCTVLCPlayerManager.m */,
+				0C1A0EC91D07E18700441684 /* RCTVLCPlayerManager.h */,
+				0CA30C471D07E0DB003B09F9 /* RCTVLCPlayer.h */,
+				0CA30C491D07E0DB003B09F9 /* RCTVLCPlayer.m */,
+			);
+			path = RCTVLCPlayer;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0CA30C431D07E0DB003B09F9 /* RCTVLCPlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0CA30C4D1D07E0DB003B09F9 /* Build configuration list for PBXNativeTarget "RCTVLCPlayer" */;
+			buildPhases = (
+				0CA30C401D07E0DB003B09F9 /* Sources */,
+				0CA30C411D07E0DB003B09F9 /* Frameworks */,
+				0CA30C421D07E0DB003B09F9 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RCTVLCPlayer;
+			productName = RCTVLCPlayer;
+			productReference = 0CA30C441D07E0DB003B09F9 /* libRCTVLCPlayer.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0CA30C3C1D07E0DB003B09F9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "熊川";
+				TargetAttributes = {
+					0CA30C431D07E0DB003B09F9 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 0CA30C3F1D07E0DB003B09F9 /* Build configuration list for PBXProject "RCTVLCPlayer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				en,
+			);
+			mainGroup = 0CA30C3B1D07E0DB003B09F9;
+			productRefGroup = 0CA30C451D07E0DB003B09F9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0CA30C431D07E0DB003B09F9 /* RCTVLCPlayer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0CA30C401D07E0DB003B09F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0C1A0ECA1D07E18700441684 /* RCTVLCPlayerManager.m in Sources */,
+				0CA30C4A1D07E0DB003B09F9 /* RCTVLCPlayer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0CA30C4B1D07E0DB003B09F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "arm64 armv7 armv7s";
+			};
+			name = Debug;
+		};
+		0CA30C4C1D07E0DB003B09F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s";
+			};
+			name = Release;
+		};
+		0CA30C4E1D07E0DB003B09F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../vlcKit",
+					"\"$(SRCROOT)/../../../ios/Pods/MobileVLCKit-unstable/MobileVLCKit-binary\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(inherited)",
+					"$(SRCROOT)/../../react-native/React/**",
+					"$(SRCROOT)/node_modules/react-native/React/**",
+					"$(SRCROOT)/../../../ios/Pods/MobileVLCKit-unstable/MobileVLCKit-binary/MobileVLCKit.framework",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s";
+			};
+			name = Debug;
+		};
+		0CA30C4F1D07E0DB003B09F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../vlcKit",
+					"\"$(SRCROOT)/../../../ios/Pods/MobileVLCKit-unstable/MobileVLCKit-binary\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(inherited)",
+					"$(SRCROOT)/../../react-native/React/**",
+					"$(SRCROOT)/node_modules/react-native/React/**",
+					"$(SRCROOT)/../../../ios/Pods/MobileVLCKit-unstable/MobileVLCKit-binary/MobileVLCKit.framework",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0CA30C3F1D07E0DB003B09F9 /* Build configuration list for PBXProject "RCTVLCPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0CA30C4B1D07E0DB003B09F9 /* Debug */,
+				0CA30C4C1D07E0DB003B09F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0CA30C4D1D07E0DB003B09F9 /* Build configuration list for PBXNativeTarget "RCTVLCPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0CA30C4E1D07E0DB003B09F9 /* Debug */,
+				0CA30C4F1D07E0DB003B09F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0CA30C3C1D07E0DB003B09F9 /* Project object */;
+}
