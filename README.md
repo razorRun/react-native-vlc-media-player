@@ -7,8 +7,8 @@ project clone from `react-native-yz-vlcplayer`
 
 Run
 `yarn add https://github.com/razorRun/react-native-vlc-player.git`
-yarn add react-native-vector-icons
-yarn add react-native-slider
+`yarn add react-native-vector-icons`
+`yarn add react-native-slider`
 
 ## android
 
