@@ -1,11 +1,14 @@
-# react-native-vlcplayer
+# react-native-vlc-player
 
 A `<VLCPlayer>` component for react-native
 project clone from `react-native-yz-vlcplayer`
 
 ### Add it to your project
 
-Run `yarn add https://github.com/razorRun/react-native-vlc-player.git`
+Run
+`yarn add https://github.com/razorRun/react-native-vlc-player.git`
+yarn add react-native-vector-icons
+yarn add react-native-slider
 
 ## android
 
@@ -26,7 +29,7 @@ in root project select Build Settings ---> find Bitcode and select Enable Bitcod
 ## Use
 
 ```
-  (1) import { VLCPlayer, VlCPlayerView } from 'react-native-vlcplayer';
+  (1) import { VLCPlayer, VlCPlayerView } from 'react-native-vlc-player';
 
   (2)
     <VLCPlayer
