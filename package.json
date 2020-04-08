@@ -1,7 +1,7 @@
 {
-  "name": "react-native-vlc-player",
+  "name": "react-native-vlc-media-player",
   "version": "1.0.1",
-  "description": "",
+  "description": "React native media player for video streaming and playing. Supports RTSP,RTMP and other protocols supported by VLC player",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,7 +18,11 @@
   "author": "rmilinda@gmail.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/razorRun/react-native-vlc-player"
+    "url": "git+https://github.com/razorRun/react-native-vlc-media-player.git"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/razorRun/react-native-vlc-media-player/issues"
+  },
+  "homepage": "https://github.com/razorRun/react-native-vlc-media-player#readme"
 }

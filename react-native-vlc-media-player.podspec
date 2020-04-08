@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
-  s.name         = "react-native-vlc-player"
+  s.name         = "react-native-vlc-media-player"
   s.version      = "0.3.4"
-  s.summary      = "Ro"
+  s.summary      = "VLC player"
   s.requires_arc = true
   s.author       = { 'roshan.milinda' => 'rmilinda@gmail.com' }
   s.license      = 'MIT'
-  s.homepage     = 'https://github.com/razorRun/react-native-vlc-player.git'
-  s.source       = { :git => "https://github.com/razorRun/react-native-vlc-player.git" }
+  s.homepage     = 'https://github.com/razorRun/react-native-vlc-media-player.git'
+  s.source       = { :git => "https://github.com/razorRun/react-native-vlc-media-player.git" }
   s.source_files = 'ios/RCTVLCPlayer/*'
   s.platform     = :ios, "8.0"
   s.static_framework = true  
