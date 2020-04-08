@@ -1,34 +1,39 @@
 # react-native-vlc-media-player
 
 A `<VLCPlayer>` component for react-native
-project clone from `react-native-yz-vlcplayer`
+project clone from `react-native-yz-vlcplayer` as this repository is not maintained any more and does not support RN newer versions.
 
 PODs are updated to works with 0.61 and up.(Tested in 0.61.5)
 
 ### Add it to your project
 
 Run
-`yarn add https://github.com/razorRun/react-native-vlc-media-player.git`
 
-`yarn add react-native-vector-icons`
+`npm i react-native-vlc-media-player --save`
 
-`yarn add react-native-slider`
+Run `react-native link react-native-vlc-media-player`
 
 ## android
 
-Run `react-native link react-native-vlc-media-player`
+Should work without any specific settings
 
 ## ios
 
 Use framework
 
 1. cd to ios
-2. run `pod init`
+2. run `pod init` (if only Podfile has not been generated in ios folder)
 3. add `pod 'MobileVLCKit-unstable', '3.0.0a44'` to pod file
-4. run `pod install`
+4. run `pod install` (you have to delete the app on the simulator/device and run `react-native run-ios` again)
+
+## Optional(only for ios)
 
 Enable Bitcode
 in root project select Build Settings ---> find Bitcode and select Enable Bitcode
+
+## TODO
+
+1. Android video Aspect ratio is not working.
 
 ## Use
 
