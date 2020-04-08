@@ -19,8 +19,6 @@ Should work without any specific settings
 
 ## ios
 
-Use framework
-
 1. cd to ios
 2. run `pod init` (if only Podfile has not been generated in ios folder)
 3. add `pod 'MobileVLCKit-unstable', '3.0.0a44'` to pod file
@@ -33,7 +31,7 @@ in root project select Build Settings ---> find Bitcode and select Enable Bitcod
 
 ## TODO
 
-1. Android video Aspect ratio is not working.
+1. Android video Aspect ratio does not work.
 
 ## Use
 
