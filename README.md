@@ -1,7 +1,7 @@
 # react-native-vlc-media-player
 
 A `<VLCPlayer>` component for react-native
-project clone from `react-native-yz-vlcplayer` as this repository is not maintained any more and does not support RN newer versions.
+project was cloned from `react-native-yz-vlcplayer` as it is not maintained any more and does not support RN newer versions.
 
 ## Supported RN Versions
 
