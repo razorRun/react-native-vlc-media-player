@@ -8,6 +8,22 @@ project was cloned from `react-native-yz-vlcplayer` as it is not maintained any 
 0.59,0.60,0.61 and up
 PODs are updated to works with 0.61 and up.(Tested in 0.61.5)
 
+## Supported formats
+
+Support for network streams, RTSP, RTP,RTMP, HLS, MMS.
+Play all files, in all formats, including exotic ones, like classic VLC media player.
+Play MKV, multiple audio tracks (including 5.1), and subtitles tracks (including SSA!)
+
+## More formats
+
+Container formats: 3GP, ASF, AVI, DVR-MS, FLV, Matroska (MKV), MIDI,QuickTime File Format, MP4, Ogg, OGM, WAV, MPEG-2 (ES, PS, TS, PVA, MP3), AIFF, Raw audio, Raw DV, MXF, VOB, RM, Blu-ray, DVD-Video, VCD, SVCD, CD Audio, DVB, HEIF, AVIF
+Audio coding formats: AAC, AC3, ALAC, AMR, DTS, DV Audio, XM, FLAC, It, MACE, MOD, Monkey's Audio, MP3, Opus, PLS, QCP, QDM2/QDMC, RealAudio, Speex, Screamtracker 3/S3M, TTA, Vorbis, WavPack, WMA (WMA 1/2, WMA 3 partially).
+Capture devices: Video4Linux (on Linux), DirectShow (on Windows), Desktop (screencast), Digital TV (DVB-C, DVB-S, DVB-T, DVB-S2, DVB-T2, ATSC, Clear QAM)
+Network protocols: FTP, HTTP, MMS, RSS/Atom, RTMP, RTP (unicast or multicast), RTSP, UDP, Sat-IP, Smooth Streaming
+Network streaming formats: Apple HLS, Flash RTMP, MPEG-DASH, MPEG Transport Stream, RTP/RTSP ISMA/3GPP PSS, Windows Media MMS
+Subtitles: Advanced SubStation Alpha, Closed Captions, DVB, DVD-Video, MPEG-4 Timed Text, MPL2, OGM, SubStation Alpha, SubRip, SVCD, Teletext, Text file, VobSub, WebVTT, TTML
+Video coding formats: Cinepak, Dirac, DV, H.263, H.264/MPEG-4 AVC, H.265/MPEG HEVC, AV1, HuffYUV, Indeo 3,MJPEG, MPEG-1, MPEG-2, MPEG-4 Part 2, RealVideo 3&4,Sorenson, Theora, VC-1,[h] VP5,VP6, VP8, VP9, DNxHD, ProRes and some WMV.
+
 ### Add it to your project
 
 Run
