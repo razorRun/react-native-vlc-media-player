@@ -11,5 +11,5 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "8.0"
   s.static_framework = true  
   s.dependency 'React'
-  s.dependency 'MobileVLCKit-unstable', '3.0.0a44'
+  s.dependency 'MobileVLCKit-unstable', '3.3.10'
 end
