@@ -96,3 +96,8 @@ in root project select Build Settings ---> find Bitcode and select Enable Bitcod
            }}
        />
 ```
+
+## credits
+
+[Nghi-NV](https://github.com/Nghi-NV)
+[xuyuanzhou](https://github.com/xuyuanzhou)
