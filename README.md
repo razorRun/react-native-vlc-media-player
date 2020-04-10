@@ -20,11 +20,9 @@ Play MKV, multiple audio tracks (including 5.1), and subtitles tracks (including
 
 ### Add it to your project
 
-Run
+Run `npm i react-native-vlc-media-player --save`
 
-`npm i react-native-vlc-media-player --save`
-
-Run `react-native link react-native-vlc-media-player`
+(Run - optional `react-native link react-native-vlc-media-player`) // No need if you are running RN 0.61 and up
 
 ## android
 
@@ -34,7 +32,7 @@ Should work without any specific settings
 
 1. cd to ios
 2. run `pod init` (if only Podfile has not been generated in ios folder)
-3. add `pod 'MobileVLCKit-unstable', '3.0.0a44'` to pod file
+3. (No need if you are running RN 0.61 and up) add `pod 'MobileVLCKit', '3.3.10'` to pod file
 4. run `pod install` (you have to delete the app on the simulator/device and run `react-native run-ios` again)
 
 ## Optional(only for ios)
