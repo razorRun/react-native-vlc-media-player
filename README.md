@@ -53,6 +53,7 @@ Video coding formats: Cinepak, Dirac, DV, H.263, H.264/MPEG-4 AVC, H.265/MPEG HE
 ## TODO
 
 1. Android video Aspect ratio does not work.
+2. UPDATE VLC KIT to latest(3.3.10) or atleast [3.1.7](https://mvnrepository.com/artifact/com.yyl.vlc/vlc-android-sdk/3.1.7) in android  -> react-native-vlc-media-player/android/build.gradle:28 => compile 'com.yyl.vlc:vlc-android-sdk:3.0.10'
 
 ## Use
 
