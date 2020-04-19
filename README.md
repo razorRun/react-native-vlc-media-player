@@ -60,8 +60,8 @@ Video coding formats: Cinepak, Dirac, DV, H.263, H.264/MPEG-4 AVC, H.265/MPEG HE
 #### Our idea was to keep the repo simple, and people can use it with newer RN versions without any additional config.
 
 
-1. Get a copy of [VLC Media Player test](https://github.com/razorRun/react-native-vlc-media-player-test) 
-2. Run it for ios and android locally. 
+1. Get a fork of tis repo and clone [VLC Media Player test](https://github.com/razorRun/react-native-vlc-media-player-test) 
+2. Run it for ios and android locally using your fork, and do the changes. (remove this package using ```npm remove react-native-vlc-media-player``` and install the forked version from git hub ```npm i https://git-address-to-your-forked-repo```)  
 3. Verify your changes and make sure everything works on both platforms. (If you need a hand with testing I might be able to help as well)
 4. Send PR.
 5. Be happy, Coz you are a Rockstart 🌟 ❤️
