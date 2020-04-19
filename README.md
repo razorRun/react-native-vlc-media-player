@@ -57,7 +57,7 @@ Video coding formats: Cinepak, Dirac, DV, H.263, H.264/MPEG-4 AVC, H.265/MPEG HE
 
 ## Got a few minutes to spare? Please help us to keep this repo up to date and simple to use. 
 
-#### Our idea was to keep the repo so simple, and people can use it with newer RN versions without any additional config.
+#### Our idea was to keep the repo simple, and people can use it with newer RN versions without any additional config.
 
 
 1. Get a copy of [VLC Media Player test](https://github.com/razorRun/react-native-vlc-media-player-test) 
