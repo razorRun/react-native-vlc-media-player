@@ -20,9 +20,11 @@ Play MKV, multiple audio tracks (including 5.1), and subtitles tracks (including
 
 ### Add it to your project
 
-Run `npm i react-native-vlc-media-player --save`
+Run
 
-(Run - optional `react-native link react-native-vlc-media-player`) // No need if you are running RN 0.61 and up
+`npm i react-native-vlc-media-player --save`
+
+Run `react-native link react-native-vlc-media-player`
 
 ## android
 
@@ -32,7 +34,7 @@ Should work without any specific settings
 
 1. cd to ios
 2. run `pod init` (if only Podfile has not been generated in ios folder)
-3. (No need if you are running RN 0.61 and up) add `pod 'MobileVLCKit', '3.3.10'` to pod file
+3. add `pod 'MobileVLCKit-unstable', '3.0.0a44'` to pod file
 4. run `pod install` (you have to delete the app on the simulator/device and run `react-native run-ios` again)
 
 ## Optional(only for ios)
@@ -53,7 +55,6 @@ Video coding formats: Cinepak, Dirac, DV, H.263, H.264/MPEG-4 AVC, H.265/MPEG HE
 ## TODO
 
 1. Android video Aspect ratio does not work.
-2. UPDATE VLC KIT to latest(3.3.10) or atleast [3.1.7](https://mvnrepository.com/artifact/com.yyl.vlc/vlc-android-sdk/3.1.7) in android  -> react-native-vlc-media-player/android/build.gradle:28 => compile 'com.yyl.vlc:vlc-android-sdk:3.0.10'
 
 ## Use
 
