@@ -6,7 +6,7 @@ project was cloned from `react-native-yz-vlcplayer` as it is not maintained any 
 ## Supported RN Versions
 
 0.59,0.60,0.61 and up
-PODs are updated to works with 0.61 and up.(Tested in 0.61.5)
+PODs are updated to works with 0.61 and up.(Tested in 0.61.5 and 0.62)
 
 ## Sample repo
 
@@ -34,7 +34,7 @@ Should work without any specific settings
 
 1. cd to ios
 2. run `pod init` (if only Podfile has not been generated in ios folder)
-3. add `pod 'MobileVLCKit-unstable', '3.0.0a44'` to pod file
+3. (No need if you are running RN 0.61 and up) add `pod 'MobileVLCKit', '3.3.10'` to pod file
 4. run `pod install` (you have to delete the app on the simulator/device and run `react-native run-ios` again)
 
 ## Optional(only for ios)
