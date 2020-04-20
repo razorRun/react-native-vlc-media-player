@@ -54,7 +54,7 @@ Video coding formats: Cinepak, Dirac, DV, H.263, H.264/MPEG-4 AVC, H.265/MPEG HE
 
 ## TODO
 
-1. Android video Aspect ratio does not work.
+1. Android video Aspect ratio and other params does not work(Events are called but all events come through a single event onVideoStateChange but the JS side does not implement it.).
 
 ## Got a few minutes to spare? Please help us to keep this repo up to date and simple to use. 
 
