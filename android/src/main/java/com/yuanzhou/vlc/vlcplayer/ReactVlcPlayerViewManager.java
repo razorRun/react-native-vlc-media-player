@@ -1,7 +1,6 @@
 package com.yuanzhou.vlc.vlcplayer;
 
 import android.content.Context;
-import android.net.Uri;
 import android.text.TextUtils;
 
 import com.facebook.react.bridge.ReadableMap;
@@ -28,7 +27,7 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
     private static final String PROP_SEEK = "seek";
     private static final String PROP_RESUME = "resume";
     private static final String PROP_RATE = "rate";
-    private static final String PROP_POTISION = "position";
+    private static final String PROP_POSITION = "position";
     private static final String PROP_VIDEO_ASPECT_RATIO = "videoAspectRatio";
     private static final String PROP_SRC_IS_NETWORK = "isNetwork";
     private static final String PROP_SNAPSHOT_PATH = "snapshotPath";
@@ -124,7 +123,7 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
         videoView.setRateModifier(rate);
     }
 
-    @ReactProp(name = PROP_POTISION)
+    @ReactProp(name = PROP_POSITION)
     public void setPosition(final ReactVlcPlayerView videoView, final float potision) {
         videoView.setPosition(potision);
     }
