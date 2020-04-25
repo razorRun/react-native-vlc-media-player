@@ -5,7 +5,7 @@ project was cloned from `react-native-yz-vlcplayer` as it is not maintained any 
 
 ## Supported RN Versions
 
-0.59,0.60,0.61 and up
+0.59,0.60,0.61, 0.62 and up
 PODs are updated to works with 0.61 and up.(Tested in 0.61.5 and 0.62)
 
 ## Sample repo
