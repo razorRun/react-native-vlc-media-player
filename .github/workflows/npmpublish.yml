@@ -4,9 +4,11 @@
 name: Node.js Package
 
 on:
-  release:
-    types: [created]
-
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+  push:
+    branches:
+      - master
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,8 +17,14 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
+      - name: Set Git Environment and Update package number
+        run: |
+          git config --global user.name 'GIT Package Updater'
+          git config --global user.email 'razorRun@users.noreply.github.com'
+          npm version patch
+          git push
       - run: npm ci
-
+        
   publish-npm:
     needs: build
     runs-on: ubuntu-latest

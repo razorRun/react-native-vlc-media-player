@@ -5,8 +5,8 @@ project was cloned from `react-native-yz-vlcplayer` as it is not maintained any 
 
 ## Supported RN Versions
 
-0.59,0.60,0.61 and up
-PODs are updated to works with 0.61 and up.(Tested in 0.61.5)
+0.59,0.60,0.61, 0.62 and up
+PODs are updated to works with 0.61 and up.(Tested in 0.61.5 and 0.62)
 
 ## Sample repo
 
@@ -20,9 +20,11 @@ Play MKV, multiple audio tracks (including 5.1), and subtitles tracks (including
 
 ### Add it to your project
 
-Run `npm i react-native-vlc-media-player --save`
+Run
 
-(Run - optional `react-native link react-native-vlc-media-player`) // No need if you are running RN 0.61 and up
+`npm i react-native-vlc-media-player --save`
+
+Run `react-native link react-native-vlc-media-player`
 
 ## android
 
@@ -52,8 +54,18 @@ Video coding formats: Cinepak, Dirac, DV, H.263, H.264/MPEG-4 AVC, H.265/MPEG HE
 
 ## TODO
 
-1. Android video Aspect ratio does not work.
-2. UPDATE VLC KIT to latest(3.3.10) or atleast [3.1.7](https://mvnrepository.com/artifact/com.yyl.vlc/vlc-android-sdk/3.1.7) in android  -> react-native-vlc-media-player/android/build.gradle:28 => compile 'com.yyl.vlc:vlc-android-sdk:3.0.10'
+1. Android video Aspect ratio and other params does not work(Events are called but all events come through a single event onVideoStateChange but the JS side does not implement it.).
+
+## Got a few minutes to spare? Please help us to keep this repo up to date and simple to use. 
+
+#### Our idea was to keep the repo simple, and people can use it with newer RN versions without any additional config.
+
+
+1. Get a fork of tis repo and clone [VLC Media Player test](https://github.com/razorRun/react-native-vlc-media-player-test) 
+2. Run it for ios and android locally using your fork, and do the changes. (remove this package using ```npm remove react-native-vlc-media-player``` and install the forked version from git hub ```npm i https://git-address-to-your-forked-repo```)  
+3. Verify your changes and make sure everything works on both platforms. (If you need a hand with testing I might be able to help as well)
+4. Send PR.
+5. Be happy, Coz you are a Rockstart 🌟 ❤️
 
 ## Use
 
@@ -100,7 +112,11 @@ Video coding formats: Cinepak, Dirac, DV, H.263, H.264/MPEG-4 AVC, H.265/MPEG HE
        />
 ```
 
+
+
 ## credits
 
+[ammarahm-ed](https://github.com/ammarahm-ed)
 [Nghi-NV](https://github.com/Nghi-NV)
 [xuyuanzhou](https://github.com/xuyuanzhou)
+
