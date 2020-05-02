@@ -33,7 +33,7 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
     private static final String PROP_SNAPSHOT_PATH = "snapshotPath";
     private static final String PROP_AUTO_ASPECT_RATIO = "autoAspectRatio";
     private static final String PROP_CLEAR = "clear";
-
+    private static final String PROP_PROGRESS_UPDATE_INTERVAL = "progressUpdateInterval";
 
 
     @Override
@@ -83,6 +83,12 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
     @ReactProp(name = PROP_REPEAT, defaultBoolean = false)
     public void setRepeat(final ReactVlcPlayerView videoView, final boolean repeat) {
         videoView.setRepeatModifier(repeat);
+    }
+
+
+    @ReactProp(name = PROP_PROGRESS_UPDATE_INTERVAL, defaultFloat = 250.0f )
+    public void setInterval(final ReactVlcPlayerView videoView, final float interval) {
+        videoView.setmProgressUpdateInterval(interval);
     }
 
     @ReactProp(name = PROP_PAUSED, defaultBoolean = false)
