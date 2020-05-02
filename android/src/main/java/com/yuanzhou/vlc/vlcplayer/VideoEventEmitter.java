@@ -24,13 +24,18 @@ class VideoEventEmitter {
         this.eventEmitter = reactContext.getJSModule(RCTEventEmitter.class);
     }
 
-    private static final String EVENT_LOAD_START = "onVideoLoadStart";
-    private static final String EVENT_PROGRESS = "onVideoProgress";
-    private static final String EVENT_SEEK = "onVideoSeek";
-    private static final String EVENT_END = "onVideoEnd";
-    private static final String EVENT_SNAPSHOT = "onSnapshot";
-    private static final String EVENT_ON_IS_PLAYING= "onIsPlaying";
-    private static final String EVENT_ON_VIDEO_STATE_CHANGE = "onVideoStateChange";
+    public static final String EVENT_LOAD_START = "onVideoLoadStart";
+    public static final String EVENT_ON_OPEN = "onVideoOpen";
+    public static final String EVENT_PROGRESS = "onVideoProgress";
+    public static final String EVENT_SEEK = "onVideoSeek";
+    public static final String EVENT_END = "onVideoEnd";
+    public static final String EVENT_SNAPSHOT = "onSnapshot";
+    public static final String EVENT_ON_IS_PLAYING= "onVideoPlaying";
+    public static final String EVENT_ON_VIDEO_STATE_CHANGE = "onVideoStateChange";
+    public static final String EVENT_ON_VIDEO_STOPPED = "onVideoStopped";
+    public static final String EVENT_ON_ERROR = "onVideoError";
+    public static final String EVENT_ON_VIDEO_BUFFERING = "onVideoBuffering";
+    public static final String EVENT_ON_PAUSED = "onVideoPaused";
 
     static final String[] Events = {
             EVENT_LOAD_START,
@@ -39,7 +44,12 @@ class VideoEventEmitter {
             EVENT_END,
             EVENT_SNAPSHOT,
             EVENT_ON_IS_PLAYING,
-            EVENT_ON_VIDEO_STATE_CHANGE
+            EVENT_ON_VIDEO_STATE_CHANGE,
+            EVENT_ON_OPEN,
+            EVENT_ON_PAUSED,
+            EVENT_ON_VIDEO_BUFFERING,
+            EVENT_ON_ERROR,
+            EVENT_ON_VIDEO_STOPPED
     };
 
     @Retention(RetentionPolicy.SOURCE)
@@ -50,7 +60,12 @@ class VideoEventEmitter {
             EVENT_END,
             EVENT_SNAPSHOT,
             EVENT_ON_IS_PLAYING,
-            EVENT_ON_VIDEO_STATE_CHANGE
+            EVENT_ON_VIDEO_STATE_CHANGE,
+            EVENT_ON_OPEN,
+            EVENT_ON_PAUSED,
+            EVENT_ON_VIDEO_BUFFERING,
+            EVENT_ON_ERROR,
+            EVENT_ON_VIDEO_STOPPED
     })
 
     @interface VideoEvents {
@@ -122,6 +137,10 @@ class VideoEventEmitter {
      */
     void onVideoStateChange(WritableMap map){
         receiveEvent(EVENT_ON_VIDEO_STATE_CHANGE, map);
+    }
+
+    void sendEvent(WritableMap map, String event) {
+        receiveEvent(event, map);
     }
 
     private void receiveEvent(@VideoEvents String type, WritableMap event) {
