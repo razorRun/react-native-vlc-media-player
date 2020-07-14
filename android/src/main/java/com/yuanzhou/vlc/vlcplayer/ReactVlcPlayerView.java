@@ -146,11 +146,11 @@ class ReactVlcPlayerView extends TextureView implements
     }
 
     private void setProgressUpdateRunnable() {
-        if (mMediaPlayer != null)
+        if (mMediaPlayer != null){
             mProgressUpdateRunnable = new Runnable() {
                 @Override
                 public void run() {
-                    if (mMediaPlayer != null && mMediaPlayer.isPlaying() && !isPaused) {
+                    if (mMediaPlayer != null && !isPaused) {
                         long currentTime = 0;
                         long totalLength = 0;
                         WritableMap event = Arguments.createMap();
@@ -168,7 +168,9 @@ class ReactVlcPlayerView extends TextureView implements
                     }
                 }
             };
-
+            mProgressUpdateHandler.postDelayed(mProgressUpdateRunnable,0);
+        }
+            
     }
 
 
@@ -423,6 +425,9 @@ class ReactVlcPlayerView extends TextureView implements
         //surfaceView.removeOnLayoutChangeListener(onLayoutChangeListener);
         libvlc.release();
         libvlc = null;
+        if(mProgressUpdateRunnable!=null){
+            mProgressUpdateHandler.removeCallbacks(mProgressUpdateRunnable);
+        }
     }
 
     /**
