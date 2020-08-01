@@ -13,7 +13,9 @@
     "ios",
     "react-native",
     "mp4",
-    "rtsp"
+    "rtsp",
+    "media",
+    "video"
   ],
   "author": "rmilinda@gmail.com",
   "dependencies": {
