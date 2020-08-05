@@ -164,8 +164,8 @@ class ReactVlcPlayerView extends TextureView implements
                         map.putDouble("currentTime", currentTime);
                         map.putDouble("duration", totalLength);
                         eventEmitter.sendEvent(map, VideoEventEmitter.EVENT_PROGRESS);
-                        mProgressUpdateHandler.postDelayed(mProgressUpdateRunnable, Math.round(mProgressUpdateInterval));
                     }
+                    mProgressUpdateHandler.postDelayed(mProgressUpdateRunnable, Math.round(mProgressUpdateInterval));    
                 }
             };
             mProgressUpdateHandler.postDelayed(mProgressUpdateRunnable,0);
