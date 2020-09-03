@@ -123,3 +123,5 @@ Video coding formats: Cinepak, Dirac, DV, H.263, H.264/MPEG-4 AVC, H.265/MPEG HE
 ## sponsors 
 
 Huge thanks to "[smartlife - one of the best custom home automation companies in new zealand](https://www.smartlife.nz/)" for helping me to keep this repo maintained 
+
+Author - Roshan Milinda -> [roshan.digital](https://roshan.digital)
