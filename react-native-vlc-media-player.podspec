@@ -5,11 +5,11 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.author       = { 'roshan.milinda' => 'rmilinda@gmail.com' }
   s.license      = 'MIT'
-  s.homepage     = 'https://github.com/razorRun/react-native-vlc-media-player.git'
-  s.source       = { :git => "https://github.com/razorRun/react-native-vlc-media-player.git" }
+  s.homepage     = 'https://github.com/ksielyov/react-native-vlc-media-player.git'
+  s.source       = { :git => "https://github.com/ksielyov/react-native-vlc-media-player.git" }
   s.source_files = 'ios/RCTVLCPlayer/*'
   s.platform     = :ios, "8.0"
-  s.static_framework = true  
+  s.static_framework = true
   s.dependency 'React'
   s.dependency 'MobileVLCKit', '3.3.14'
 end
