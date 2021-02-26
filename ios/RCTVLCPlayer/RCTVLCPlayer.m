@@ -90,25 +90,22 @@ static NSString *const playbackRate = @"rate";
         [self _release];
     }
     // [bavv edit start]
-    // NSArray *options = [NSArray arrayWithObject:@"--rtsp-tcp"];
     NSString* uri    = [_source objectForKey:@"uri"];
     NSURL* _uri    = [NSURL URLWithString:uri];
+    NSDictionary* initOptions = [_source objectForKey:@"initOptions"];
     
-    // _player = [[VLCMediaPlayer alloc] initWithOptions:options];
     _player = [[VLCMediaPlayer alloc] init];
 	// [bavv edit end]
 
     [_player setDrawable:self];
     _player.delegate = self;
     _player.scaleFactor = 0;
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaPlayerStateChanged:) name:VLCMediaPlayerStateChanged object:nil];
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaPlayerTimeChanged:) name:VLCMediaPlayerTimeChanged object:nil];
-    NSMutableDictionary *mediaDictonary = [NSMutableDictionary new];
-    //设置缓存多少毫秒
-    // [mediaDictonary setObject:@"0" forKey:@"network-caching"];
-    [mediaDictonary setObject:@"1" forKey:@"rtsp-tcp"];
     VLCMedia *media = [VLCMedia mediaWithURL:_uri];
-    [media addOptions:mediaDictonary];
+    
+    for (NSString* option in initOptions) {
+        [media addOption:[option stringByReplacingOccurrencesOfString:@"--" withString:@""]];
+    }
+    
     _player.media = media;
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     NSLog(@"autoplay: %i",autoplay);
@@ -124,27 +121,24 @@ static NSString *const playbackRate = @"rate";
     }
     _source = source;
     // [bavv edit start]
-    // NSArray *options = [NSArray arrayWithObject:@"--rtsp-tcp"];
     NSString* uri    = [source objectForKey:@"uri"];
     BOOL    autoplay = [RCTConvert BOOL:[source objectForKey:@"autoplay"]];
     NSURL* _uri    = [NSURL URLWithString:uri];
+    NSDictionary* initOptions = [source objectForKey:@"initOptions"];
     
-    //init player && play
-    // _player = [[VLCMediaPlayer alloc] initWithOptions:options];
     _player = [[VLCMediaPlayer alloc] init];
     // [bavv edit end]
 
     [_player setDrawable:self];
     _player.delegate = self;
     _player.scaleFactor = 0;
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaPlayerStateChanged:) name:VLCMediaPlayerStateChanged object:nil];
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaPlayerTimeChanged:) name:VLCMediaPlayerTimeChanged object:nil];
-    NSMutableDictionary *mediaDictonary = [NSMutableDictionary new];
-    //设置缓存多少毫秒
-    // [mediaDictonary setObject:@"0" forKey:@"network-caching"];
-    [mediaDictonary setObject:@"1" forKey:@"rtsp-tcp"];
+    
     VLCMedia *media = [VLCMedia mediaWithURL:_uri];
-    [media addOptions:mediaDictonary];
+    
+    for (NSString* option in initOptions) {
+        [media addOption:[option stringByReplacingOccurrencesOfString:@"--" withString:@""]];
+    }
+    
     _player.media = media;
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     NSLog(@"autoplay: %i",autoplay);
