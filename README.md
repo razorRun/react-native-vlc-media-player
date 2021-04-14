@@ -3,6 +3,14 @@
 A `<VLCPlayer>` component for react-native
 project was initially cloned from `react-native-yz-vlcplayer` And been actively maintaining it as the original repo is not been maintained by the owner.
 
+## New feature requests and bug fixes 
+
+At the moment I am bit tide up with other work. One option is to add a bounty in following site
+https://www.bountysource.com/ someone will attend to it. 
+
+
+
+
 ## Supported RN Versions
 
 0.59 > 0.62 and up
