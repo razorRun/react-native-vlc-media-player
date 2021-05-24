@@ -5,7 +5,7 @@ project was initially cloned from `react-native-yz-vlcplayer` And been actively 
 
 ## New feature requests and bug fixes 
 
-At the moment I am bit tide up with other work. One option is to add a bounty in following site
+At the moment I am bit tide up with other work. Matter afact I don't get much time to develop at all now a days. But I am more than open to help anyone who want's to contribute to this repo. And i will be sure to buge any fixes as soon as PR's come up. But if you need somene to fix issues that affects you till I get back to this(ETA Q3 2022), One option is to add a bounty in following site
 https://www.bountysource.com/ someone will attend to it. 
 
 
