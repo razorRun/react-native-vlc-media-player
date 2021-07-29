@@ -13,34 +13,34 @@ static NSString *const playbackRate = @"rate";
 
 @implementation RCTVLCPlayer
 {
-    
+
     /* Required to publish events */
     RCTEventDispatcher *_eventDispatcher;
     VLCMediaPlayer *_player;
-    
+
     NSDictionary * _source;
     BOOL _paused;
     BOOL _started;
-    
+
 }
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher
 {
     if ((self = [super init])) {
         _eventDispatcher = eventDispatcher;
-        
+
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(applicationWillResignActive:)
                                                      name:UIApplicationWillResignActiveNotification
                                                    object:nil];
-        
+
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(applicationWillEnterForeground:)
                                                      name:UIApplicationWillEnterForegroundNotification
                                                    object:nil];
-        
+
     }
-    
+
     return self;
 }
 
@@ -93,7 +93,7 @@ static NSString *const playbackRate = @"rate";
     NSString* uri    = [_source objectForKey:@"uri"];
     NSURL* _uri    = [NSURL URLWithString:uri];
     NSDictionary* initOptions = [_source objectForKey:@"initOptions"];
-    
+
     _player = [[VLCMediaPlayer alloc] init];
 	// [bavv edit end]
 
@@ -101,11 +101,11 @@ static NSString *const playbackRate = @"rate";
     _player.delegate = self;
     _player.scaleFactor = 0;
     VLCMedia *media = [VLCMedia mediaWithURL:_uri];
-    
+
     for (NSString* option in initOptions) {
         [media addOption:[option stringByReplacingOccurrencesOfString:@"--" withString:@""]];
     }
-    
+
     _player.media = media;
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     NSLog(@"autoplay: %i",autoplay);
@@ -125,20 +125,20 @@ static NSString *const playbackRate = @"rate";
     BOOL    autoplay = [RCTConvert BOOL:[source objectForKey:@"autoplay"]];
     NSURL* _uri    = [NSURL URLWithString:uri];
     NSDictionary* initOptions = [source objectForKey:@"initOptions"];
-    
+
     _player = [[VLCMediaPlayer alloc] init];
     // [bavv edit end]
 
     [_player setDrawable:self];
     _player.delegate = self;
     _player.scaleFactor = 0;
-    
+
     VLCMedia *media = [VLCMedia mediaWithURL:_uri];
-    
+
     for (NSString* option in initOptions) {
         [media addOption:[option stringByReplacingOccurrencesOfString:@"--" withString:@""]];
     }
-    
+
     _player.media = media;
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     NSLog(@"autoplay: %i",autoplay);
@@ -156,7 +156,7 @@ static NSString *const playbackRate = @"rate";
 
 - (void)mediaPlayerStateChanged:(NSNotification *)aNotification
 {
-   
+
      NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
      NSLog(@"userInfo %@",[aNotification userInfo]);
      NSLog(@"standardUserDefaults %@",defaults);
@@ -202,7 +202,7 @@ static NSString *const playbackRate = @"rate";
                 int currentTime   = [[_player time] intValue];
                 int remainingTime = [[_player remainingTime] intValue];
                 int duration      = [_player.media.length intValue];
-                
+
                 self.onVideoEnded(@{
                                     @"target": self.reactTag,
                                     @"currentTime": [NSNumber numberWithInt:currentTime],
@@ -230,7 +230,7 @@ static NSString *const playbackRate = @"rate";
         int currentTime   = [[_player time] intValue];
         int remainingTime = [[_player remainingTime] intValue];
         int duration      = [_player.media.length intValue];
-        
+
         if( currentTime >= 0 && currentTime < duration) {
             self.onVideoProgress(@{
                                    @"target": self.reactTag,
@@ -278,6 +278,13 @@ static NSString *const playbackRate = @"rate";
 -(void)setVideoAspectRatio:(NSString *)ratio{
     char *char_content = [ratio cStringUsingEncoding:NSASCIIStringEncoding];
     [_player setVideoAspectRatio:char_content];
+}
+
+- (void)setMuted:(BOOL)value
+{
+    if (_player) {
+        [[_player audio] setMuted:value];
+    }
 }
 
 - (void)_release
