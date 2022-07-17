@@ -20,7 +20,7 @@
   "author": "rmilinda@gmail.com",
   "dependencies": {
     "react-native-slider": "^0.11.0",
-    "react-native-vector-icons": "^6.6.0"
+    "react-native-vector-icons": "^9.2.0"
   },
   "repository": {
     "type": "git",
