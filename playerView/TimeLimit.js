@@ -59,9 +59,9 @@ export default class TimeLimt extends Component {
             <Text style={{ color: 'green', fontSize: 13 }}>{maxTime - timeNumber}</Text>
           </View>
         )}
-        <View style={styles.nameView}>
-          <Text style={{ fontSize: 13 }}>跳过片头</Text>
-        </View>
+//         <View style={styles.nameView}>
+//           <Text style={{ fontSize: 13 }}>跳过片头</Text>
+//         </View>
       </TouchableOpacity>
     );
   }
