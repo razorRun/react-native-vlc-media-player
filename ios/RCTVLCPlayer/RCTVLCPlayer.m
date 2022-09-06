@@ -102,9 +102,11 @@ static NSString *const playbackRate = @"rate";
     _player.scaleFactor = 0;
     VLCMedia *media = [VLCMedia mediaWithURL:_uri];
 
-    for (NSString* option in initOptions) {
-        [media addOption:[option stringByReplacingOccurrencesOfString:@"--" withString:@""]];
-    }
+    NSMutableDictionary *options = [NSMutableDictionary new];
+    [options setObject:@"1" forKey:@"rtsp-tcp"];
+    [options setObject:@"1000" forKey:@"input-repeat"];
+    [media addOptions:[options copy]];
+    options = nil;
 
     _player.media = media;
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
@@ -135,9 +137,11 @@ static NSString *const playbackRate = @"rate";
 
     VLCMedia *media = [VLCMedia mediaWithURL:_uri];
 
-    for (NSString* option in initOptions) {
-        [media addOption:[option stringByReplacingOccurrencesOfString:@"--" withString:@""]];
-    }
+    NSMutableDictionary *options = [NSMutableDictionary new];
+    [options setObject:@"1" forKey:@"rtsp-tcp"];
+    [options setObject:@"1000" forKey:@"input-repeat"];
+    [media addOptions:[options copy]];
+    options = nil;
 
     _player.media = media;
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
