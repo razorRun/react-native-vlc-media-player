@@ -41,6 +41,20 @@ Run
 
 Should work without any specific settings
 
+gradle build might failed with `More than one file was found with OS independent path 'lib/x86/libc++_shared.so'` error. If that happens add the following block to your `android/app/build.gradle`
+
+```
+android {
+    packagingOptions {
+        pickFirst 'lib/x86/libc++_shared.so'
+        pickFirst 'lib/x86_64/libc++_shared.so'
+        pickFirst 'lib/armeabi-v7a/libc++_shared.so'
+        pickFirst 'lib/arm64-v8a/libc++_shared.so'
+    }
+    // rest of the config
+}
+```
+
 ## iOS
 
 1. cd to ios
