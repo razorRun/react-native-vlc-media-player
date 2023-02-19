@@ -120,6 +120,8 @@ Prop | Description | Default
 `seek` | Set position to seek between `0` and `1` (`0` being the start, `1` being the end , use `position` from the progress object )
 `volume` | Set the volume of the player (`number`)
 `muted` | Set to `true` or `false` to mute the player |  `false`
+`audioTrack` | Set audioTrack id 
+`textTrack` | Set textTrack(subtitle) id
 `playInBackground` | Set to `true` or `false` to allow playing in the background | false
 `videoAspectRatio ` | Set the video aspect ratio eg `"16:9"`
 `autoAspectRatio` | Set to `true` or `false` to enable auto aspect ratio | false
@@ -133,12 +135,31 @@ Callback props take a function that gets fired on various player events:
 Prop | Description
 ---- | -----------
 `onPlaying` | Called when media starts playing returns eg `{target: 9, duration: 99750, seekable: true}`
-`onProgress` | Callback containing `position` as a fraction, and `duration`, `currentTime` and `remainingTime` in seconds <br />&nbsp; ◦ &nbsp;eg `{  duration: 99750, position: 0.30, currentTime: 30154, remainingTime: -69594 }`
+`onProgress` | Callback containing `position` as a fraction, and `duration`, `currentTime` and `remainingTime` in seconds <br />&nbsp; ◦ &nbsp;eg `{  duration: 99750, position: 0.30, currentTime: 30154, remainingTime: -69594 }
 `onPaused` | Called when media is paused
 `onStopped ` | Called when media is stoped
 `onBuffering ` | Called when media is buffering
 `onEnded` | Called when media playing ends
 `onError` | Called when an error occurs whilst attempting to play media
+`onLoad` | Called when video info is loaded, Callback containing VideoInfo
+
+VideoInfo example:
+```
+ {
+    duration: 30906, 
+    videoSize: {height: 240, width: 32},
+    audioTracks: [
+            {id: -1, name: "Disable"}, 
+            {id: 1, name: "Track 1"}, 
+            {id: 3, name: "Japanese Audio (2ch LC-AAC) - [Japanese]"}
+    ], 
+    textTracks: [
+        {id: -1, name: "Disable"}, 
+        {id: 4, name: "Track 1 - [English]"}, 
+        {id: 5, name: "Track 2 - [Japanese]"}
+    ],    
+}
+```
 
 
 ## More formats

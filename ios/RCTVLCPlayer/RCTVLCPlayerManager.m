@@ -23,6 +23,7 @@ RCT_EXPORT_VIEW_PROPERTY(onVideoEnded, RCTDirectEventBlock);
 RCT_EXPORT_VIEW_PROPERTY(onVideoError, RCTDirectEventBlock);
 RCT_EXPORT_VIEW_PROPERTY(onVideoOpen, RCTDirectEventBlock);
 RCT_EXPORT_VIEW_PROPERTY(onVideoLoadStart, RCTDirectEventBlock);
+RCT_EXPORT_VIEW_PROPERTY(onVideoLoad, RCTDirectEventBlock);
 
 - (dispatch_queue_t)methodQueue
 {
@@ -41,5 +42,7 @@ RCT_CUSTOM_VIEW_PROPERTY(muted, BOOL, RCTVLCPlayer)
     BOOL isMuted = [RCTConvert BOOL:json];
     [view setMuted:isMuted];
 };
+RCT_EXPORT_VIEW_PROPERTY(audioTrack, int);
+RCT_EXPORT_VIEW_PROPERTY(textTrack, int);
 
 @end
