@@ -109,7 +109,7 @@ or you can use
 | Prop                | Description                                                                                                                  | Default |
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------- |
 | `source`            | Object that contains the uri of a video or song to play eg `{{ uri: "https://video.com/example.mkv" }}`                      | `{}`    |
-| `subtitleUri`       | local subtitle file path，if you want to hide subtitle, you can set this to an empty subtitle file                            |         |
+| `subtitleUri`       | local subtitle file path，for ios: if you want to hide subtitle, you can set this to an empty subtitle file.                  |         |
 | `paused`            | Set to `true` or `false` to pause or play the media                                                                          | `false` |
 | `repeat`            | Set to `true` or `false` to loop the media                                                                                   | `false` |
 | `rate`              | Set the playback rate of the player                                                                                          | `1`     |
