@@ -163,7 +163,6 @@ export default class VLCPlayer extends Component {
       onVideoBuffering: this._onBuffering,
       progressUpdateInterval: 250,
     });
-
     return <RCTVLCPlayer ref={this._assignRoot} {...nativeProps} />;
   }
 }
@@ -200,6 +199,7 @@ VLCPlayer.propTypes = {
 
   /* Wrapper component */
   source: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+  subtitleUri: PropTypes.string,
 
   onError: PropTypes.func,
   onProgress: PropTypes.func,

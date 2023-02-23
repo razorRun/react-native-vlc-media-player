@@ -1,11 +1,8 @@
 # react-native-vlc-media-player
 
-## New feature requests and bug fixes 
+## New feature requests and bug fixes
 
 At the moment I am a bit tied up with other work. As a matter of fact, I don't get much time to develop at all nowadays. But I am more than open to help anyone who wants's to contribute to this repo. And I will be sure to merge any fixes as soon as PR's come up. But if you need someone to fix issues that affect you till I get back to this(ETA Q3 2022), One option is to add a bounty to the following site https://www.bountysource.com/ someone will attend to it.
-
-
-
 
 ## Supported RN Versions
 
@@ -31,7 +28,6 @@ Run
 or
 
 `yarn add react-native-vlc-media-player`
-
 
 Run 
 
@@ -71,10 +67,9 @@ in root project select Build Settings ---> find Bitcode and select Enable Bitcod
 
 1. Android video Aspect ratio and other params do not work (Events are called but all events come through a single event onVideoStateChange but the JS side does not implement it.).
 
-## Got a few minutes to spare? Please help us to keep this repo up to date and simple to use. 
+## Got a few minutes to spare? Please help us to keep this repo up to date and simple to use.
 
 #### Our idea was to keep the repo simple, and people can use it with newer RN versions without any additional config.
-
 
 1. Get a fork of this repo and clone [VLC Media Player test](https://github.com/razorRun/react-native-vlc-media-player-test) 
 2. Run it for ios and android locally using your fork, and do the changes. (remove this package using ```npm remove react-native-vlc-media-player``` and install the forked version from git hub ```npm i https://git-address-to-your-forked-repo```)  
@@ -111,35 +106,35 @@ or you can use
 
 ### VLCPlayer Props
 
-Prop | Description | Default
----- | ----------- | -------
-`source` | Object that contains the uri of a video or song to play eg `{{ uri: "https://video.com/example.mkv" }}` | `{}`
-`paused` | Set to `true` or `false` to pause or play the media | `false`
-`repeat` | Set to `true` or `false` to loop the media | `false`
-`rate` | Set the playback rate of the player| `1`
-`seek` | Set position to seek between `0` and `1` (`0` being the start, `1` being the end , use `position` from the progress object )
-`volume` | Set the volume of the player (`number`)
-`muted` | Set to `true` or `false` to mute the player |  `false`
-`playInBackground` | Set to `true` or `false` to allow playing in the background | false
-`videoAspectRatio ` | Set the video aspect ratio eg `"16:9"`
-`autoAspectRatio` | Set to `true` or `false` to enable auto aspect ratio | false
-`resizeMode` | Set the behavior for the video size (`fill, contain, cover, none, scale-down`) | none
-`style` | React native stylesheet styles| `{}`
+| Prop                | Description                                                                                                                  | Default |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `source`            | Object that contains the uri of a video or song to play eg `{{ uri: "https://video.com/example.mkv" }}`                      | `{}`    |
+| `subtitleUri`       | local subtitle file path，for ios: if you want to hide subtitle, you can set this to an empty subtitle file.                  |         |
+| `paused`            | Set to `true` or `false` to pause or play the media                                                                          | `false` |
+| `repeat`            | Set to `true` or `false` to loop the media                                                                                   | `false` |
+| `rate`              | Set the playback rate of the player                                                                                          | `1`     |
+| `seek`              | Set position to seek between `0` and `1` (`0` being the start, `1` being the end , use `position` from the progress object ) |         |
+| `volume`            | Set the volume of the player (`number`)                                                                                      |         |
+| `muted`             | Set to `true` or `false` to mute the player                                                                                  | `false` |
+| `playInBackground`  | Set to `true` or `false` to allow playing in the background                                                                  | false   |
+| `videoAspectRatio ` | Set the video aspect ratio eg `"16:9"`                                                                                       |         |
+| `autoAspectRatio`   | Set to `true` or `false` to enable auto aspect ratio                                                                         | false   |
+| `resizeMode`        | Set the behavior for the video size (`fill, contain, cover, none, scale-down`)                                               | none    |
+| `style`             | React native stylesheet styles                                                                                               | `{}`    |
 
 #### Callback props
 
 Callback props take a function that gets fired on various player events:
 
-Prop | Description
----- | -----------
-`onPlaying` | Called when media starts playing returns eg `{target: 9, duration: 99750, seekable: true}`
-`onProgress` | Callback containing `position` as a fraction, and `duration`, `currentTime` and `remainingTime` in seconds <br />&nbsp; ◦ &nbsp;eg `{  duration: 99750, position: 0.30, currentTime: 30154, remainingTime: -69594 }`
-`onPaused` | Called when media is paused
-`onStopped ` | Called when media is stoped
-`onBuffering ` | Called when media is buffering
-`onEnded` | Called when media playing ends
-`onError` | Called when an error occurs whilst attempting to play media
-
+| Prop           | Description                                                                                                                                                                                                          |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `onPlaying`    | Called when media starts playing returns eg `{target: 9, duration: 99750, seekable: true}`                                                                                                                           |
+| `onProgress`   | Callback containing `position` as a fraction, and `duration`, `currentTime` and `remainingTime` in seconds <br />&nbsp; ◦ &nbsp;eg `{  duration: 99750, position: 0.30, currentTime: 30154, remainingTime: -69594 }` |
+| `onPaused`     | Called when media is paused                                                                                                                                                                                          |
+| `onStopped `   | Called when media is stoped                                                                                                                                                                                          |
+| `onBuffering ` | Called when media is buffering                                                                                                                                                                                       |
+| `onEnded`      | Called when media playing ends                                                                                                                                                                                       |
+| `onError`      | Called when an error occurs whilst attempting to play media                                                                                                                                                          |
 
 ## More formats
 
@@ -157,7 +152,7 @@ Video coding formats: Cinepak, Dirac, DV, H.263, H.264/MPEG-4 AVC, H.265/MPEG HE
 [Nghi-NV](https://github.com/Nghi-NV)
 [xuyuanzhou](https://github.com/xuyuanzhou)
 
-## sponsors 
+## sponsors
 
 Huge thanks to "[smartlife - one of the best custom home automation companies in new zealand](https://www.smartlife.nz/)" for helping me to keep this repo maintained 
 
