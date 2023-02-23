@@ -41,6 +41,7 @@ class ReactVlcPlayerView extends TextureView implements
     private final VideoEventEmitter eventEmitter;
     private LibVLC libvlc;
     private MediaPlayer mMediaPlayer = null;
+    private boolean mMuted = false;
     private boolean isSurfaceViewDestory;
     private String src;
     private boolean netStrTag;
@@ -344,6 +345,7 @@ class ReactVlcPlayerView extends TextureView implements
             }
             // Create media player
             mMediaPlayer = new MediaPlayer(libvlc);
+            setMutedModifier(mMuted);
             mMediaPlayer.setEventListener(mPlayerListener);
             //this.getHolder().setKeepScreenOn(true);
             IVLCVout vlcOut = mMediaPlayer.getVLCVout();
@@ -501,6 +503,7 @@ class ReactVlcPlayerView extends TextureView implements
      * @param muted
      */
     public void setMutedModifier(boolean muted) {
+        mMuted = muted;
         if (mMediaPlayer != null) {
             if (muted) {
                 this.preVolume = mMediaPlayer.getVolume();
