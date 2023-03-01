@@ -19,6 +19,7 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
 
     private static final String PROP_SRC = "source";
     private static final String PROP_SRC_URI = "uri";
+    private static final String PROP_SUBTITLE_URI = "subtitleUri";
     private static final String PROP_SRC_TYPE = "type";
     private static final String PROP_REPEAT = "repeat";
     private static final String PROP_PAUSED = "paused";
@@ -78,6 +79,11 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
         }
         videoView.setSrc(src);
 
+    }
+
+    @ReactProp(name = PROP_SUBTITLE_URI)
+    public void setSubtitleUri(final ReactVlcPlayerView videoView, final String subtitleUri) {
+        videoView.setSubtitleUri(subtitleUri);
     }
 
     @ReactProp(name = PROP_REPEAT, defaultBoolean = false)
