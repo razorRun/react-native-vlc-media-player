@@ -18,12 +18,13 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
 
-import org.videolan.libvlc.IVLCVout;
+import org.videolan.libvlc.interfaces.IVLCVout;
 import org.videolan.libvlc.LibVLC;
 import org.videolan.libvlc.Media;
 import org.videolan.libvlc.MediaPlayer;
 
 import java.util.ArrayList;
+
 
 
 
