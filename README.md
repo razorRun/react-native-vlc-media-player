@@ -40,16 +40,36 @@ Should work without any specific settings
 gradle build might failed with `More than one file was found with OS independent path 'lib/x86/libc++_shared.so'` error. If that happens add the following block to your `android/app/build.gradle`
 
 ```
-android {
-    packagingOptions {
-        pickFirst 'lib/x86/libc++_shared.so'
-        pickFirst 'lib/x86_64/libc++_shared.so'
-        pickFirst 'lib/armeabi-v7a/libc++_shared.so'
-        pickFirst 'lib/arm64-v8a/libc++_shared.so'
+tasks.whenTaskAdded((tas -> {
+    // when task is 'mergeLocalDebugNativeLibs' or 'mergeLocalReleaseNativeLibs'
+    if (tas.name.contains("merge") && tas.name.contains("NativeLibs")) {
+        tasks.named(tas.name) {it
+            doFirst {
+                java.nio.file.Path notNeededDirectory = it.externalLibNativeLibs
+                        .getFiles()
+                        .stream()
+                        .filter(file -> file.toString().contains("jetified-react-native"))
+                        .findAny()
+                        .orElse(null)
+                        .toPath();
+                Files.walk(notNeededDirectory).forEach(file -> {
+                    if (file.toString().contains("libc++_shared.so")) {
+                        Files.delete(file);
+                    }
+                });
+            }
+        }
     }
-    // rest of the config
-}
+}))
 ```
+
+Explain: react-native and libvlc both import `libc++_shared.so`, but we cannot use `packagingOptions.pickFirst` to handle this case, because libvlc-all:3.6.0-eap5 will crash when using `libc++_shared.so`, so we have to use `libc++_shared.so` from libvlc, so I add a gradle script to delete `libc++_shared.so` from react-native to solve this.
+
+Reference: https://stackoverflow.com/questions/74258902/how-to-define-which-so-file-to-use-in-gradle-packaging-options
+
+Explain why we have to use libvlc-all:3.6.0-eap5 instead of libvlc-all:3.2.6: libvlc-all:3.2.6 has a bug that subtitle won't display on Android 12 and 13, so we have to upgrade libvlc to support subtitle display on Android 12 and 13.
+
+Reference: https://code.videolan.org/videolan/vlc-android/-/issues/2252
 
 ## iOS
 
@@ -106,21 +126,21 @@ or you can use
 
 ### VLCPlayer Props
 
-| Prop                | Description                                                                                                                  | Default |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `source`            | Object that contains the uri of a video or song to play eg `{{ uri: "https://video.com/example.mkv" }}`                      | `{}`    |
-| `subtitleUri`       | local subtitle file path，for ios: if you want to hide subtitle, you can set this to an empty subtitle file.                  |         |
-| `paused`            | Set to `true` or `false` to pause or play the media                                                                          | `false` |
-| `repeat`            | Set to `true` or `false` to loop the media                                                                                   | `false` |
-| `rate`              | Set the playback rate of the player                                                                                          | `1`     |
-| `seek`              | Set position to seek between `0` and `1` (`0` being the start, `1` being the end , use `position` from the progress object ) |         |
-| `volume`            | Set the volume of the player (`number`)                                                                                      |         |
-| `muted`             | Set to `true` or `false` to mute the player                                                                                  | `false` |
-| `playInBackground`  | Set to `true` or `false` to allow playing in the background                                                                  | false   |
-| `videoAspectRatio ` | Set the video aspect ratio eg `"16:9"`                                                                                       |         |
-| `autoAspectRatio`   | Set to `true` or `false` to enable auto aspect ratio                                                                         | false   |
-| `resizeMode`        | Set the behavior for the video size (`fill, contain, cover, none, scale-down`)                                               | none    |
-| `style`             | React native stylesheet styles                                                                                               | `{}`    |
+| Prop                | Description                                                                                                                                        | Default |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `source`            | Object that contains the uri of a video or song to play eg `{{ uri: "https://video.com/example.mkv" }}`                                            | `{}`    |
+| `subtitleUri`       | local subtitle file path，if you want to hide subtitle, you can set this to an empty subtitle file，current we don't support a `hide subtitle` prop. |         |
+| `paused`            | Set to `true` or `false` to pause or play the media                                                                                                | `false` |
+| `repeat`            | Set to `true` or `false` to loop the media                                                                                                         | `false` |
+| `rate`              | Set the playback rate of the player                                                                                                                | `1`     |
+| `seek`              | Set position to seek between `0` and `1` (`0` being the start, `1` being the end , use `position` from the progress object )                       |         |
+| `volume`            | Set the volume of the player (`number`)                                                                                                            |         |
+| `muted`             | Set to `true` or `false` to mute the player                                                                                                        | `false` |
+| `playInBackground`  | Set to `true` or `false` to allow playing in the background                                                                                        | false   |
+| `videoAspectRatio ` | Set the video aspect ratio eg `"16:9"`                                                                                                             |         |
+| `autoAspectRatio`   | Set to `true` or `false` to enable auto aspect ratio                                                                                               | false   |
+| `resizeMode`        | Set the behavior for the video size (`fill, contain, cover, none, scale-down`)                                                                     | none    |
+| `style`             | React native stylesheet styles                                                                                                                     | `{}`    |
 
 #### Callback props
 

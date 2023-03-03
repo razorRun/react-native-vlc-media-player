@@ -18,12 +18,13 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
 
-import org.videolan.libvlc.IVLCVout;
+import org.videolan.libvlc.interfaces.IVLCVout;
 import org.videolan.libvlc.LibVLC;
 import org.videolan.libvlc.Media;
 import org.videolan.libvlc.MediaPlayer;
 
 import java.util.ArrayList;
+
 
 
 
@@ -44,6 +45,7 @@ class ReactVlcPlayerView extends TextureView implements
     private boolean mMuted = false;
     private boolean isSurfaceViewDestory;
     private String src;
+    private String _subtitleUri;
     private boolean netStrTag;
     private ReadableMap srcMap;
     private int mVideoHeight = 0;
@@ -386,6 +388,9 @@ class ReactVlcPlayerView extends TextureView implements
             }
             mMediaPlayer.setMedia(m);
             mMediaPlayer.setScale(0);
+            if (_subtitleUri != null) {
+                mMediaPlayer.addSlave(Media.Slave.Type.Subtitle, _subtitleUri, true);
+            }
 
             if (!vlcOut.areViewsAttached()) {
                 vlcOut.addCallback(callback);
@@ -448,6 +453,13 @@ class ReactVlcPlayerView extends TextureView implements
             if (position >= 0 && position <= 1) {
                 mMediaPlayer.setPosition(position);
             }
+        }
+    }
+
+    public void setSubtitleUri(String subtitleUri) {
+        _subtitleUri = subtitleUri;
+        if (mMediaPlayer != null) {
+            mMediaPlayer.addSlave(Media.Slave.Type.Subtitle,  _subtitleUri, true);
         }
     }
 
