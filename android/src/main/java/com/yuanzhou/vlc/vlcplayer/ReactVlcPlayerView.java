@@ -21,12 +21,13 @@ import com.facebook.react.bridge.WritableArray;
 
 import com.facebook.react.uimanager.ThemedReactContext;
 
-import org.videolan.libvlc.IVLCVout;
+import org.videolan.libvlc.interfaces.IVLCVout;
 import org.videolan.libvlc.LibVLC;
 import org.videolan.libvlc.Media;
 import org.videolan.libvlc.MediaPlayer;
 
 import java.util.ArrayList;
+
 
 
 
@@ -44,8 +45,10 @@ class ReactVlcPlayerView extends TextureView implements
     private final VideoEventEmitter eventEmitter;
     private LibVLC libvlc;
     private MediaPlayer mMediaPlayer = null;
+    private boolean mMuted = false;
     private boolean isSurfaceViewDestory;
     private String src;
+    private String _subtitleUri;
     private boolean netStrTag;
     private ReadableMap srcMap;
     private int mVideoHeight = 0;
@@ -354,6 +357,7 @@ class ReactVlcPlayerView extends TextureView implements
             }
             // Create media player
             mMediaPlayer = new MediaPlayer(libvlc);
+            setMutedModifier(mMuted);
             mMediaPlayer.setEventListener(mPlayerListener);
             //this.getHolder().setKeepScreenOn(true);
             IVLCVout vlcOut = mMediaPlayer.getVLCVout();
@@ -395,6 +399,9 @@ class ReactVlcPlayerView extends TextureView implements
             mVideoInfo = null;
             mMediaPlayer.setMedia(m);
             mMediaPlayer.setScale(0);
+            if (_subtitleUri != null) {
+                mMediaPlayer.addSlave(Media.Slave.Type.Subtitle, _subtitleUri, true);
+            }
 
             if (!vlcOut.areViewsAttached()) {
                 vlcOut.addCallback(callback);
@@ -460,6 +467,13 @@ class ReactVlcPlayerView extends TextureView implements
         }
     }
 
+    public void setSubtitleUri(String subtitleUri) {
+        _subtitleUri = subtitleUri;
+        if (mMediaPlayer != null) {
+            mMediaPlayer.addSlave(Media.Slave.Type.Subtitle,  _subtitleUri, true);
+        }
+    }
+
     /**
      * 设置资源路径
      *
@@ -512,6 +526,7 @@ class ReactVlcPlayerView extends TextureView implements
      * @param muted
      */
     public void setMutedModifier(boolean muted) {
+        mMuted = muted;
         if (mMediaPlayer != null) {
             if (muted) {
                 this.preVolume = mMediaPlayer.getVolume();

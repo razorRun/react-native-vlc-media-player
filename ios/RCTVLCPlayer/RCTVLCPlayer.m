@@ -27,7 +27,8 @@ static NSString *const playbackRate = @"rate";
     NSDictionary * _source;
     BOOL _paused;
     BOOL _started;
-    
+    NSString * _subtitleUri;
+
     NSDictionary * _videoInfo;
 
 }
@@ -123,6 +124,7 @@ static NSString *const playbackRate = @"rate";
     self.onVideoLoadStart(@{
                             @"target": self.reactTag
                             });
+    
 }
 
 -(void)setSource:(NSDictionary *)source
@@ -161,10 +163,21 @@ static NSString *const playbackRate = @"rate";
     self.onVideoLoadStart(@{
                            @"target": self.reactTag
                            });
+    if(_subtitleUri) {
+        [_player addPlaybackSlave:_subtitleUri type:VLCMediaPlaybackSlaveTypeSubtitle enforce:YES];
+    }
+    
 //    if(autoplay)
         [self play];
 }
 
+- (void)setSubtitleUri:(NSString *)subtitleUri
+{
+    _subtitleUri = [NSURL URLWithString:subtitleUri];
+    if(_player) {
+        [_player addPlaybackSlave:_subtitleUri type:VLCMediaPlaybackSlaveTypeSubtitle enforce:YES];
+    }
+}
 
 // ==== player delegate methods ====
 

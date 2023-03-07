@@ -31,6 +31,7 @@ RCT_EXPORT_VIEW_PROPERTY(onVideoLoad, RCTDirectEventBlock);
 }
 
 RCT_EXPORT_VIEW_PROPERTY(source, NSDictionary);
+RCT_EXPORT_VIEW_PROPERTY(subtitleUri, NSString);
 RCT_EXPORT_VIEW_PROPERTY(paused, BOOL);
 RCT_EXPORT_VIEW_PROPERTY(seek, float);
 RCT_EXPORT_VIEW_PROPERTY(rate, float);
