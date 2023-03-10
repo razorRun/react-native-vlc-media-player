@@ -129,13 +129,15 @@ or you can use
 | Prop                | Description                                                                                                                                        | Default |
 | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | `source`            | Object that contains the uri of a video or song to play eg `{{ uri: "https://video.com/example.mkv" }}`                                            | `{}`    |
-| `subtitleUri`       | local subtitle file path，if you want to hide subtitle, you can set this to an empty subtitle file，current we don't support a `hide subtitle` prop. |         |
+| `subtitleUri`       | local subtitle file path，if you want to hide subtitle, you can set this to an empty subtitle file，current we don't support a `hide subtitle` prop.|         |
 | `paused`            | Set to `true` or `false` to pause or play the media                                                                                                | `false` |
 | `repeat`            | Set to `true` or `false` to loop the media                                                                                                         | `false` |
 | `rate`              | Set the playback rate of the player                                                                                                                | `1`     |
 | `seek`              | Set position to seek between `0` and `1` (`0` being the start, `1` being the end , use `position` from the progress object )                       |         |
 | `volume`            | Set the volume of the player (`number`)                                                                                                            |         |
 | `muted`             | Set to `true` or `false` to mute the player                                                                                                        | `false` |
+| `audioTrack`        | Set audioTrack id (`number`)   (see `onLoad` callback VideoInfo.audioTracks)                                                                       |         |
+| `textTrack`         | Set textTrack(subtitle) id  (`number`)   (see `onLoad` callback- VideoInfo.textTracks)                                                             |         |                      
 | `playInBackground`  | Set to `true` or `false` to allow playing in the background                                                                                        | false   |
 | `videoAspectRatio ` | Set the video aspect ratio eg `"16:9"`                                                                                                             |         |
 | `autoAspectRatio`   | Set to `true` or `false` to enable auto aspect ratio                                                                                               | false   |
@@ -155,6 +157,25 @@ Callback props take a function that gets fired on various player events:
 | `onBuffering ` | Called when media is buffering                                                                                                                                                                                       |
 | `onEnded`      | Called when media playing ends                                                                                                                                                                                       |
 | `onError`      | Called when an error occurs whilst attempting to play media                                                                                                                                                          |
+| `onLoad`       | Called when video info is loaded, Callback containing VideoInfo
+
+VideoInfo example:
+```
+ {
+    duration: 30906, 
+    videoSize: {height: 240, width: 32},
+    audioTracks: [
+            {id: -1, name: "Disable"}, 
+            {id: 1, name: "Track 1"}, 
+            {id: 3, name: "Japanese Audio (2ch LC-AAC) - [Japanese]"}
+    ], 
+    textTracks: [
+        {id: -1, name: "Disable"}, 
+        {id: 4, name: "Track 1 - [English]"}, 
+        {id: 5, name: "Track 2 - [Japanese]"}
+    ],    
+}
+```
 
 ## More formats
 
