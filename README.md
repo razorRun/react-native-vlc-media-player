@@ -48,6 +48,7 @@ tasks.whenTaskAdded((tas -> {
                 java.nio.file.Path notNeededDirectory = it.externalLibNativeLibs
                         .getFiles()
                         .stream()
+                        // for React Native 0.71, the file value now contains "jetified-react-android"
                         .filter(file -> file.toString().contains("jetified-react-native"))
                         .findAny()
                         .orElse(null)
