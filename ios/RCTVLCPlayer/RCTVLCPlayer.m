@@ -3,7 +3,11 @@
 #import "React/RCTBridgeModule.h"
 #import "React/RCTEventDispatcher.h"
 #import "React/UIView+React.h"
+#ifdef TARGET_OS_TV
+#import <TVVLCKit/TVVLCKit.h>
+#else
 #import <MobileVLCKit/MobileVLCKit.h>
+#endif
 #import <AVFoundation/AVFoundation.h>
 static NSString *const statusKeyPath = @"status";
 static NSString *const playbackLikelyToKeepUpKeyPath = @"playbackLikelyToKeepUp";
