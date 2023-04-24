@@ -3,7 +3,7 @@
 #import "React/RCTBridgeModule.h"
 #import "React/RCTEventDispatcher.h"
 #import "React/UIView+React.h"
-#ifdef TARGET_OS_TV
+#if TARGET_OS_TV
 #import <TVVLCKit/TVVLCKit.h>
 #else
 #import <MobileVLCKit/MobileVLCKit.h>
@@ -128,7 +128,7 @@ static NSString *const playbackRate = @"rate";
     self.onVideoLoadStart(@{
                             @"target": self.reactTag
                             });
-    
+
 }
 
 -(void)setSource:(NSDictionary *)source
@@ -138,7 +138,7 @@ static NSString *const playbackRate = @"rate";
     }
     _source = source;
     _videoInfo = nil;
-    
+
     // [bavv edit start]
     NSString* uri    = [source objectForKey:@"uri"];
     BOOL    autoplay = [RCTConvert BOOL:[source objectForKey:@"autoplay"]];
@@ -170,7 +170,7 @@ static NSString *const playbackRate = @"rate";
     if(_subtitleUri) {
         [_player addPlaybackSlave:_subtitleUri type:VLCMediaPlaybackSlaveTypeSubtitle enforce:YES];
     }
-    
+
 //    if(autoplay)
         [self play];
 }
@@ -225,7 +225,7 @@ static NSString *const playbackRate = @"rate";
                     self.onVideoLoad(_videoInfo);
                 }
 
-                
+
                 self.onVideoBuffering(@{
                                         @"target": self.reactTag
                                         });
