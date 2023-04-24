@@ -10,6 +10,7 @@
 		0C1A0ECA1D07E18700441684 /* RCTVLCPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1A0EC81D07E18700441684 /* RCTVLCPlayerManager.m */; };
 		0CA30C481D07E0DB003B09F9 /* RCTVLCPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0CA30C471D07E0DB003B09F9 /* RCTVLCPlayer.h */; };
 		0CA30C4A1D07E0DB003B09F9 /* RCTVLCPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CA30C491D07E0DB003B09F9 /* RCTVLCPlayer.m */; };
+		F0A7F47529F2FAF700E74DD3 /* RCTVLCPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7F47429F2FAF700E74DD3 /* RCTVLCPlayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +32,8 @@
 		0CA30C441D07E0DB003B09F9 /* libRCTVLCPlayer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTVLCPlayer.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CA30C471D07E0DB003B09F9 /* RCTVLCPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTVLCPlayer.h; sourceTree = "<group>"; };
 		0CA30C491D07E0DB003B09F9 /* RCTVLCPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTVLCPlayer.m; sourceTree = "<group>"; };
+		F0A7F47329F2FAF700E74DD3 /* RCTVLCPlayer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RCTVLCPlayer-Bridging-Header.h"; sourceTree = "<group>"; };
+		F0A7F47429F2FAF700E74DD3 /* RCTVLCPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCTVLCPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +70,8 @@
 				0C1A0EC91D07E18700441684 /* RCTVLCPlayerManager.h */,
 				0CA30C471D07E0DB003B09F9 /* RCTVLCPlayer.h */,
 				0CA30C491D07E0DB003B09F9 /* RCTVLCPlayer.m */,
+				F0A7F47429F2FAF700E74DD3 /* RCTVLCPlayer.swift */,
+				F0A7F47329F2FAF700E74DD3 /* RCTVLCPlayer-Bridging-Header.h */,
 			);
 			path = RCTVLCPlayer;
 			sourceTree = "<group>";
@@ -102,6 +107,7 @@
 				TargetAttributes = {
 					0CA30C431D07E0DB003B09F9 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 1430;
 					};
 				};
 			};
@@ -129,6 +135,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C1A0ECA1D07E18700441684 /* RCTVLCPlayerManager.m in Sources */,
+				F0A7F47529F2FAF700E74DD3 /* RCTVLCPlayer.swift in Sources */,
 				0CA30C4A1D07E0DB003B09F9 /* RCTVLCPlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -177,6 +184,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
@@ -215,6 +223,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
@@ -223,6 +232,7 @@
 		0CA30C4E1D07E0DB003B09F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../vlcKit",
 					"\"$(SRCROOT)/../../../ios/Pods/MobileVLCKit-unstable/MobileVLCKit-binary\"",
@@ -238,6 +248,9 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "RCTVLCPlayer/RCTVLCPlayer-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
@@ -245,6 +258,7 @@
 		0CA30C4F1D07E0DB003B09F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../vlcKit",
 					"\"$(SRCROOT)/../../../ios/Pods/MobileVLCKit-unstable/MobileVLCKit-binary\"",
@@ -260,6 +274,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "RCTVLCPlayer/RCTVLCPlayer-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
