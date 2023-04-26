@@ -1,36 +1,40 @@
 import * as React from 'react';
 
-import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
-import VLC, {VLCPlayerALT, VLCPlayerView} from 'react-native-vlc-media-player';
+import {ActivityIndicator, Button, StyleSheet, Text, View} from 'react-native';
+import {VLCPlayerView, VLCPlayer} from 'react-native-vlc-media-player';
 
 export default function App() {
-  console.log(VLC)
-  console.log(VLCPlayerALT)
-  console.log("Player: ", VLCPlayerView)
+  console.log("PlayerView: ", VLCPlayerView)
+  console.log("P: ", VLCPlayer)
+  const [pause, setPause] = React.useState(false)
 
   return (
       <>
         <ActivityIndicator style={styles.activityIndicator} size={'large'} />
-        <VLC
+        <VLCPlayer
             source={{
               // uri: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-              // uri: "https://sample.vodobox.net/skate_phantom_flex_4k/skate_phantom_flex_4k.m3u8",
-              // type: "m3u8",
-              uri: 'https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd',
-              type: 'mpd',
+              uri: "https://sample.vodobox.net/skate_phantom_flex_4k/skate_phantom_flex_4k.m3u8",
+              type: "m3u8",
+              // uri: 'https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd',
+              // type: 'mpd',
             }}
             style={[
               {
-                ...styles.fullScreen,
-                // backgroundColor: "rgba(0,34,255,0.6)",
+                flex: 1,
               },
-              StyleSheet.absoluteFillObject,
             ]}
+            onPaused={() => console.log("Paused")}
             onEnded={() => {
               console.log("End reached");
             }}
-            paused
+            // onProgress={console.log}
+            paused={pause}
+            seek={0.98}
+            rate={1}
+            repeat={true}
         />
+        <Button title={"Pause"} onPress={() => setPause(!pause)} />
       </>
   );
 }
