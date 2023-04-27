@@ -53,9 +53,9 @@ tasks.whenTaskAdded((tas -> {
                         .findAny()
                         .orElse(null)
                         .toPath();
-                Files.walk(notNeededDirectory).forEach(file -> {
+                java.nio.file.Files.walk(notNeededDirectory).forEach(file -> {
                     if (file.toString().contains("libc++_shared.so")) {
-                        Files.delete(file);
+                        java.nio.file.Files.delete(file);
                     }
                 });
             }
