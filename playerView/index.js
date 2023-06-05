@@ -158,7 +158,7 @@ export default class CommonVideo extends Component {
       this.setState({ isFull: false, currentVideoAspectRatio: deviceWidth + ":" + this.initialHeight, });
     }
     BackHandle && BackHandle.removeBackFunction(_fullKey);
-    Orientation && Orientation.lockToPortrait();
+    Orientation && Orientation.lockToPortrait;
     StatusBar.setHidden(false);
     //StatusBar.setTranslucent(false);
     this._componentMounted && closeFullScreen && closeFullScreen();
@@ -171,7 +171,7 @@ export default class CommonVideo extends Component {
     StatusBar.setHidden(true);
     BackHandle && BackHandle.addBackFunction(_fullKey, this._closeFullScreen);
     startFullScreen && startFullScreen();
-    Orientation && Orientation.lockToLandscape && Orientation.lockToLandscape();
+    Orientation && Orientation.lockToLandscape && Orientation.lockToLandscape;
   };
 
   _onLayout = (e) => {
