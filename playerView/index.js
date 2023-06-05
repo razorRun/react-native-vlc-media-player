@@ -29,7 +29,7 @@ export default class CommonVideo extends Component {
     this.initialHeight = 200;
 
     if (props.widthCamera) {
-      deviceWidth = props.widthCamerax
+      deviceWidth = props.widthCamera
     }
   }
 
