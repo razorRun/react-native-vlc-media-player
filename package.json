@@ -31,5 +31,7 @@
     "url": "https://github.com/razorRun/react-native-vlc-media-player/issues"
   },
   "homepage": "https://github.com/razorRun/react-native-vlc-media-player#readme",
-  "devDependencies": {}
+  "devDependencies": {
+    "@expo/config-plugins": "^6.0.2"
+  }
 }

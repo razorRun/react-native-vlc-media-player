@@ -29,7 +29,7 @@ or
 
 `yarn add react-native-vlc-media-player`
 
-Run 
+Run
 
 `react-native link react-native-vlc-media-player`
 
@@ -76,13 +76,37 @@ Reference: https://code.videolan.org/videolan/vlc-android/-/issues/2252
 
 1. cd to ios
 2. run `pod init` (if only Podfile has not been generated in ios folder)
-3. add `pod 'MobileVLCKit', '3.3.10'` to pod file **(No need if you are running RN 0.61 and up)** 
+3. add `pod 'MobileVLCKit', '3.3.10'` to pod file **(No need if you are running RN 0.61 and up)**
 4. run `pod install` (you have to delete the app on the simulator/device and run `react-native run-ios` again)
 
 ## Optional (only for ios)
 
 Enable Bitcode
 in root project select Build Settings ---> find Bitcode and select Enable Bitcode
+
+## Expo
+
+This package works with expo when using [custom development builds](https://docs.expo.dev/develop/development-builds/introduction/)
+
+Just insert the react-native-vlc-media-player plugin to the "plugins" array from `app.config.js` or `app.json`. Then rebuild your app as described in the ["Adding custom native code"](https://docs.expo.io/workflow/customizing/) guide.
+
+```json
+{
+    "plugins": [
+        [
+            "react-native-vlc-media-player",
+            {
+                "ios": {
+                    "includeVLCKit": false // should be true if react-native version < 0.61
+                },
+                "android": {
+                    "legacyJetifier": false // should be true if react-native version < 0.71
+                }
+            }
+        ]
+    ]
+}
+```
 
 ## TODO
 
@@ -92,8 +116,8 @@ in root project select Build Settings ---> find Bitcode and select Enable Bitcod
 
 #### Our idea was to keep the repo simple, and people can use it with newer RN versions without any additional config.
 
-1. Get a fork of this repo and clone [VLC Media Player test](https://github.com/razorRun/react-native-vlc-media-player-test) 
-2. Run it for ios and android locally using your fork, and do the changes. (remove this package using ```npm remove react-native-vlc-media-player``` and install the forked version from git hub ```npm i https://git-address-to-your-forked-repo```)  
+1. Get a fork of this repo and clone [VLC Media Player test](https://github.com/razorRun/react-native-vlc-media-player-test)
+2. Run it for ios and android locally using your fork, and do the changes. (remove this package using `npm remove react-native-vlc-media-player` and install the forked version from git hub `npm i https://git-address-to-your-forked-repo`)
 3. Verify your changes and make sure everything works on both platforms. (If you need a hand with testing I might be able to help as well)
 4. Send PR.
 5. Be happy, Cause you're a Rockstar 🌟 ❤️
@@ -127,23 +151,23 @@ or you can use
 
 ### VLCPlayer Props
 
-| Prop                | Description                                                                                                                                        | Default |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `source`            | Object that contains the uri of a video or song to play eg `{{ uri: "https://video.com/example.mkv" }}`                                            | `{}`    |
-| `subtitleUri`       | local subtitle file path，if you want to hide subtitle, you can set this to an empty subtitle file，current we don't support a `hide subtitle` prop.|         |
-| `paused`            | Set to `true` or `false` to pause or play the media                                                                                                | `false` |
-| `repeat`            | Set to `true` or `false` to loop the media                                                                                                         | `false` |
-| `rate`              | Set the playback rate of the player                                                                                                                | `1`     |
-| `seek`              | Set position to seek between `0` and `1` (`0` being the start, `1` being the end , use `position` from the progress object )                       |         |
-| `volume`            | Set the volume of the player (`number`)                                                                                                            |         |
-| `muted`             | Set to `true` or `false` to mute the player                                                                                                        | `false` |
-| `audioTrack`        | Set audioTrack id (`number`)   (see `onLoad` callback VideoInfo.audioTracks)                                                                       |         |
-| `textTrack`         | Set textTrack(subtitle) id  (`number`)   (see `onLoad` callback- VideoInfo.textTracks)                                                             |         |                      
-| `playInBackground`  | Set to `true` or `false` to allow playing in the background                                                                                        | false   |
-| `videoAspectRatio ` | Set the video aspect ratio eg `"16:9"`                                                                                                             |         |
-| `autoAspectRatio`   | Set to `true` or `false` to enable auto aspect ratio                                                                                               | false   |
-| `resizeMode`        | Set the behavior for the video size (`fill, contain, cover, none, scale-down`)                                                                     | none    |
-| `style`             | React native stylesheet styles                                                                                                                     | `{}`    |
+| Prop                | Description                                                                                                                                          | Default |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `source`            | Object that contains the uri of a video or song to play eg `{{ uri: "https://video.com/example.mkv" }}`                                              | `{}`    |
+| `subtitleUri`       | local subtitle file path，if you want to hide subtitle, you can set this to an empty subtitle file，current we don't support a `hide subtitle` prop. |         |
+| `paused`            | Set to `true` or `false` to pause or play the media                                                                                                  | `false` |
+| `repeat`            | Set to `true` or `false` to loop the media                                                                                                           | `false` |
+| `rate`              | Set the playback rate of the player                                                                                                                  | `1`     |
+| `seek`              | Set position to seek between `0` and `1` (`0` being the start, `1` being the end , use `position` from the progress object )                         |         |
+| `volume`            | Set the volume of the player (`number`)                                                                                                              |         |
+| `muted`             | Set to `true` or `false` to mute the player                                                                                                          | `false` |
+| `audioTrack`        | Set audioTrack id (`number`) (see `onLoad` callback VideoInfo.audioTracks)                                                                           |         |
+| `textTrack`         | Set textTrack(subtitle) id (`number`) (see `onLoad` callback- VideoInfo.textTracks)                                                                  |         |
+| `playInBackground`  | Set to `true` or `false` to allow playing in the background                                                                                          | false   |
+| `videoAspectRatio ` | Set the video aspect ratio eg `"16:9"`                                                                                                               |         |
+| `autoAspectRatio`   | Set to `true` or `false` to enable auto aspect ratio                                                                                                 | false   |
+| `resizeMode`        | Set the behavior for the video size (`fill, contain, cover, none, scale-down`)                                                                       | none    |
+| `style`             | React native stylesheet styles                                                                                                                       | `{}`    |
 
 #### Callback props
 
@@ -158,23 +182,24 @@ Callback props take a function that gets fired on various player events:
 | `onBuffering ` | Called when media is buffering                                                                                                                                                                                       |
 | `onEnded`      | Called when media playing ends                                                                                                                                                                                       |
 | `onError`      | Called when an error occurs whilst attempting to play media                                                                                                                                                          |
-| `onLoad`       | Called when video info is loaded, Callback containing VideoInfo
+| `onLoad`       | Called when video info is loaded, Callback containing VideoInfo                                                                                                                                                      |
 
 VideoInfo example:
+
 ```
  {
-    duration: 30906, 
+    duration: 30906,
     videoSize: {height: 240, width: 32},
     audioTracks: [
-            {id: -1, name: "Disable"}, 
-            {id: 1, name: "Track 1"}, 
+            {id: -1, name: "Disable"},
+            {id: 1, name: "Track 1"},
             {id: 3, name: "Japanese Audio (2ch LC-AAC) - [Japanese]"}
-    ], 
+    ],
     textTracks: [
-        {id: -1, name: "Disable"}, 
-        {id: 4, name: "Track 1 - [English]"}, 
+        {id: -1, name: "Disable"},
+        {id: 4, name: "Track 1 - [English]"},
         {id: 5, name: "Track 2 - [Japanese]"}
-    ],    
+    ],
 }
 ```
 
@@ -196,6 +221,6 @@ Video coding formats: Cinepak, Dirac, DV, H.263, H.264/MPEG-4 AVC, H.265/MPEG HE
 
 ## sponsors
 
-Huge thanks to "[smartlife - one of the best custom home automation companies in new zealand](https://www.smartlife.nz/)" for helping me to keep this repo maintained 
+Huge thanks to "[smartlife - one of the best custom home automation companies in new zealand](https://www.smartlife.nz/)" for helping me to keep this repo maintained
 
 Author - Roshan Milinda -> [roshan.digital](https://roshan.digital)
