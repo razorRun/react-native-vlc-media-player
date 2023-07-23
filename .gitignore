@@ -117,3 +117,7 @@ dist
 # Android
 #
 .gradle
+
+# Example Generated Files
+
+/example/ios/Pods/
