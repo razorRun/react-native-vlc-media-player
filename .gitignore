@@ -121,3 +121,5 @@ build/
 # MacOS
 .DS_Store
 
+# Example Generated Files
+/example/ios/Pods/

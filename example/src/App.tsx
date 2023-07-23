@@ -1,11 +1,9 @@
 import * as React from 'react';
 
-import {ActivityIndicator, Button, StyleSheet, Text, View} from 'react-native';
-import {VLCPlayerView, VLCPlayer} from 'react-native-vlc-media-player';
+import {ActivityIndicator, Button, StyleSheet} from 'react-native';
+import {VLCPlayer} from 'react-native-vlc-media-player';
 
 export default function App() {
-  console.log("PlayerView: ", VLCPlayerView)
-  console.log("P: ", VLCPlayer)
   const [pause, setPause] = React.useState(false)
 
   return (
@@ -28,7 +26,7 @@ export default function App() {
             onEnded={() => {
               console.log("End reached");
             }}
-            // onProgress={console.log}
+            onProgress={console.log}
             paused={pause}
             seek={0.98}
             rate={1}
