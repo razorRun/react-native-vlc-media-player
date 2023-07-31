@@ -115,11 +115,9 @@ static NSString *const playbackRate = @"rate";
     _player.scaleFactor = 0;
     VLCMedia *media = [VLCMedia mediaWithURL:_uri];
 
-    NSMutableDictionary *options = [NSMutableDictionary new];
-    [options setObject:@"1" forKey:@"rtsp-tcp"];
-    [options setObject:@"1000" forKey:@"input-repeat"];
-    [media addOptions:[options copy]];
-    options = nil;
+    for (NSString* option in initOptions) {
+        [media addOption:[option stringByReplacingOccurrencesOfString:@"--" withString:@""]];
+    }
 
     _player.media = media;
     _player.media.delegate = self;
@@ -154,11 +152,9 @@ static NSString *const playbackRate = @"rate";
 
     VLCMedia *media = [VLCMedia mediaWithURL:_uri];
 
-    NSMutableDictionary *options = [NSMutableDictionary new];
-    [options setObject:@"1" forKey:@"rtsp-tcp"];
-    [options setObject:@"1000" forKey:@"input-repeat"];
-    [media addOptions:[options copy]];
-    options = nil;
+    for (NSString* option in initOptions) {
+        [media addOption:[option stringByReplacingOccurrencesOfString:@"--" withString:@""]];
+    }
 
     _player.media = media;
     _player.media.delegate = self;
