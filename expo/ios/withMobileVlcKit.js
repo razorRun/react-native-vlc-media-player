@@ -6,7 +6,6 @@ const fs = require("fs");
 const withMobileVlcKit = (config, options) => {
     // No need if you are running RN 0.61 and up
     if (!options?.ios?.includeVLCKit) {
-        console.log("okok");
         return config;
     }
 
