@@ -82,6 +82,11 @@ class RCTVLCPlayer : UIView {
     
     @objc
     func setResume(_ autoplay: Bool) {
+        if _player != nil {
+            _release()
+        }
+        
+        playMedia(_source)
         
     }
     
@@ -95,6 +100,17 @@ class RCTVLCPlayer : UIView {
         _source = source
         _videoInfo = nil
         
+        playMedia(source)
+        
+        if _subtitleUri != nil, let uri = URL(string: _subtitleUri) {
+            _player.addPlaybackSlave(uri, type: .subtitle, enforce: true)
+        }
+        
+        self.play()
+        
+    }
+    
+    private func playMedia(_ source: NSDictionary) {
         guard let uri = source["uri"] as? String else { return }
         let autoPlay = source["autoPlay"] as? Bool ?? true
         
@@ -110,16 +126,24 @@ class RCTVLCPlayer : UIView {
             media.addOptions(initOptions)
         }
         
-        let options = ["rtsp-tcp": "1"]
-        media.addOptions(options)
-        
         _player.media = media
         _player.delegate = self
         
         try? AVAudioSession.sharedInstance().setActive(false, options: AVAudioSession.SetActiveOptions.notifyOthersOnDeactivation)
+        print("Autoplay: \(autoPlay)")
         
-        self.play()
+        self.onVideoLoad?([
+            "target": self.reactTag
+        ])
+    }
+    
+    @objc
+    func setSubtitleUri(_ subtitleUri: String) {
+        _subtitleUri = subtitleUri
         
+        if _player != nil, let subtitle = URL(string: subtitleUri) {
+            _player.addPlaybackSlave(subtitle, type: .subtitle, enforce: true)
+        }
     }
     
     @objc
