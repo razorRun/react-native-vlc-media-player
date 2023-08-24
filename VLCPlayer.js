@@ -169,8 +169,9 @@ export default class VLCPlayer extends Component {
       onVideoStopped: this._onStopped,
       onVideoBuffering: this._onBuffering,
       onVideoLoad: this._onLoad,
-      progressUpdateInterval: 250,
+      progressUpdateInterval: this.props.onProgress ? 250 : 0,
     });
+
     return <RCTVLCPlayer ref={this._assignRoot} {...nativeProps} />;
   }
 }
