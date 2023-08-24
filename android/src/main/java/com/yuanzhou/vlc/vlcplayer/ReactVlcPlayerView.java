@@ -29,10 +29,6 @@ import org.videolan.libvlc.MediaPlayer;
 import java.util.ArrayList;
 
 
-
-
-
-
 @SuppressLint("ViewConstructor")
 class ReactVlcPlayerView extends TextureView implements
         LifecycleEventListener,
@@ -67,7 +63,7 @@ class ReactVlcPlayerView extends TextureView implements
     private int preVolume = 200;
     private boolean autoAspectRatio = false;
 
-    private float mProgressUpdateInterval = 250;
+    private float mProgressUpdateInterval = 0;
     private Handler mProgressUpdateHandler = new Handler();
     private Runnable mProgressUpdateRunnable = null;
 
@@ -154,31 +150,36 @@ class ReactVlcPlayerView extends TextureView implements
     }
 
     private void setProgressUpdateRunnable() {
-        if (mMediaPlayer != null){
-            mProgressUpdateRunnable = new Runnable() {
+        if (mMediaPlayer != null && mProgressUpdateInterval > 0){
+            new Thread() {
                 @Override
                 public void run() {
-                    if (mMediaPlayer != null && !isPaused) {
-                        long currentTime = 0;
-                        long totalLength = 0;
-                        WritableMap event = Arguments.createMap();
-                        boolean isPlaying = mMediaPlayer.isPlaying();
-                        currentTime = mMediaPlayer.getTime();
-                        float position = mMediaPlayer.getPosition();
-                        totalLength = mMediaPlayer.getLength();
-                        WritableMap map = Arguments.createMap();
-                        map.putBoolean("isPlaying", isPlaying);
-                        map.putDouble("position", position);
-                        map.putDouble("currentTime", currentTime);
-                        map.putDouble("duration", totalLength);
-                        eventEmitter.sendEvent(map, VideoEventEmitter.EVENT_PROGRESS);
-                    }
-                    mProgressUpdateHandler.postDelayed(mProgressUpdateRunnable, Math.round(mProgressUpdateInterval));    
+                    super.run();
+
+                    mProgressUpdateRunnable = () -> {
+                        if (mMediaPlayer != null && !isPaused) {
+                            long currentTime = 0;
+                            long totalLength = 0;
+                            WritableMap event = Arguments.createMap();
+                            boolean isPlaying = mMediaPlayer.isPlaying();
+                            currentTime = mMediaPlayer.getTime();
+                            float position = mMediaPlayer.getPosition();
+                            totalLength = mMediaPlayer.getLength();
+                            WritableMap map = Arguments.createMap();
+                            map.putBoolean("isPlaying", isPlaying);
+                            map.putDouble("position", position);
+                            map.putDouble("currentTime", currentTime);
+                            map.putDouble("duration", totalLength);
+                            eventEmitter.sendEvent(map, VideoEventEmitter.EVENT_PROGRESS);
+                        }
+
+                        mProgressUpdateHandler.postDelayed(mProgressUpdateRunnable, Math.round(mProgressUpdateInterval));
+                    };
+
+                    mProgressUpdateHandler.postDelayed(mProgressUpdateRunnable, 0);
                 }
-            };
-            mProgressUpdateHandler.postDelayed(mProgressUpdateRunnable,0);
+            }.start();
         }
-            
     }
 
 
@@ -436,14 +437,15 @@ class ReactVlcPlayerView extends TextureView implements
     private void releasePlayer() {
         if (libvlc == null)
             return;
-        mMediaPlayer.stop();
+
         final IVLCVout vout = mMediaPlayer.getVLCVout();
         vout.removeCallback(callback);
         vout.detachViews();
         //surfaceView.removeOnLayoutChangeListener(onLayoutChangeListener);
         libvlc.release();
         libvlc = null;
-        if(mProgressUpdateRunnable!=null){
+
+        if(mProgressUpdateRunnable != null){
             mProgressUpdateHandler.removeCallbacks(mProgressUpdateRunnable);
         }
     }
@@ -489,9 +491,7 @@ class ReactVlcPlayerView extends TextureView implements
     public void setSrc(ReadableMap src) {
         this.srcMap = src;
         createPlayer(true, false);
-
     }
-
 
     /**
      * 改变播放速率
@@ -505,7 +505,8 @@ class ReactVlcPlayerView extends TextureView implements
     }
 
     public void setmProgressUpdateInterval(float interval) {
-       mProgressUpdateInterval = interval;
+        mProgressUpdateInterval = interval;
+        createPlayer(true, false);
     }
 
 
@@ -650,19 +651,19 @@ class ReactVlcPlayerView extends TextureView implements
                     break;
                 case Media.Event.ParsedChanged:
                     Log.i(tag, "Media.Event.ParsedChanged  =" + event.getMetaId());
-                    
+
                     break;
                 case Media.Event.StateChanged:
                     Log.i(tag, "StateChanged   =" + event.getMetaId());
                     break;
                 default:
                     Log.i(tag, "Media.Event.type=" + event.type + "   eventgetParsedStatus=" + event.getParsedStatus());
-                break;
+                    break;
 
             }
         }
     };
-    
+
     private WritableMap getVideoInfo() {
 
         WritableMap map = Arguments.createMap();

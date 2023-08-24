@@ -94,7 +94,7 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
     }
 
 
-    @ReactProp(name = PROP_PROGRESS_UPDATE_INTERVAL, defaultFloat = 250.0f )
+    @ReactProp(name = PROP_PROGRESS_UPDATE_INTERVAL, defaultFloat = 0f )
     public void setInterval(final ReactVlcPlayerView videoView, final float interval) {
         videoView.setmProgressUpdateInterval(interval);
     }

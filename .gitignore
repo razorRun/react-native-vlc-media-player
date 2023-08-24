@@ -115,5 +115,9 @@ dist
 .pnp.*
 
 # Android
-#
 .gradle
+build/
+
+# MacOS
+.DS_Store
+
