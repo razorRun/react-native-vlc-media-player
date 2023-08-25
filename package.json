@@ -32,6 +32,8 @@
   },
   "homepage": "https://github.com/razorRun/react-native-vlc-media-player#readme",
   "devDependencies": {
-    "@expo/config-plugins": "^7.2.2"
-  }
+    "@expo/config-plugins": "^7.2.2",
+    "@types/react": "~18.2.14"
+  },
+  "typings": "index.d.ts"
 }
