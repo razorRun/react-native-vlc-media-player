@@ -442,6 +442,7 @@ class ReactVlcPlayerView extends TextureView implements
         vout.removeCallback(callback);
         vout.detachViews();
         //surfaceView.removeOnLayoutChangeListener(onLayoutChangeListener);
+        mMediaPlayer.release();
         libvlc.release();
         libvlc = null;
 
