@@ -60,7 +60,7 @@ class ReactVlcPlayerView extends TextureView implements
 
     private boolean isPaused = true;
     private boolean isHostPaused = false;
-    private int preVolume = 200;
+    private int preVolume = 100;
     private boolean autoAspectRatio = false;
 
     private float mProgressUpdateInterval = 0;
