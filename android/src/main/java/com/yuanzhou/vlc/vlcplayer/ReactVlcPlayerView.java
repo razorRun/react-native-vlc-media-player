@@ -399,6 +399,7 @@ class ReactVlcPlayerView extends TextureView implements
             }
             mVideoInfo = null;
             mMediaPlayer.setMedia(m);
+            m.release();
             mMediaPlayer.setScale(0);
             if (_subtitleUri != null) {
                 mMediaPlayer.addSlave(Media.Slave.Type.Subtitle, _subtitleUri, true);
