@@ -31,9 +31,6 @@ const resolveAppGradleString = (options) => {
 };
 
 const withGradleTasks = (config, options) => {
-    if(!options || !options.android){
-        return config;
-    }
     return withAppBuildGradle(config, (config) => {
         const newCode = generateCode.mergeContents({
             tag: "withVlcMediaPlayer",
