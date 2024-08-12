@@ -19,6 +19,17 @@ android {
         }
     }
 }
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        // maven { url "https://maven.appspector.com/artifactory/android-sdk" }
+
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:4.0.2")
+    }
+}
 
 repositories {
     maven {

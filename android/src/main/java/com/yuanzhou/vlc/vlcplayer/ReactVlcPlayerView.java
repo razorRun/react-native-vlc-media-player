@@ -6,6 +6,7 @@ import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Surface;
@@ -156,24 +157,27 @@ class ReactVlcPlayerView extends TextureView implements
                 public void run() {
                     super.run();
 
-                    mProgressUpdateRunnable = () -> {
-                        if (mMediaPlayer != null && !isPaused) {
-                            long currentTime = 0;
-                            long totalLength = 0;
-                            WritableMap event = Arguments.createMap();
-                            boolean isPlaying = mMediaPlayer.isPlaying();
-                            currentTime = mMediaPlayer.getTime();
-                            float position = mMediaPlayer.getPosition();
-                            totalLength = mMediaPlayer.getLength();
-                            WritableMap map = Arguments.createMap();
-                            map.putBoolean("isPlaying", isPlaying);
-                            map.putDouble("position", position);
-                            map.putDouble("currentTime", currentTime);
-                            map.putDouble("duration", totalLength);
-                            eventEmitter.sendEvent(map, VideoEventEmitter.EVENT_PROGRESS);
-                        }
+                    mProgressUpdateRunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mMediaPlayer != null && !isPaused) {
+                                long currentTime = 0;
+                                long totalLength = 0;
+                                WritableMap event = Arguments.createMap();
+                                boolean isPlaying = mMediaPlayer.isPlaying();
+                                currentTime = mMediaPlayer.getTime();
+                                float position = mMediaPlayer.getPosition();
+                                totalLength = mMediaPlayer.getLength();
+                                WritableMap map = Arguments.createMap();
+                                map.putBoolean("isPlaying", isPlaying);
+                                map.putDouble("position", position);
+                                map.putDouble("currentTime", currentTime);
+                                map.putDouble("duration", totalLength);
+                                eventEmitter.sendEvent(map, VideoEventEmitter.EVENT_PROGRESS);
+                            }
 
-                        mProgressUpdateHandler.postDelayed(mProgressUpdateRunnable, Math.round(mProgressUpdateInterval));
+                            mProgressUpdateHandler.postDelayed(mProgressUpdateRunnable, Math.round(mProgressUpdateInterval));
+                        }
                     };
 
                     mProgressUpdateHandler.postDelayed(mProgressUpdateRunnable, 0);
@@ -245,6 +249,33 @@ class ReactVlcPlayerView extends TextureView implements
                     if(mVideoInfo == null && mMediaPlayer.getAudioTracksCount() > 0) {
                         mVideoInfo = getVideoInfo();
                         eventEmitter.sendEvent(mVideoInfo, VideoEventEmitter.EVENT_ON_LOAD);
+                        final Handler handler = new Handler(Looper.getMainLooper());
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    if (mMediaPlayer.getSpuTracksCount() > 0) {
+                                        if (mMediaPlayer != null) {
+                                            WritableMap map1 = Arguments.createMap();
+                                            MediaPlayer.TrackDescription[] spuTracks = mMediaPlayer.getSpuTracks();
+                                            WritableArray tracks = new WritableNativeArray();
+                                            for (MediaPlayer.TrackDescription track : spuTracks) {
+                                                Log.i("TextTrack", "track id: " + track.id + "track name: " + track.name);
+                                                WritableMap trackMap = Arguments.createMap();
+                                                trackMap.putInt("id", track.id);
+                                                trackMap.putString("name", track.name);
+                                                tracks.pushMap(trackMap);
+                                            }
+                                            map1.putArray("textTracks", tracks);
+                                            eventEmitter.sendEvent(map1, VideoEventEmitter.EVENT_ON_LOAD);
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, 10000);
+
                     }
 
                     map.putDouble("bufferRate", event.getBuffering());
