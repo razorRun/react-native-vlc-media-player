@@ -12,6 +12,6 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = "10.2"
   s.static_framework = true
   s.dependency 'React'
-  s.ios.dependency 'MobileVLCKit', '3.5.1'
-  s.tvos.dependency 'TVVLCKit', '3.5.1'
+  s.ios.dependency 'MobileVLCKit', '3.6.1b1'
+  s.tvos.dependency 'TVVLCKit', '3.6.1b1'
 end
