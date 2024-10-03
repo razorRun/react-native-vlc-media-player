@@ -116,7 +116,9 @@ dist
 
 # Android
 .gradle
+.idea
 build/
+local.properties
 
 # MacOS
 .DS_Store
