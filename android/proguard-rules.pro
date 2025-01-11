@@ -23,3 +23,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# https://github.com/pedroSG94/vlc-example-streamplayer/issues/28
+
+-keep class org.videolan.** { *; }
