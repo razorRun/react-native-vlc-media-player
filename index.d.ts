@@ -19,6 +19,18 @@ export interface VLCPlayerSource {
    * Media source uri to render
    */
   uri: string;
+  /**
+   * LibVLC initialization type:
+   *  - `1`: Default context options 
+   *  - `2`: Custom context options, see `initOptions`
+   */
+  initType?: 1 | 2;
+  /**
+   * LibVLC initialization options:
+   *  - `["--network-caching=50"]`
+   *    - `--input-repeat=1000` added by default
+   */
+  initOptions?: string[];
 }
 
 /**
