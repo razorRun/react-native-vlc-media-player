@@ -21,14 +21,17 @@ export interface VLCPlayerSource {
   uri: string;
   /**
    * LibVLC initialization type:
-   *  - `1`: Default context options 
-   *  - `2`: Custom context options, see `initOptions`
+   *  - `1`: Default configuration options 
+   *  - `2`: Custom configuration options
+   *    - See `initOptions` for more information
    */
   initType?: 1 | 2;
   /**
+   * https://wiki.videolan.org/VLC_command-line_help/
+   * 
    * LibVLC initialization options:
-   *  - `["--network-caching=50"]`
-   *    - `--input-repeat=1000` added by default
+   *  - `["--network-caching=50", "--rtsp-tcp"]`
+   *  - `--input-repeat=1000` added by default
    */
   initOptions?: string[];
 }
