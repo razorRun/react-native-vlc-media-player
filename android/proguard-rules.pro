@@ -26,4 +26,4 @@
 
 # https://github.com/pedroSG94/vlc-example-streamplayer/issues/28
 
--keep class org.videolan.** { *; }
+-keep class org.videolan.libvlc.** { *; }
