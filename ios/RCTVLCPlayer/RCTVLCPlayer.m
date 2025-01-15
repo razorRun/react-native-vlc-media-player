@@ -56,52 +56,22 @@ static NSString *const playbackRate = @"rate";
     return self;
 }
 
-- (void)applicationWillResignActive:(NSNotification *)notification
-{
-    [self play];
-}
-
 - (void)applicationWillEnterForeground:(NSNotification *)notification
 {
-    [self pause];
+    if (!_paused)
+        [self play];
 }
 
-- (void)setAutoplay:(BOOL)autoplay
+- (void)applicationWillResignActive:(NSNotification *)notification
 {
-    _autoplay = autoplay;
+    if (!_paused)
+        [self play];
 }
 
-- (void)setPaused:(BOOL)paused
+- (void)createPlayer:(NSDictionary *)source
 {
-    _paused = paused;
-}
-
--(void)play
-{
-    if (_player) {
-        [_player play];
-        _paused = NO;
-    }
-}
-
-- (void)pause
-{
-    if (_player) {
-        [_player pause];
-        _paused = YES;
-    }
-}
-
--(void)createPlayer:(NSDictionary *)source
-{
-    if (_player) {
-        [self _release];
-    }
-
-    if (source) {
-        _source = source;
-        _videoInfo = nil;
-    }
+    _source = source;
+    _videoInfo = nil;
 
     // [bavv edit start]
     NSString* uri    = [_source objectForKey:@"uri"];
@@ -128,21 +98,52 @@ static NSString *const playbackRate = @"rate";
     if(_subtitleUri) {
         [_player addPlaybackSlave:_subtitleUri type:VLCMediaPlaybackSlaveTypeSubtitle enforce:YES];
     }
-
-    if(_autoplay)
-        [self play];
 }
 
--(void)setResume:(BOOL)autoplay
+- (void)play
+{
+    if (_player) {
+        [_player play];
+        _paused = NO;
+    }
+}
+
+- (void)pause
+{
+    if (_player) {
+        [_player pause];
+        _paused = YES;
+    }
+}
+
+- (void)setSource:(NSDictionary *)source
+{
+    [self createPlayer:source];
+}
+
+- (void)setAutoplay:(BOOL)autoplay
 {
     _autoplay = autoplay;
 
-    [self createPlayer:nil];
+    if(autoplay)
+        [self play];
 }
 
--(void)setSource:(NSDictionary *)source
+- (void)setPaused:(BOOL)paused
 {
-    [self createPlayer:source];
+    _paused = paused;
+
+    if (paused)
+        [self pause];
+}
+
+- (void)setResume:(BOOL)resume
+{
+    if (resume) {
+        [self play];
+    } else {
+        [self pause];
+    }
 }
 
 - (void)setSubtitleUri:(NSString *)subtitleUri
@@ -239,7 +240,7 @@ static NSString *const playbackRate = @"rate";
 
 //   ===== media delegate methods =====
 
--(void)mediaDidFinishParsing:(VLCMedia *)aMedia {
+- (void)mediaDidFinishParsing:(VLCMedia *)aMedia {
     NSLog(@"VLCMediaDidFinishParsing %i", _player.numberOfAudioTracks);
 }
 
@@ -249,7 +250,7 @@ static NSString *const playbackRate = @"rate";
 
 //   ===================================
 
--(void)updateVideoProgress
+- (void)updateVideoProgress
 {
     if(_player){
         int currentTime   = [[_player time] intValue];
@@ -268,7 +269,7 @@ static NSString *const playbackRate = @"rate";
     }
 }
 
--(NSDictionary *)getVideoInfo
+- (NSDictionary *)getVideoInfo
 {
     NSMutableDictionary *info = [NSMutableDictionary new];
     info[@"duration"] = _player.media.length.value;
@@ -318,7 +319,7 @@ static NSString *const playbackRate = @"rate";
         [_player jumpForward:interval];
 }
 
--(void)setSeek:(float)pos
+- (void)setSeek:(float)pos
 {
     if([_player isSeekable]){
         if(pos>=0 && pos <= 1){
@@ -327,29 +328,29 @@ static NSString *const playbackRate = @"rate";
     }
 }
 
--(void)setSnapshotPath:(NSString*)path
+- (void)setSnapshotPath:(NSString*)path
 {
     if(_player)
         [_player saveVideoSnapshotAt:path withWidth:0 andHeight:0];
 }
 
--(void)setRate:(float)rate
+- (void)setRate:(float)rate
 {
     [_player setRate:rate];
 }
 
--(void)setAudioTrack:(int)track
+- (void)setAudioTrack:(int)track
 {
     [_player setCurrentAudioTrackIndex: track];
 }
 
--(void)setTextTrack:(int)track
+- (void)setTextTrack:(int)track
 {
     [_player setCurrentVideoSubTitleIndex:track];
 }
 
 
--(void)setVideoAspectRatio:(NSString *)ratio{
+- (void)setVideoAspectRatio:(NSString *)ratio{
     char *char_content = [ratio cStringUsingEncoding:NSASCIIStringEncoding];
     [_player setVideoAspectRatio:char_content];
 }
