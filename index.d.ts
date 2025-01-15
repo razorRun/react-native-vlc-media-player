@@ -16,9 +16,30 @@ export type PlayerResizeMode = "fill" | "contain" | "cover" | "none" | "scale-do
  */
 export interface VLCPlayerSource {
   /**
-   * Media source uri to render
+   * Media source URI to render
    */
   uri: string;
+  /**
+   * VLC Player initialization type
+   * 
+   *  - Default configuration: `1`
+   *  - Custom configuration: `2`
+   * 
+   * See `initOptions` for more information
+   * 
+   * @default 1
+   */
+  initType?: 1 | 2;
+  /**
+   * https://wiki.videolan.org/VLC_command-line_help/
+   * 
+   * VLC Player initialization options
+   * 
+   * `["--network-caching=50", "--rtsp-tcp"]`
+   * 
+   * @default ["--input-repeat=1000"]
+   */
+  initOptions?: string[];
 }
 
 /**
