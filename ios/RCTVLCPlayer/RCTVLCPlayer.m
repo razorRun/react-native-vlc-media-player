@@ -34,7 +34,7 @@ static NSString *const playbackRate = @"rate";
     NSString * _subtitleUri;
 
     NSDictionary * _videoInfo;
-
+    BOOL _autoplay;
 }
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher
@@ -75,6 +75,11 @@ static NSString *const playbackRate = @"rate";
         [self play];
 }
 
+- (void)setAutoplay:(BOOL)autoplay
+{
+    _autoplay = autoplay;
+}
+
 - (void)setPaused:(BOOL)paused
 {
     if(_player){
@@ -97,67 +102,28 @@ static NSString *const playbackRate = @"rate";
     }
 }
 
--(void)setResume:(BOOL)autoplay
-{
-    if(_player){
-        [self _release];
-    }
-    // [bavv edit start]
-    NSString* uri    = [_source objectForKey:@"uri"];
-    NSURL* _uri    = [NSURL URLWithString:uri];
-    NSDictionary* initOptions = [_source objectForKey:@"initOptions"];
-
-    _player = [[VLCMediaPlayer alloc] init];
-	// [bavv edit end]
-
-    [_player setDrawable:self];
-    _player.delegate = self;
-    _player.scaleFactor = 0;
-    VLCMedia *media = [VLCMedia mediaWithURL:_uri];
-
-    for (NSString* option in initOptions) {
-        [media addOption:[option stringByReplacingOccurrencesOfString:@"--" withString:@""]];
-    }
-
-    _player.media = media;
-    _player.media.delegate = self;
-    [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
-    NSLog(@"autoplay: %i",autoplay);
-    self.onVideoLoadStart(@{
-                            @"target": self.reactTag
-                            });
-
-}
-
 -(void)setSource:(NSDictionary *)source
 {
-    if(_player){
-        [self _release];
-    }
     _source = source;
     _videoInfo = nil;
 
     // [bavv edit start]
-    NSString* uri    = [source objectForKey:@"uri"];
-    BOOL    autoplay = [RCTConvert BOOL:[source objectForKey:@"autoplay"]];
+    NSString* uri    = [_source objectForKey:@"uri"];
     NSURL* _uri    = [NSURL URLWithString:uri];
-    NSDictionary* initOptions = [source objectForKey:@"initOptions"];
+    int initType = [_source objectForKey:@"initType"];
+    NSDictionary* initOptions = [_source objectForKey:@"initOptions"];
 
-    _player = [[VLCMediaPlayer alloc] init];
+    if(initType == 1) {
+        _player = [[VLCMediaPlayer alloc] init];
+    }else {
+        _player = [[VLCMediaPlayer alloc] initWithOptions:initOptions];
+    }
+    _player.delegate = self;
+    _player.drawable = self;
     // [bavv edit end]
 
-    [_player setDrawable:self];
-    _player.delegate = self;
-    _player.scaleFactor = 0;
-
-    VLCMedia *media = [VLCMedia mediaWithURL:_uri];
-
-    for (NSString* option in initOptions) {
-        [media addOption:[option stringByReplacingOccurrencesOfString:@"--" withString:@""]];
-    }
-
-    _player.media = media;
-    _player.media.delegate = self;
+    _player.media = [VLCMedia mediaWithURL:_uri];
+    
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     NSLog(@"autoplay: %i",autoplay);
     self.onVideoLoadStart(@{
@@ -167,8 +133,8 @@ static NSString *const playbackRate = @"rate";
         [_player addPlaybackSlave:_subtitleUri type:VLCMediaPlaybackSlaveTypeSubtitle enforce:YES];
     }
 
-//    if(autoplay)
-        [self play];
+    if(_autoplay)
+        [_player play];
 }
 
 - (void)setSubtitleUri:(NSString *)subtitleUri
@@ -389,13 +355,15 @@ static NSString *const playbackRate = @"rate";
 
 - (void)_release
 {
-    if(_player){
-        [_player pause];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    if(_player.media)
         [_player stop];
+
+    if (_player)
         _player = nil;
-        _eventDispatcher = nil;
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-    }
+
+    _eventDispatcher = nil;
 }
 
 

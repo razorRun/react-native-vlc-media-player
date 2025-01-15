@@ -212,6 +212,7 @@ VLCPlayer.propTypes = {
   /* Wrapper component */
   source: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
   subtitleUri: PropTypes.string,
+  autoplay: PropTypes.bool,
 
   onError: PropTypes.func,
   onProgress: PropTypes.func,
