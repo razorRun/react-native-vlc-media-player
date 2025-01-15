@@ -145,10 +145,9 @@ static NSString *const playbackRate = @"rate";
 
 -(void)setResume:(BOOL)autoplay
 {
-    [self createPlayer:nil];
+    _autoplay = autoplay;
 
-    if(autoplay)
-        [self play];
+    [self createPlayer:nil];
 }
 
 -(void)setSource:(NSDictionary *)source
