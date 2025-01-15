@@ -231,6 +231,13 @@ export type VLCPlayerProps = VLCPlayerCallbackProps & {
    * React native view stylesheet styles
    */
   style?: StyleProp<ViewStyle>;
+
+  /**
+   * Enables autoplay
+   * 
+   * @default true
+   */
+  autoplay?: boolean;
 };
 
 /**
