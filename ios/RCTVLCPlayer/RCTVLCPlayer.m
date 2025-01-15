@@ -30,7 +30,6 @@ static NSString *const playbackRate = @"rate";
 
     NSDictionary * _source;
     BOOL _paused;
-    BOOL _started;
     NSString * _subtitleUri;
 
     NSDictionary * _videoInfo;
@@ -59,20 +58,12 @@ static NSString *const playbackRate = @"rate";
 
 - (void)applicationWillResignActive:(NSNotification *)notification
 {
-    if (!_paused) {
-        [self setPaused:_paused];
-    }
+    [self play];
 }
 
 - (void)applicationWillEnterForeground:(NSNotification *)notification
 {
-    [self applyModifiers];
-}
-
-- (void)applyModifiers
-{
-    if(!_paused)
-        [self play];
+    [self pause];
 }
 
 - (void)setAutoplay:(BOOL)autoplay
@@ -82,23 +73,22 @@ static NSString *const playbackRate = @"rate";
 
 - (void)setPaused:(BOOL)paused
 {
-    if(_player){
-        if(!paused){
-            [self play];
-        }else {
-            [_player pause];
-            _paused =  YES;
-            _started = NO;
-        }
-    }
+    _paused = paused;
 }
 
 -(void)play
 {
-    if(_player){
+    if (_player) {
         [_player play];
         _paused = NO;
-        _started = YES;
+    }
+}
+
+- (void)pause
+{
+    if (_player) {
+        [_player pause];
+        _paused = YES;
     }
 }
 
