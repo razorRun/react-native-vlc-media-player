@@ -102,14 +102,16 @@ static NSString *const playbackRate = @"rate";
     }
 }
 
--(void)setResume:(BOOL)autoplay
+-(void)createPlayer:(NSDictionary *)source
 {
-}
+    if (_player) {
+        [self _release];
+    }
 
--(void)setSource:(NSDictionary *)source
-{
-    _source = source;
-    _videoInfo = nil;
+    if (source) {
+        _source = source;
+        _videoInfo = nil;
+    }
 
     // [bavv edit start]
     NSString* uri    = [_source objectForKey:@"uri"];
@@ -139,6 +141,16 @@ static NSString *const playbackRate = @"rate";
 
     if(_autoplay)
         [_player play];
+}
+
+-(void)setResume:(BOOL)autoplay
+{
+    [self createPlayer:nil];
+}
+
+-(void)setSource:(NSDictionary *)source
+{
+    [self createPlayer:source];
 }
 
 - (void)setSubtitleUri:(NSString *)subtitleUri
