@@ -146,6 +146,9 @@ static NSString *const playbackRate = @"rate";
 -(void)setResume:(BOOL)autoplay
 {
     [self createPlayer:nil];
+
+    if(autoplay)
+        [self play];
 }
 
 -(void)setSource:(NSDictionary *)source
@@ -373,7 +376,7 @@ static NSString *const playbackRate = @"rate";
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-    if(_player.media)
+    if (_player.media)
         [_player stop];
 
     if (_player)
