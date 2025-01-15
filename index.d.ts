@@ -16,22 +16,28 @@ export type PlayerResizeMode = "fill" | "contain" | "cover" | "none" | "scale-do
  */
 export interface VLCPlayerSource {
   /**
-   * Media source uri to render
+   * Media source URI to render
    */
   uri: string;
   /**
-   * LibVLC initialization type:
-   *  - `1`: Default configuration options 
-   *  - `2`: Custom configuration options
-   *    - See `initOptions` for more information
+   * VLC Player initialization type
+   * 
+   *  - Default configuration: `1`
+   *  - Custom configuration: `2`
+   * 
+   * See `initOptions` for more information
+   * 
+   * @default 1
    */
   initType?: 1 | 2;
   /**
    * https://wiki.videolan.org/VLC_command-line_help/
    * 
-   * LibVLC initialization options:
-   *  - `["--network-caching=50", "--rtsp-tcp"]`
-   *  - `--input-repeat=1000` added by default
+   * VLC Player initialization options
+   * 
+   * `["--network-caching=50", "--rtsp-tcp"]`
+   * 
+   * @default ["--input-repeat=1000"]
    */
   initOptions?: string[];
 }
@@ -246,6 +252,13 @@ export type VLCPlayerProps = VLCPlayerCallbackProps & {
    * React native view stylesheet styles
    */
   style?: StyleProp<ViewStyle>;
+
+  /**
+   * Enables autoplay
+   * 
+   * @default true
+   */
+  autoplay?: boolean;
 };
 
 /**
