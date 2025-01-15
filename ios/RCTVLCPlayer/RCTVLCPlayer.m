@@ -102,6 +102,10 @@ static NSString *const playbackRate = @"rate";
     }
 }
 
+-(void)setResume:(BOOL)autoplay
+{
+}
+
 -(void)setSource:(NSDictionary *)source
 {
     _source = source;
