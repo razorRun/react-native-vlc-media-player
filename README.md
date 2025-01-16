@@ -81,6 +81,16 @@ Reference: https://code.videolan.org/videolan/vlc-android/-/issues/2252
 3. add `pod 'MobileVLCKit', '3.3.10'` to pod file **(No need if you are running RN 0.61 and up)**
 4. run `pod install` (you have to delete the app on the simulator/device and run `react-native run-ios` again)
 
+### Important
+
+Starting from iOS 14, you are required to provide a message for the `NSLocalNetworkUsageDescription` key in `Info.plist` if your app uses the local network directly or indirectly.
+
+It seems the `MobileVLCKit` library powering the VLC Player on iOS makes use of this feature when playing external media from sources such as RTSP streams from IP cameras.
+
+Provide a custom message specifying how your app will make use of the network so your App Store submission is not rejected for this reason, read more about this here:
+
+https://developer.apple.com/documentation/bundleresources/information-property-list/nslocalnetworkusagedescription
+
 ### Optional
 
 In root project select "Build Settings", find "Bitcode" and select "Enable Bitcode"
