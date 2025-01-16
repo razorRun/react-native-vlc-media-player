@@ -70,6 +70,10 @@ static NSString *const playbackRate = @"rate";
 
 - (void)createPlayer:(NSDictionary *)source
 {
+    if(_player){
+        [self _release];
+    }
+
     _source = source;
     _videoInfo = nil;
 
@@ -79,9 +83,9 @@ static NSString *const playbackRate = @"rate";
     int initType = [_source objectForKey:@"initType"];
     NSDictionary* initOptions = [_source objectForKey:@"initOptions"];
 
-    if(initType == 1) {
+    if (initType == 1) {
         _player = [[VLCMediaPlayer alloc] init];
-    }else {
+    } else {
         _player = [[VLCMediaPlayer alloc] initWithOptions:initOptions];
     }
     _player.delegate = self;
