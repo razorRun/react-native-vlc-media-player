@@ -70,7 +70,7 @@ static NSString *const playbackRate = @"rate";
 
 - (void)createPlayer:(NSDictionary *)source
 {
-    if(_player){
+    if (_player){
         [self _release];
     }
 
@@ -99,7 +99,8 @@ static NSString *const playbackRate = @"rate";
     self.onVideoLoadStart(@{
                            @"target": self.reactTag
                            });
-    if(_subtitleUri) {
+
+    if (_subtitleUri) {
         [_player addPlaybackSlave:_subtitleUri type:VLCMediaPlaybackSlaveTypeSubtitle enforce:YES];
     }
 }
@@ -138,7 +139,7 @@ static NSString *const playbackRate = @"rate";
 {
     _autoplay = autoplay;
 
-    if(autoplay)
+    if (autoplay)
         [self play];
 }
 
@@ -159,7 +160,8 @@ static NSString *const playbackRate = @"rate";
 - (void)setSubtitleUri:(NSString *)subtitleUri
 {
     _subtitleUri = [NSURL URLWithString:subtitleUri];
-    if(_player) {
+
+    if (_player) {
         [_player addPlaybackSlave:_subtitleUri type:VLCMediaPlaybackSlaveTypeSubtitle enforce:YES];
     }
 }
@@ -177,7 +179,7 @@ static NSString *const playbackRate = @"rate";
      NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
      NSLog(@"userInfo %@",[aNotification userInfo]);
      NSLog(@"standardUserDefaults %@",defaults);
-    if(_player){
+    if (_player){
         VLCMediaPlayerState state = _player.state;
         switch (state) {
             case VLCMediaPlayerStateOpening:
@@ -201,7 +203,7 @@ static NSString *const playbackRate = @"rate";
                 break;
             case VLCMediaPlayerStateBuffering:
                 NSLog(@"VLCMediaPlayerStateBuffering %i", _player.numberOfAudioTracks);
-                if(!_videoInfo && _player.numberOfAudioTracks > 0) {
+                if (!_videoInfo && _player.numberOfAudioTracks > 0) {
                     _videoInfo = [self getVideoInfo];
                     self.onVideoLoad(_videoInfo);
                 }
@@ -262,12 +264,12 @@ static NSString *const playbackRate = @"rate";
 
 - (void)updateVideoProgress
 {
-    if(_player){
+    if (_player){
         int currentTime   = [[_player time] intValue];
         int remainingTime = [[_player remainingTime] intValue];
         int duration      = [_player.media.length intValue];
 
-        if( currentTime >= 0 && currentTime < duration) {
+        if ( currentTime >= 0 && currentTime < duration) {
             self.onVideoProgress(@{
                                    @"target": self.reactTag,
                                    @"currentTime": [NSNumber numberWithInt:currentTime],
@@ -284,55 +286,58 @@ static NSString *const playbackRate = @"rate";
     NSMutableDictionary *info = [NSMutableDictionary new];
     info[@"duration"] = _player.media.length.value;
     int i;
-    if(_player.videoSize.width > 0) {
+    if (_player.videoSize.width > 0) {
         info[@"videoSize"] =  @{
             @"width":  @(_player.videoSize.width),
             @"height": @(_player.videoSize.height)
         };
     }
-   if(_player.numberOfAudioTracks > 0) {
-        NSMutableArray *tracks = [NSMutableArray new];
-        for (i = 0; i < _player.numberOfAudioTracks; i++) {
-            if(_player.audioTrackIndexes[i] && _player.audioTrackNames[i]) {
-                [tracks addObject:  @{
-                    @"id": _player.audioTrackIndexes[i],
-                    @"name":  _player.audioTrackNames[i]
-                }];
+
+    if (_player.numberOfAudioTracks > 0) {
+            NSMutableArray *tracks = [NSMutableArray new];
+            for (i = 0; i < _player.numberOfAudioTracks; i++) {
+                if (_player.audioTrackIndexes[i] && _player.audioTrackNames[i]) {
+                    [tracks addObject:  @{
+                        @"id": _player.audioTrackIndexes[i],
+                        @"name":  _player.audioTrackNames[i]
+                    }];
+                }
             }
+            info[@"audioTracks"] = tracks;
         }
-        info[@"audioTracks"] = tracks;
-    }
-    if(_player.numberOfSubtitlesTracks > 0) {
-        NSMutableArray *tracks = [NSMutableArray new];
-        for (i = 0; i < _player.numberOfSubtitlesTracks; i++) {
-            if(_player.videoSubTitlesIndexes[i] && _player.videoSubTitlesNames[i]) {
-                [tracks addObject:  @{
-                    @"id": _player.videoSubTitlesIndexes[i],
-                    @"name":  _player.videoSubTitlesNames[i]
-                }];
+
+        if (_player.numberOfSubtitlesTracks > 0) {
+            NSMutableArray *tracks = [NSMutableArray new];
+            for (i = 0; i < _player.numberOfSubtitlesTracks; i++) {
+                if (_player.videoSubTitlesIndexes[i] && _player.videoSubTitlesNames[i]) {
+                    [tracks addObject:  @{
+                        @"id": _player.videoSubTitlesIndexes[i],
+                        @"name":  _player.videoSubTitlesNames[i]
+                    }];
+                }
             }
+            info[@"textTracks"] = tracks;
         }
-        info[@"textTracks"] = tracks;
-    }
-    return info;
+
+        return info;
 }
 
 - (void)jumpBackward:(int)interval
 {
-    if(interval>=0 && interval <= [_player.media.length intValue])
+    if (interval>=0 && interval <= [_player.media.length intValue])
         [_player jumpBackward:interval];
 }
 
 - (void)jumpForward:(int)interval
 {
-    if(interval>=0 && interval <= [_player.media.length intValue])
+    if (interval>=0 && interval <= [_player.media.length intValue])
         [_player jumpForward:interval];
 }
 
 - (void)setSeek:(float)pos
 {
-    if([_player isSeekable]){
-        if(pos>=0 && pos <= 1){
+    if ([_player isSeekable]){
+        if (pos>=0 && pos <= 1){
             [_player setPosition:pos];
         }
     }
@@ -340,7 +345,7 @@ static NSString *const playbackRate = @"rate";
 
 - (void)setSnapshotPath:(NSString*)path
 {
-    if(_player)
+    if (_player)
         [_player saveVideoSnapshotAt:path withWidth:0 andHeight:0];
 }
 
