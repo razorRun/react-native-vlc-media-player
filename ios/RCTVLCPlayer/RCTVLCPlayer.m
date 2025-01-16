@@ -116,6 +116,15 @@ static NSString *const playbackRate = @"rate";
     }
 }
 
+- (void)togglePlayback
+{
+    if (_paused) {
+        [self play];
+    } else {
+        [self pause];
+    }
+}
+
 - (void)setSource:(NSDictionary *)source
 {
     [self createPlayer:source];
@@ -133,17 +142,14 @@ static NSString *const playbackRate = @"rate";
 {
     _paused = paused;
 
-    if (paused)
-        [self pause];
+    [self togglePlayback];
 }
 
 - (void)setResume:(BOOL)resume
 {
-    if (resume) {
-        [self play];
-    } else {
-        [self pause];
-    }
+    _paused = resume;
+    
+    [self togglePlayback];
 }
 
 - (void)setSubtitleUri:(NSString *)subtitleUri
