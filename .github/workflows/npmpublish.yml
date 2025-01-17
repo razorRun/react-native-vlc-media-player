@@ -10,20 +10,20 @@ on:
     branches:
       - master
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Set Git environment and update package number
-        run: |
-          git config --global user.name 'GIT Package Updater'
-          git config --global user.email 'razorRun@users.noreply.github.com'
-          npm version patch
-          git push
-      - run: npm ci
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 20
+  #     - name: Set Git environment and update package number
+  #       run: |
+  #         git config --global user.name 'GIT Package Updater'
+  #         git config --global user.email 'razorRun@users.noreply.github.com'
+  #         npm version patch
+  #         git push
+  #     - run: npm ci
 
   publish-npm:
     needs: build
