@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Set Git Environment and Update package number
+      - name: Set Git environment and update package number
         run: |
           git config --global user.name 'GIT Package Updater'
           git config --global user.email 'razorRun@users.noreply.github.com'
@@ -30,12 +30,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
+      - name: Pull latest Changes and publish new version
+        run: git pull
       - run: npm ci
       - run: npm publish
         env:
