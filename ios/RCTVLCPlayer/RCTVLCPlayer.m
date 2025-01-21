@@ -100,7 +100,7 @@ static NSString *const playbackRate = @"rate";
                            @"target": self.reactTag
                            });
 
-    if (_subtitleUri) {
+    if (_subtitleUri && !([_subtitleUri  isEqual: @""]) && _player) {
         [_player addPlaybackSlave:_subtitleUri type:VLCMediaPlaybackSlaveTypeSubtitle enforce:YES];
     }
 }
@@ -159,10 +159,12 @@ static NSString *const playbackRate = @"rate";
 
 - (void)setSubtitleUri:(NSString *)subtitleUri
 {
-    _subtitleUri = [NSURL URLWithString:subtitleUri];
-
-    if (_player) {
+    NSURL *url = [NSURL URLWithString:subtitleUri];
+    if (url && ![subtitleUri isEqualToString:@""] && _player) {
+        _subtitleUri = url;
         [_player addPlaybackSlave:_subtitleUri type:VLCMediaPlaybackSlaveTypeSubtitle enforce:YES];
+    } else {
+        NSLog(@"Invalid subtitle URI: %@", subtitleUri);
     }
 }
 
