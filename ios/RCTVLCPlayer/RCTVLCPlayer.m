@@ -95,14 +95,10 @@ static NSString *const playbackRate = @"rate";
     _player.media = [VLCMedia mediaWithURL:_uri];
     
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
-    NSLog(@"autoplay: %i",autoplay);
+
     self.onVideoLoadStart(@{
                            @"target": self.reactTag
                            });
-
-    if (_subtitleUri) {
-        [_player addPlaybackSlave:_subtitleUri type:VLCMediaPlaybackSlaveTypeSubtitle enforce:YES];
-    }
 }
 
 - (void)play
