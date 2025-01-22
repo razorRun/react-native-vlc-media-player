@@ -123,7 +123,7 @@ static NSString *const playbackRate = @"rate";
 
 - (void)togglePlayback
 {
-    if (_paused) {
+    if (!_paused) {
         [self play];
     } else {
         [self pause];
@@ -152,7 +152,7 @@ static NSString *const playbackRate = @"rate";
 
 - (void)setResume:(BOOL)resume
 {
-    _paused = resume;
+    _paused = !resume;
     
     [self togglePlayback];
 }
