@@ -148,9 +148,11 @@ static NSString *const playbackRate = @"rate";
 
 - (void)setResume:(BOOL)resume
 {
-    _paused = !resume;
-    
-    [self togglePlayback];
+    if (resume) {
+        [self play];
+    } else {
+        [self pause];
+    }
 }
 
 - (void)setSubtitleUri:(NSString *)subtitleUri
