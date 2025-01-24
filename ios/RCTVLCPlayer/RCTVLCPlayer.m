@@ -28,11 +28,10 @@ static NSString *const playbackRate = @"rate";
     RCTEventDispatcher *_eventDispatcher;
     VLCMediaPlayer *_player;
 
-    NSDictionary * _source;
-    BOOL _paused;
+    NSDictionary * _videoInfo;
     NSString * _subtitleUri;
 
-    NSDictionary * _videoInfo;
+    BOOL _paused;
     BOOL _autoplay;
 }
 
@@ -68,39 +67,6 @@ static NSString *const playbackRate = @"rate";
         [self play];
 }
 
-- (void)createPlayer:(NSDictionary *)source
-{
-    if (_player){
-        [self _release];
-    }
-
-    _source = source;
-    _videoInfo = nil;
-
-    // [bavv edit start]
-    NSString* uri    = [_source objectForKey:@"uri"];
-    NSURL* _uri    = [NSURL URLWithString:uri];
-    int initType = [_source objectForKey:@"initType"];
-    NSDictionary* initOptions = [_source objectForKey:@"initOptions"];
-
-    if (initType == 1) {
-        _player = [[VLCMediaPlayer alloc] init];
-    } else {
-        _player = [[VLCMediaPlayer alloc] initWithOptions:initOptions];
-    }
-    _player.delegate = self;
-    _player.drawable = self;
-    // [bavv edit end]
-
-    _player.media = [VLCMedia mediaWithURL:_uri];
-    
-    [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
-
-    self.onVideoLoadStart(@{
-                           @"target": self.reactTag
-                           });
-}
-
 - (void)play
 {
     if (_player) {
@@ -117,18 +83,36 @@ static NSString *const playbackRate = @"rate";
     }
 }
 
-- (void)togglePlayback
-{
-    if (!_paused) {
-        [self play];
-    } else {
-        [self pause];
-    }
-}
-
 - (void)setSource:(NSDictionary *)source
 {
-    [self createPlayer:source];
+    if (_player) {
+        [self _release];
+    }
+
+    _videoInfo = nil;
+
+    // [bavv edit start]
+    NSString* uriString = [source objectForKey:@"uri"];
+    NSURL* uri = [NSURL URLWithString:uriString];
+    int initType = [source objectForKey:@"initType"];
+    NSDictionary* initOptions = [source objectForKey:@"initOptions"];
+
+    if (initType == 1) {
+        _player = [[VLCMediaPlayer alloc] init];
+    } else {
+        _player = [[VLCMediaPlayer alloc] initWithOptions:initOptions];
+    }
+    _player.delegate = self;
+    _player.drawable = self;
+    // [bavv edit end]
+
+    _player.media = [VLCMedia mediaWithURL:uri];
+    
+    [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
+
+    self.onVideoLoadStart(@{
+                           @"target": self.reactTag
+                           });
 }
 
 - (void)setAutoplay:(BOOL)autoplay
@@ -143,7 +127,11 @@ static NSString *const playbackRate = @"rate";
 {
     _paused = paused;
 
-    [self togglePlayback];
+    if (!paused) {
+        [self play];
+    } else {
+        [self pause];
+    }
 }
 
 - (void)setResume:(BOOL)resume
@@ -177,10 +165,10 @@ static NSString *const playbackRate = @"rate";
 - (void)mediaPlayerStateChanged:(NSNotification *)aNotification
 {
 
-     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-     NSLog(@"userInfo %@",[aNotification userInfo]);
-     NSLog(@"standardUserDefaults %@",defaults);
-    if (_player){
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSLog(@"userInfo %@",[aNotification userInfo]);
+    NSLog(@"standardUserDefaults %@",defaults);
+    if (_player) {
         VLCMediaPlayerState state = _player.state;
         switch (state) {
             case VLCMediaPlayerStateOpening:
@@ -265,7 +253,7 @@ static NSString *const playbackRate = @"rate";
 
 - (void)updateVideoProgress
 {
-    if (_player){
+    if (_player) {
         int currentTime   = [[_player time] intValue];
         int remainingTime = [[_player remainingTime] intValue];
         int duration      = [_player.media.length intValue];
@@ -337,8 +325,8 @@ static NSString *const playbackRate = @"rate";
 
 - (void)setSeek:(float)pos
 {
-    if ([_player isSeekable]){
-        if (pos>=0 && pos <= 1){
+    if ([_player isSeekable]) {
+        if (pos>=0 && pos <= 1) {
             [_player setPosition:pos];
         }
     }
