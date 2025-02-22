@@ -7,7 +7,6 @@ import VLCPlayer from '../VLCPlayer';
 import PropTypes from 'prop-types';
 import TimeLimt from './TimeLimit';
 import ControlBtn from './ControlBtn';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getStatusBarHeight } from './SizeController';
 
 const statusBarHeight = getStatusBarHeight();
