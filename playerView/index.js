@@ -3,21 +3,13 @@
  */
 
 import React, { Component } from 'react';
-import {
-  StatusBar,
-  View,
-  StyleSheet,
-  Platform,
-  TouchableOpacity,
-  Text,
-  Dimensions,
-  BackHandler,
-} from 'react-native';
+import { StatusBar, View, StyleSheet, Platform, TouchableOpacity, Text, Dimensions, BackHandler } from 'react-native';
 
 import VLCPlayerView from './VLCPlayerView';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getStatusBarHeight } from './SizeController';
+
 const statusBarHeight = getStatusBarHeight();
 const _fullKey = 'commonVideo_android_fullKey';
 let deviceHeight = Dimensions.get('window').height;
@@ -29,7 +21,7 @@ export default class CommonVideo extends Component {
     this.initialHeight = 200;
 
     if (props.widthCamera) {
-      deviceWidth = props.widthCamera
+      deviceWidth = props.widthCamera;
     }
   }
 
@@ -97,7 +89,7 @@ export default class CommonVideo extends Component {
     let { url } = nextProps;
     let { currentUrl, storeUrl } = preState;
     if (url && url !== storeUrl) {
-      if (storeUrl === "") {
+      if (storeUrl === '') {
         return {
           currentUrl: url,
           storeUrl: url,
@@ -105,7 +97,7 @@ export default class CommonVideo extends Component {
         };
       } else {
         return {
-          currentUrl: "",
+          currentUrl: '',
           storeUrl: url,
           isEndGG: false,
         };
@@ -114,26 +106,25 @@ export default class CommonVideo extends Component {
     return null;
   }
 
-
   componentDidUpdate(prevProps, prevState) {
     if (this.props.url !== prevState.storeUrl && this._componentMounted) {
       this.setState({
         storeUrl: this.props.url,
-        currentUrl: this.props.url
-      })
+        currentUrl: this.props.url,
+      });
     }
   }
 
   componentDidMount() {
-    this._componentMounted = true
-    StatusBar.setBarStyle("light-content");
+    this._componentMounted = true;
+    StatusBar.setBarStyle('light-content');
     let { style, isGG } = this.props;
 
     if (style && style.height && !isNaN(style.height)) {
       this.initialHeight = style.height;
     }
     this.setState({
-      currentVideoAspectRatio: deviceWidth + ":" + this.initialHeight,
+      currentVideoAspectRatio: deviceWidth + ':' + this.initialHeight,
     });
 
     let { isFull } = this.props;
@@ -155,7 +146,7 @@ export default class CommonVideo extends Component {
   _closeFullScreen = () => {
     let { closeFullScreen, BackHandle, Orientation } = this.props;
     if (this._componentMounted) {
-      this.setState({ isFull: false, currentVideoAspectRatio: deviceWidth + ":" + this.initialHeight, });
+      this.setState({ isFull: false, currentVideoAspectRatio: deviceWidth + ':' + this.initialHeight });
     }
     BackHandle && BackHandle.removeBackFunction(_fullKey);
     Orientation && Orientation.lockToPortrait;
@@ -167,7 +158,7 @@ export default class CommonVideo extends Component {
   _toFullScreen = () => {
     let { startFullScreen, BackHandle, Orientation } = this.props;
     //StatusBar.setTranslucent(true);
-    this.setState({ isFull: true, currentVideoAspectRatio: deviceHeight + ":" + deviceWidth, });
+    this.setState({ isFull: true, currentVideoAspectRatio: deviceHeight + ':' + deviceWidth });
     StatusBar.setHidden(true);
     BackHandle && BackHandle.addBackFunction(_fullKey, this._closeFullScreen);
     startFullScreen && startFullScreen();
@@ -184,10 +175,25 @@ export default class CommonVideo extends Component {
         this.initialHeight = height;
       }
     }
-  }
+  };
 
   render() {
-    let { url, ggUrl, showGG, onGGEnd, onEnd, style, height, title, onLeftPress, showBack, showTitle, closeFullScreen, videoAspectRatio, fullVideoAspectRatio } = this.props;
+    let {
+      url,
+      ggUrl,
+      showGG,
+      onGGEnd,
+      onEnd,
+      style,
+      height,
+      title,
+      onLeftPress,
+      showBack,
+      showTitle,
+      closeFullScreen,
+      videoAspectRatio,
+      fullVideoAspectRatio,
+    } = this.props;
     let { isEndGG, isFull, currentUrl } = this.state;
     let currentVideoAspectRatio = '';
     if (isFull) {
@@ -230,30 +236,36 @@ export default class CommonVideo extends Component {
     return (
       <View
         //onLayout={this._onLayout}
-        style={[isFull ? styles.container : { height: 200, backgroundColor: '#000' }, style]}>
-        {showTop && <View style={styles.topView}>
-          <View style={styles.backBtn}>
-            {showBack && <TouchableOpacity
-              onPress={() => {
-                if (isFull) {
-                  closeFullScreen && closeFullScreen();
-                } else {
-                  onLeftPress && onLeftPress();
-                }
-              }}
-              style={styles.btn}
-              activeOpacity={0.8}>
-              <Icon name={'chevron-left'} size={30} color="#fff" />
-            </TouchableOpacity>
-            }
-            <View style={{ justifyContent: 'center', flex: 1, marginRight: 10 }}>
-              {showTitle &&
-                <Text style={{ color: '#fff', fontSize: 16 }} numberOfLines={1}>{title}</Text>
-              }
+        style={[isFull ? styles.container : { height: 200, backgroundColor: '#000' }, style]}
+      >
+        {showTop && (
+          <View style={styles.topView}>
+            <View style={styles.backBtn}>
+              {showBack && (
+                <TouchableOpacity
+                  onPress={() => {
+                    if (isFull) {
+                      closeFullScreen && closeFullScreen();
+                    } else {
+                      onLeftPress && onLeftPress();
+                    }
+                  }}
+                  style={styles.btn}
+                  activeOpacity={0.8}
+                >
+                  <Icon name={'chevron-left'} size={30} color="#fff" />
+                </TouchableOpacity>
+              )}
+              <View style={{ justifyContent: 'center', flex: 1, marginRight: 10 }}>
+                {showTitle && (
+                  <Text style={{ color: '#fff', fontSize: 16 }} numberOfLines={1}>
+                    {title}
+                  </Text>
+                )}
+              </View>
             </View>
           </View>
-        </View>
-        }
+        )}
         {realShowGG && (
           <VLCPlayerView
             {...this.props}
@@ -305,20 +317,20 @@ export default class CommonVideo extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000'
+    backgroundColor: '#000',
   },
   topView: {
     top: Platform.OS === 'ios' ? statusBarHeight : 0,
     left: 0,
     height: 45,
     position: 'absolute',
-    width: '100%'
+    width: '100%',
   },
   backBtn: {
     height: 45,
     width: '100%',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   btn: {
     marginLeft: 10,
@@ -329,5 +341,5 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     width: 40,
-  }
+  },
 });

@@ -2,27 +2,16 @@
  * Created by yuanzhou.xu on 2018/5/16.
  */
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-  ActivityIndicator,
-  StatusBar,
-} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-// import Slider from 'react-native-slider';
-import PropTypes from 'prop-types';
-import TimeLimt from './TimeLimit';
 
 export default class ControlBtn extends Component {
   static defaultProps = {
     titleGolive: 'Go live',
     showLeftButton: true,
     showMiddleButton: true,
-    showRightButton: true
-  }
+    showRightButton: true,
+  };
 
   _getTime = (data = 0) => {
     let hourCourse = Math.floor(data / 3600);
@@ -54,25 +43,16 @@ export default class ControlBtn extends Component {
     let {
       paused,
       isFull,
-      showGG,
-      showSlider,
       showGoLive,
       onGoLivePress,
       onReplayPress,
       onPausedPress,
       onFullPress,
-      onValueChange,
-      onSlidingComplete,
-      currentTime,
-      totalTime,
-      onLeftPress,
-      title,
-      onEnd,
       titleGolive,
       showLeftButton,
       showMiddleButton,
       showRightButton,
-      style
+      style,
     } = this.props;
     return (
       <View style={[styles.controls, style]}>
@@ -80,34 +60,33 @@ export default class ControlBtn extends Component {
           <TouchableOpacity style={styles.controlContent} activeOpacity={1}>
             <View style={styles.controlContent2}>
               <View style={styles.right}>
-                {
-                  showLeftButton ? (
-                    <TouchableOpacity
-                      activeOpacity={1}
-                      onPress={() => {
-                        onReplayPress && onReplayPress();
-                      }}
-                      style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
-                      <Icon name={'replay'} size={30} color="#fff" />
-                    </TouchableOpacity>
-                  ) : <View style={{ width: 50 }} />
-                }
-                <Text
-                  style={{ fontSize: 11, color: '#fff' }}>       </Text>
-              </View>
-
-              {
-                showMiddleButton && (
+                {showLeftButton ? (
                   <TouchableOpacity
                     activeOpacity={1}
                     onPress={() => {
-                      onPausedPress && onPausedPress(!paused);
+                      onReplayPress && onReplayPress();
                     }}
-                    style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
-                    <Icon name={paused ? 'play' : 'pause'} size={30} color="#fff" />
+                    style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}
+                  >
+                    <Icon name={'replay'} size={30} color="#fff" />
                   </TouchableOpacity>
-                )
-              }
+                ) : (
+                  <View style={{ width: 50 }} />
+                )}
+                <Text style={{ fontSize: 11, color: '#fff' }}> </Text>
+              </View>
+
+              {showMiddleButton && (
+                <TouchableOpacity
+                  activeOpacity={1}
+                  onPress={() => {
+                    onPausedPress && onPausedPress(!paused);
+                  }}
+                  style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}
+                >
+                  <Icon name={paused ? 'play' : 'pause'} size={30} color="#fff" />
+                </TouchableOpacity>
+              )}
 
               {/* {showSlider && totalTime > 0 &&(
                 <View
@@ -152,24 +131,24 @@ export default class ControlBtn extends Component {
                   activeOpacity={1}
                   onPress={() => {
                     onGoLivePress && onGoLivePress();
-                  }}>
-                  <Text
-                    style={{ fontSize: 11, color: '#fff' }}>{showGoLive ? titleGolive : '       '}</Text>
+                  }}
+                >
+                  <Text style={{ fontSize: 11, color: '#fff' }}>{showGoLive ? titleGolive : '       '}</Text>
                 </TouchableOpacity>
-                {
-                  showRightButton ? (
-                    <TouchableOpacity
-                      activeOpacity={1}
-                      onPress={() => {
-                        onFullPress && onFullPress(!isFull);
-                      }}
-                      style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
-                      <Icon name={isFull ? 'fullscreen-exit' : 'fullscreen'} size={30} color="#fff" />
-                    </TouchableOpacity>
-                  ) : <View style={{ width: 50 }} />
-                }
+                {showRightButton ? (
+                  <TouchableOpacity
+                    activeOpacity={1}
+                    onPress={() => {
+                      onFullPress && onFullPress(!isFull);
+                    }}
+                    style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}
+                  >
+                    <Icon name={isFull ? 'fullscreen-exit' : 'fullscreen'} size={30} color="#fff" />
+                  </TouchableOpacity>
+                ) : (
+                  <View style={{ width: 50 }} />
+                )}
               </View>
-
             </View>
           </TouchableOpacity>
         </View>
