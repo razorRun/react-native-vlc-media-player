@@ -88,11 +88,11 @@ export interface VideoInfo {
   textTracks: Track[];
 }
 
-type OnPlayingEventProps = Pick<VideoInfo, 'duration' | 'target'> & {
+export type OnPlayingEventProps = Pick<VideoInfo, 'duration' | 'target'> & {
   seekable: boolean;
 };
 
-type OnProgressEventProps = Pick<VideoInfo, 'duration' | 'target'> & {
+export type OnProgressEventProps = Pick<VideoInfo, 'duration' | 'target'> & {
   /**
    * Current playback time
    */
@@ -109,7 +109,7 @@ type OnProgressEventProps = Pick<VideoInfo, 'duration' | 'target'> & {
   remainingTime: number;
 };
 
-type SimpleCallbackEventProps = Pick<VideoInfo, 'target'>;
+export type SimpleCallbackEventProps = Pick<VideoInfo, 'target'>;
 
 export interface VLCPlayerCallbackProps {
   /**
