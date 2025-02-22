@@ -62,3 +62,5 @@ const { baseStyle } = StyleSheet.create({
     overflow: 'hidden',
   },
 });
+
+export * from './types';
