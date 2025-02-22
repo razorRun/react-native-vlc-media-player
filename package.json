@@ -29,11 +29,15 @@
   },
   "homepage": "https://github.com/razorRun/react-native-vlc-media-player#readme",
   "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
     "react-native-vector-icons": "*"
   },
   "devDependencies": {
     "@expo/config-plugins": "^7.2.2",
-    "@types/react": "~18.2.14",
+    "@types/react": "^19.0.0",
+    "react": "^19.0.0",
+    "react-native": "^0.78.0",
     "react-native-vector-icons": "^9.2.0"
   },
   "packageManager": "yarn@4.6.0+sha512.5383cc12567a95f1d668fbe762dfe0075c595b4bfff433be478dbbe24e05251a8e8c3eb992a986667c1d53b6c3a9c85b8398c35a960587fbd9fa3a0915406728"
