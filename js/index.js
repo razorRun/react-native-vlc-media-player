@@ -1,5 +1,5 @@
 const VLCPlayerControl = {
-  VLCPlayer: require('./VLCPlayer').default,
+  VLCPlayer: require('../src/vlc-player').default,
   VlCPlayerView: require('./playerView/index').default,
 };
 

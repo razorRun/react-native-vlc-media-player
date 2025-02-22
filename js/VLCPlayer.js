@@ -1,11 +1,6 @@
-import React from 'react';
-import ReactNative from 'react-native';
-
-const { Component } = React;
-
+import React, { Component } from 'react';
+import { StyleSheet, requireNativeComponent, View } from 'react-native';
 import PropTypes from 'prop-types';
-
-const { StyleSheet, requireNativeComponent, NativeModules, View } = ReactNative;
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
 
 export default class VLCPlayer extends Component {
@@ -27,6 +22,7 @@ export default class VLCPlayer extends Component {
     this._onLoad = this._onLoad.bind(this);
     this.changeVideoAspectRatio = this.changeVideoAspectRatio.bind(this);
   }
+
   static defaultProps = {
     autoplay: true,
   };
@@ -121,9 +117,6 @@ export default class VLCPlayer extends Component {
   }
 
   render() {
-    /* const {
-     source
-     } = this.props;*/
     const source = resolveAssetSource(this.props.source) || {};
 
     let uri = source.uri || '';
@@ -234,4 +227,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const RCTVLCPlayer = requireNativeComponent('RCTVLCPlayer', VLCPlayer);
+const RCTVLCPlayer = requireNativeComponent('RCTVLCPlayer');

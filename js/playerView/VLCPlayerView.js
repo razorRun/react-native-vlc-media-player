@@ -3,10 +3,11 @@
  */
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
-import VLCPlayer from '../VLCPlayer';
+import VLCPlayer from '../../src/vlc-player';
 import PropTypes from 'prop-types';
 import TimeLimt from './TimeLimit';
 import ControlBtn from './ControlBtn';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getStatusBarHeight } from './SizeController';
 
 const statusBarHeight = getStatusBarHeight();

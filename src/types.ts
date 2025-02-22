@@ -1,15 +1,16 @@
-import type { Component } from "react";
-import { StyleProp, ViewStyle } from "react-native";
+import type { StyleProp, ViewStyle } from 'react-native';
+import type { NativePlayerSource } from './source';
+import type { RefObject } from 'react';
 
 /**
  * Video aspect ratio type
  */
-export type PlayerAspectRatio = "16:9" | "1:1" | "4:3" | "3:2" | "21:9" | "9:16";
+export type PlayerAspectRatio = '16:9' | '1:1' | '4:3' | '3:2' | '21:9' | '9:16';
 
 /**
  * Video resize mode
  */
-export type PlayerResizeMode = "fill" | "contain" | "cover" | "none" | "scale-down";
+export type PlayerResizeMode = 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';
 
 /**
  * VLC Player source configuration options
@@ -21,22 +22,22 @@ export interface VLCPlayerSource {
   uri: string;
   /**
    * VLC Player initialization type
-   * 
+   *
    *  - Default configuration: `1`
    *  - Custom configuration: `2`
-   * 
+   *
    * See `initOptions` for more information
-   * 
+   *
    * @default 1
    */
   initType?: 1 | 2;
   /**
    * https://wiki.videolan.org/VLC_command-line_help/
-   * 
+   *
    * VLC Player initialization options
-   * 
+   *
    * `["--network-caching=50", "--rtsp-tcp"]`
-   * 
+   *
    * @default ["--input-repeat=1000"]
    */
   initOptions?: string[];
@@ -45,7 +46,7 @@ export interface VLCPlayerSource {
 /**
  * Represents a track type in playback
  */
-export type Track = {
+export interface Track {
   /**
    * Track identification
    */
@@ -55,12 +56,12 @@ export type Track = {
    * Track name
    */
   name: string;
-};
+}
 
 /**
  * Represents a full playback information
  */
-export type VideoInfo = {
+export interface VideoInfo {
   /**
    * Total playback duration
    */
@@ -74,7 +75,7 @@ export type VideoInfo = {
   /**
    * Total playback video size
    */
-  videoSize: Record<"width" | "height", number>;
+  videoSize: Record<'width' | 'height', number>;
 
   /**
    * List of playback audio tracks
@@ -85,13 +86,13 @@ export type VideoInfo = {
    * List of playback text tracks
    */
   textTracks: Track[];
-};
+}
 
-type OnPlayingEventProps = Pick<VideoInfo, "duration" | "target"> & {
+type OnPlayingEventProps = Pick<VideoInfo, 'duration' | 'target'> & {
   seekable: boolean;
 };
 
-type OnProgressEventProps = Pick<VideoInfo, "duration" | "target"> & {
+type OnProgressEventProps = Pick<VideoInfo, 'duration' | 'target'> & {
   /**
    * Current playback time
    */
@@ -108,9 +109,9 @@ type OnProgressEventProps = Pick<VideoInfo, "duration" | "target"> & {
   remainingTime: number;
 };
 
-type SimpleCallbackEventProps = Pick<VideoInfo, "target">;
+type SimpleCallbackEventProps = Pick<VideoInfo, 'target'>;
 
-export type VLCPlayerCallbackProps = {
+export interface VLCPlayerCallbackProps {
   /**
    * Called when media starts playing returns
    *
@@ -166,14 +167,9 @@ export type VLCPlayerCallbackProps = {
    * @param event - Event properties
    */
   onLoad?: (event: VideoInfo) => void;
-};
+}
 
-export type VLCPlayerProps = VLCPlayerCallbackProps & {
-  /**
-   * Object that contains the uri of a video or song to play eg
-   */
-  source: VLCPlayerSource;
-
+export type SharedPlayerProps = VLCPlayerCallbackProps & {
   /**
    * local subtitle file path，if you want to hide subtitle,
    * you can set this to an empty subtitle file，
@@ -255,19 +251,47 @@ export type VLCPlayerProps = VLCPlayerCallbackProps & {
 
   /**
    * Enables autoplay
-   * 
+   *
    * @default true
    */
   autoplay?: boolean;
 };
 
-/**
- * A component that can be used to show a playback
- */
-declare class VLCPlayer extends Component<VLCPlayerProps> {}
+export interface VLCPlayerProps extends SharedPlayerProps {
+  /**
+   * Object that contains the uri of a video or song to play eg
+   */
+  source: VLCPlayerSource;
+  ref?: RefObject<VLCPlayerCommands | null>;
+}
 
-/**
- * A component that renders a playback with additional
- * features like fullscreen, controls, etc.
- */
-declare class VlCPlayerView extends Component<any> {}
+interface NativeSrc {
+  uri: string;
+  isNetwork: boolean;
+  isAsset: boolean;
+  type: string;
+  mainVer: number;
+  patchVer: number;
+}
+
+export interface NativePlayerProps extends SharedPlayerProps {
+  source: NativePlayerSource;
+  src: NativeSrc;
+}
+
+// Imperative handle interface
+export interface VLCPlayerCommands {
+  seek: (pos: number) => void;
+  resume: (isResume: boolean) => void;
+  snapshot: (path: string) => void;
+  autoAspectRatio: (isAuto: boolean) => void;
+  changeVideoAspectRatio: (ratio: PlayerAspectRatio) => void;
+}
+
+export interface NativePlayerCommands {
+  seek: number;
+  resume: boolean;
+  snapshotPath: string;
+  autoAspectRatio: boolean;
+  videoAspectRatio: PlayerAspectRatio;
+}
