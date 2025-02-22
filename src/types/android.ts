@@ -1,3 +1,4 @@
+import type { NativeSyntheticEvent } from 'react-native';
 import type { VideoAspectRatio } from './native';
 import type { VideoTargetEvent } from './shared';
 
@@ -29,7 +30,7 @@ interface VLCPlayerAndroidSource {
 }
 
 interface VLCPlayerAndroidEvents {
-  onVideoLoadStart: (event: VideoTargetEvent) => void;
+  onVideoLoadStart: (event: NativeSyntheticEvent<VideoTargetEvent>) => void;
   onVideoOpen: (event: AndroidVideoOpenEvent) => void;
   onVideoProgress: (event: AndroidVideoProgressEvent) => void;
   onVideoSeek: (event: AndroidVideoSeekEvent) => void;

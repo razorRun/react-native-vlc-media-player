@@ -1,3 +1,11 @@
+import type { StyleProp, ViewStyle } from 'react-native';
+import type { VLCPlayerAndroidProps } from './android';
+import type { VLCPlayerIosProps } from './ios';
+
+export type NativePlayerProps = (VLCPlayerIosProps | VLCPlayerAndroidProps) & {
+  style: StyleProp<ViewStyle>;
+};
+
 /**
  * Video aspect ratio type
  */
@@ -8,10 +16,5 @@ export interface NativePlayerCommands {
   resume: boolean;
   snapshotPath: string;
   autoAspectRatio: boolean;
-  videoAspectRatio: PlayerAspectRatio;
-}
-
-export interface NativePlayerProps {
-  source: NativePlayerSource;
-  src: NativeSrc;
+  videoAspectRatio: VideoAspectRatio;
 }

@@ -1,11 +1,12 @@
 import type { VLCPlayerProps } from './types/js';
+import type { NativePlayerCommands, NativePlayerProps } from './types/native';
 import { resolveAssetSource } from './source';
 import { Component, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { requireNativeComponent, StyleSheet, type NativeMethods } from 'react-native';
 
 const RCTVLCPlayer = requireNativeComponent<NativePlayerProps>('RCTVLCPlayer');
 
-export const VLCPlayer = ({ source, style, autoplay = true, ref, ...props }: VLCPlayerProps) => {
+export const VLCPlayer = ({ source, style, autoplay = true, ref }: VLCPlayerProps) => {
   const playerRef = useRef<Component<NativePlayerProps, {}, any> & NativeMethods>(null);
 
   const setNativeProps = useCallback((props: Partial<NativePlayerCommands>) => {
@@ -36,25 +37,13 @@ export const VLCPlayer = ({ source, style, autoplay = true, ref, ...props }: VLC
     [setNativeProps],
   );
 
+  //** Event handlers */
+
+  const onBuffering = () => {};
+
   const resolvedAssetSource = useMemo(() => resolveAssetSource(source, autoplay), [source, autoplay]);
 
-  return (
-    <RCTVLCPlayer
-      ref={playerRef}
-      source={resolvedAssetSource}
-      src={{
-        uri: resolvedAssetSource.uri,
-        isNetwork: resolvedAssetSource.isNetwork,
-        isAsset: resolvedAssetSource.isAsset,
-        type: '',
-        mainVer: 0,
-        patchVer: 0,
-      }}
-      style={StyleSheet.compose(baseStyle, style)}
-      autoplay={autoplay}
-      {...props}
-    />
-  );
+  return <RCTVLCPlayer ref={playerRef} source={resolvedAssetSource} style={StyleSheet.compose(baseStyle, style)} autoplay={autoplay} />;
 };
 
 const { baseStyle } = StyleSheet.create({
