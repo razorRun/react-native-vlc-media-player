@@ -2,7 +2,8 @@
   "name": "react-native-vlc-media-player",
   "version": "1.0.78",
   "description": "React native media player for video streaming and playing. Supports RTSP,RTMP and other protocols supported by VLC player",
-  "main": "index.js",
+  "main": "src/index.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,9 +19,6 @@
     "video"
   ],
   "author": "rmilinda@gmail.com",
-  "dependencies": {
-    "react-native-vector-icons": "^9.2.0"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/razorRun/react-native-vlc-media-player.git"
@@ -30,9 +28,13 @@
     "url": "https://github.com/razorRun/react-native-vlc-media-player/issues"
   },
   "homepage": "https://github.com/razorRun/react-native-vlc-media-player#readme",
+  "peerDependencies": {
+    "react-native-vector-icons": "*"
+  },
   "devDependencies": {
     "@expo/config-plugins": "^7.2.2",
-    "@types/react": "~18.2.14"
+    "@types/react": "~18.2.14",
+    "react-native-vector-icons": "^9.2.0"
   },
-  "typings": "index.d.ts"
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
