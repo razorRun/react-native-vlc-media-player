@@ -7,7 +7,6 @@ import { StatusBar, View, StyleSheet, Platform, TouchableOpacity, Text, Dimensio
 
 import VLCPlayerView from './VLCPlayerView';
 import PropTypes from 'prop-types';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getStatusBarHeight } from './SizeController';
 
 const statusBarHeight = getStatusBarHeight();

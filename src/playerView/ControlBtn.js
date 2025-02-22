@@ -3,7 +3,6 @@
  */
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class ControlBtn extends Component {
   static defaultProps = {
