@@ -1,4 +1,4 @@
-import type { VLCPlayerSource } from './types';
+import type { VLCPlayerSource } from './types/js';
 import { Image } from 'react-native';
 
 export const resolveAssetSource = (input: VLCPlayerSource, autoplay: boolean) => {
@@ -18,5 +18,3 @@ export const resolveAssetSource = (input: VLCPlayerSource, autoplay: boolean) =>
 
   return { ...source, isNetwork, isAsset, autoplay, initOptions: [...(input.initOptions || []), '--input-repeat=1000'] };
 };
-
-export type NativePlayerSource = ReturnType<typeof resolveAssetSource>;

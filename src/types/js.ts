@@ -1,11 +1,6 @@
 import type { StyleProp, ViewStyle } from 'react-native';
-import type { NativePlayerSource } from './source';
 import type { RefObject } from 'react';
-
-/**
- * Video aspect ratio type
- */
-export type PlayerAspectRatio = '16:9' | '1:1' | '4:3' | '3:2' | '21:9' | '9:16';
+import type { VideoAspectRatio } from './native';
 
 /**
  * Video resize mode
@@ -169,7 +164,12 @@ export interface VLCPlayerCallbackProps {
   onLoad?: (event: VideoInfo) => void;
 }
 
-export type SharedPlayerProps = VLCPlayerCallbackProps & {
+export type VLCPlayerProps = VLCPlayerCallbackProps & {
+  /**
+   * Object that contains the uri of a video or song to play eg
+   */
+  source: VLCPlayerSource;
+  ref?: RefObject<VLCPlayerCommands | null>;
   /**
    * local subtitle file path，if you want to hide subtitle,
    * you can set this to an empty subtitle file，
@@ -231,7 +231,7 @@ export type SharedPlayerProps = VLCPlayerCallbackProps & {
   /**
    * Video aspect ratio
    */
-  videoAspectRatio?: PlayerAspectRatio;
+  videoAspectRatio?: VideoAspectRatio;
 
   /**
    * Set to `true` or `false` to enable auto aspect ratio
@@ -257,41 +257,11 @@ export type SharedPlayerProps = VLCPlayerCallbackProps & {
   autoplay?: boolean;
 };
 
-export interface VLCPlayerProps extends SharedPlayerProps {
-  /**
-   * Object that contains the uri of a video or song to play eg
-   */
-  source: VLCPlayerSource;
-  ref?: RefObject<VLCPlayerCommands | null>;
-}
-
-interface NativeSrc {
-  uri: string;
-  isNetwork: boolean;
-  isAsset: boolean;
-  type: string;
-  mainVer: number;
-  patchVer: number;
-}
-
-export interface NativePlayerProps extends SharedPlayerProps {
-  source: NativePlayerSource;
-  src: NativeSrc;
-}
-
 // Imperative handle interface
 export interface VLCPlayerCommands {
   seek: (pos: number) => void;
   resume: (isResume: boolean) => void;
   snapshot: (path: string) => void;
   autoAspectRatio: (isAuto: boolean) => void;
-  changeVideoAspectRatio: (ratio: PlayerAspectRatio) => void;
-}
-
-export interface NativePlayerCommands {
-  seek: number;
-  resume: boolean;
-  snapshotPath: string;
-  autoAspectRatio: boolean;
-  videoAspectRatio: PlayerAspectRatio;
+  changeVideoAspectRatio: (ratio: VideoAspectRatio) => void;
 }

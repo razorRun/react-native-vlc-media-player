@@ -1,4 +1,4 @@
-import { type NativePlayerCommands, type NativePlayerProps, type VLCPlayerProps } from './types';
+import type { VLCPlayerProps } from './types/js';
 import { resolveAssetSource } from './source';
 import { Component, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { requireNativeComponent, StyleSheet, type NativeMethods } from 'react-native';
@@ -63,4 +63,4 @@ const { baseStyle } = StyleSheet.create({
   },
 });
 
-export * from './types';
+export * from './types/js';
