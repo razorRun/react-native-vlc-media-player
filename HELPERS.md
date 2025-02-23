@@ -1,3 +1,6 @@
+VLCKit CHANGELOG:
+https://code.videolan.org/videolan/VLCKit/-/blob/master/NEWS
+
 git checkout master
 git merge #branch-name
 
