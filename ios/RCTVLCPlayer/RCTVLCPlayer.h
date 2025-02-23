@@ -1,9 +1,14 @@
 #import "React/RCTView.h"
 #import <React/RCTEventDispatcherProtocol.h>
+#if TARGET_OS_TV
+#import <TVVLCKit/TVVLCKit.h>
+#else
+#import <MobileVLCKit/MobileVLCKit.h>
+#endif
 
 @class RCTEventDispatcher;
 
-@interface RCTVLCPlayer : UIView
+@interface RCTVLCPlayer : UIView <VLCMediaPlayerDelegate>
 
 @property (nonatomic, copy) RCTBubblingEventBlock onVideoProgress;
 @property (nonatomic, copy) RCTBubblingEventBlock onVideoPaused;
