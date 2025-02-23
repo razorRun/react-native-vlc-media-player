@@ -25,7 +25,7 @@ static NSString *const playbackRate = @"rate";
 {
 
     /* Required to publish events */
-    RCTEventDispatcher *_eventDispatcher;
+    id<RCTEventDispatcherProtocol> _eventDispatcher;
     VLCMediaPlayer *_player;
 
     NSDictionary * _videoInfo;
@@ -35,7 +35,7 @@ static NSString *const playbackRate = @"rate";
     BOOL _autoplay;
 }
 
-- (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher
+- (instancetype)initWithEventDispatcher:(id<RCTEventDispatcherProtocol>)eventDispatcher
 {
     if ((self = [super initWithFrame:CGRectZero])) {
         _eventDispatcher = eventDispatcher;

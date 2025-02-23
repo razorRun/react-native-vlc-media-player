@@ -1,4 +1,5 @@
 #import "React/RCTView.h"
+#import <React/RCTEventDispatcherProtocol.h>
 
 @class RCTEventDispatcher;
 
@@ -15,8 +16,8 @@
 @property (nonatomic, copy) RCTBubblingEventBlock onVideoLoadStart;
 @property (nonatomic, copy) RCTBubblingEventBlock onVideoLoad;
 
+- (instancetype)initWithEventDispatcher:(id<RCTEventDispatcherProtocol>)eventDispatcher NS_DESIGNATED_INITIALIZER;
 
-- (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher NS_DESIGNATED_INITIALIZER;
 - (void)setMuted:(BOOL)value;
 
 @end
