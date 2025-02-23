@@ -29,7 +29,7 @@ static NSString *const playbackRate = @"rate";
     VLCMediaPlayer *_player;
 
     NSDictionary * _videoInfo;
-    NSString * _subtitleUri;
+    NSURL * _subtitleUri;
 
     BOOL _paused;
     BOOL _autoplay;
@@ -172,8 +172,6 @@ static NSString *const playbackRate = @"rate";
 
 - (void)mediaPlayerStateChanged:(NSNotification *)aNotification
 {
-
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSLog(@"userInfo %@",[aNotification userInfo]);
     NSLog(@"standardUserDefaults %@",defaults);
     if (_player) {
