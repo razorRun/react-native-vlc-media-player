@@ -37,7 +37,7 @@ static NSString *const playbackRate = @"rate";
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher
 {
-    if ((self = [super init])) {
+    if ((self = [super initWithFrame:CGRectZero])) {
         _eventDispatcher = eventDispatcher;
 
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -53,6 +53,14 @@ static NSString *const playbackRate = @"rate";
     }
 
     return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    return [self initWithEventDispatcher:nil];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    return [self initWithEventDispatcher:nil];
 }
 
 - (void)applicationWillEnterForeground:(NSNotification *)notification
