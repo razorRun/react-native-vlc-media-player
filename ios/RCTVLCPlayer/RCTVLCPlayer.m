@@ -361,8 +361,9 @@ static NSString *const playbackRate = @"rate";
 
 
 - (void)setVideoAspectRatio:(NSString *)ratio{
-    char *char_content = [ratio cStringUsingEncoding:NSASCIIStringEncoding];
+    char *char_content = strdup([ratio cStringUsingEncoding:NSASCIIStringEncoding]);
     [_player setVideoAspectRatio:char_content];
+    free(char_content);
 }
 
 - (void)setMuted:(BOOL)value
