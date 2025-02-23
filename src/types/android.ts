@@ -24,7 +24,7 @@ export interface VLCPlayerAndroidProps extends VLCPlayerAndroidEvents {
 
 export interface VLCPlayerAndroidSource {
   uri: string;
-  type: string;
+  type?: string;
   isNetwork: boolean;
   autoplay: boolean;
 }
