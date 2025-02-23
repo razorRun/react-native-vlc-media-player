@@ -17,5 +17,5 @@ export const resolveAssetSource = (input: VLCPlayerSource, autoplay: boolean) =>
   }
 
   // original code was using source.type || '' but source.type is always undefined.
-  return { ...source, isNetwork, autoplay, initOptions: [...(input.initOptions || []), '--input-repeat=1000'] };
+  return { ...source, isNetwork, autoplay, initOptions: [...(input.initOptions || []), '--input-repeat=1000'], type: '' };
 };
