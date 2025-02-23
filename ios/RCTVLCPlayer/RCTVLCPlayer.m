@@ -103,7 +103,7 @@ static NSString *const playbackRate = @"rate";
     NSString* uriString = [source objectForKey:@"uri"];
     NSURL* uri = [NSURL URLWithString:uriString];
     int initType = [[source objectForKey:@"initType"] intValue];
-    NSDictionary* initOptions = [source objectForKey:@"initOptions"];
+    NSArray* initOptions = [source objectForKey:@"initOptions"];
 
     if (initType == 1) {
         _player = [[VLCMediaPlayer alloc] init];
