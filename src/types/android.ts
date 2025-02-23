@@ -4,57 +4,57 @@ import type { VideoTargetEvent } from './shared';
 
 export interface VLCPlayerAndroidProps extends VLCPlayerAndroidEvents {
   source: VLCPlayerAndroidSource;
-  subtitleUri: string;
-  repeat: boolean;
-  paused: boolean;
-  muted: boolean;
-  volume: number;
-  seek: number;
-  autoAspectRatio: boolean;
+  subtitleUri?: string;
+  repeat?: boolean;
+  paused?: boolean;
+  muted?: boolean;
+  volume?: number;
+  seek?: number;
+  autoAspectRatio?: boolean;
   resume: boolean;
-  rate: number;
+  rate?: number;
   position: number;
-  videoAspectRatio: VideoAspectRatio;
+  videoAspectRatio?: VideoAspectRatio;
   snapshotPath: string;
-  audioTrack: number;
-  textTrack: number;
+  audioTrack?: number;
+  textTrack?: number;
   progressUpdateInterval: number;
   clear: boolean;
 }
 
-interface VLCPlayerAndroidSource {
+export interface VLCPlayerAndroidSource {
   uri: string;
   type: string;
   isNetwork: boolean;
   autoplay: boolean;
 }
 
-interface VLCPlayerAndroidEvents {
+export interface VLCPlayerAndroidEvents {
   onVideoLoadStart: (event: NativeSyntheticEvent<VideoTargetEvent>) => void;
-  onVideoOpen: (event: AndroidVideoOpenEvent) => void;
-  onVideoProgress: (event: AndroidVideoProgressEvent) => void;
-  onVideoSeek: (event: AndroidVideoSeekEvent) => void;
-  onVideoEnd: (event: AndroidVideoEndEvent) => void;
-  onSnapshot: (event: AndroidVideoSnapshotEvent) => void;
-  onVideoPlaying: (event: AndroidVideoPlayingEvent) => void;
-  onVideoStateChange: (event: AndroidVideoStateChangeEvent | AndroidLayoutVideoStateChangeEvent) => void;
-  onVideoPaused: (event: AndroidVideoPausedEvent) => void;
-  onVideoBuffering: (event: AndroidVideoBufferingEvent) => void;
-  onVideoError: (event: AndroidVideoErrorEvent) => void;
-  onVideoStopped: (event: AndroidVideoStoppedEvent) => void;
-  onVideoLoad: (event: AndroidVideoLoadEvent) => void;
+  onVideoOpen: (event: NativeSyntheticEvent<AndroidVideoOpenEvent>) => void;
+  onVideoProgress: (event: NativeSyntheticEvent<AndroidVideoProgressEvent>) => void;
+  onVideoSeek: (event: NativeSyntheticEvent<AndroidVideoSeekEvent>) => void;
+  onVideoEnd: (event: NativeSyntheticEvent<AndroidVideoEndEvent>) => void;
+  onSnapshot: (event: NativeSyntheticEvent<AndroidVideoSnapshotEvent>) => void;
+  onVideoPlaying: (event: NativeSyntheticEvent<AndroidVideoPlayingEvent>) => void;
+  onVideoStateChange: (event: NativeSyntheticEvent<AndroidVideoStateChangeEvent | AndroidLayoutVideoStateChangeEvent>) => void;
+  onVideoPaused: (event: NativeSyntheticEvent<AndroidVideoPausedEvent>) => void;
+  onVideoBuffering: (event: NativeSyntheticEvent<AndroidVideoBufferingEvent>) => void;
+  onVideoError: (event: NativeSyntheticEvent<AndroidVideoErrorEvent>) => void;
+  onVideoStopped: (event: NativeSyntheticEvent<AndroidVideoStoppedEvent>) => void;
+  onVideoLoad: (event: NativeSyntheticEvent<AndroidVideoLoadEvent>) => void;
 }
 
-interface AndroidVideoStoppedEvent extends VideoTargetEvent {
+export interface AndroidVideoStoppedEvent extends VideoTargetEvent {
   type: 'Stopped';
 }
 
-interface AndroidVideoBufferingEvent extends VideoTargetEvent {
+export interface AndroidVideoBufferingEvent extends VideoTargetEvent {
   type: 'Buffering';
   bufferRate: number;
 }
 
-interface AndroidVideoPausedEvent extends VideoTargetEvent {
+export interface AndroidVideoPausedEvent extends VideoTargetEvent {
   type: 'Paused';
   isPlaying: false;
   position: number;
@@ -62,7 +62,7 @@ interface AndroidVideoPausedEvent extends VideoTargetEvent {
   duration: number;
 }
 
-interface AndroidLayoutVideoStateChangeEvent extends VideoTargetEvent {
+export interface AndroidLayoutVideoStateChangeEvent extends VideoTargetEvent {
   type: 'onNewVideoLayout';
   mVideoWidth: number;
   mVideoHeight: number;
@@ -72,12 +72,12 @@ interface AndroidLayoutVideoStateChangeEvent extends VideoTargetEvent {
   mSarDen: number;
 }
 
-interface AndroidVideoStateChangeEvent extends VideoTargetEvent {
+export interface AndroidVideoStateChangeEvent extends VideoTargetEvent {
   type: 'Paused' | 'Buffering' | 'Stopped' | 'Error';
   [key: string]: unknown;
 }
 
-interface AndroidVideoPlayingEvent extends VideoTargetEvent {
+export interface AndroidVideoPlayingEvent extends VideoTargetEvent {
   type: 'Playing';
   isPlaying: true;
   position: number;
@@ -85,7 +85,7 @@ interface AndroidVideoPlayingEvent extends VideoTargetEvent {
   duration: number;
 }
 
-interface AndroidVideoEndEvent extends VideoTargetEvent {
+export interface AndroidVideoEndEvent extends VideoTargetEvent {
   type: 'Ended';
   isPlaying: boolean;
   position: number;
@@ -93,11 +93,11 @@ interface AndroidVideoEndEvent extends VideoTargetEvent {
   duration: number;
 }
 
-interface AndroidVideoSeekEvent extends VideoTargetEvent {
+export interface AndroidVideoSeekEvent extends VideoTargetEvent {
   type: 'TimeChanged';
 }
 
-interface AndroidVideoOpenEvent extends VideoTargetEvent {
+export interface AndroidVideoOpenEvent extends VideoTargetEvent {
   type: 'Opening';
   isPlaying: boolean;
   position: number;
@@ -105,7 +105,7 @@ interface AndroidVideoOpenEvent extends VideoTargetEvent {
   duration: number;
 }
 
-interface AndroidVideoProgressEvent extends VideoTargetEvent {
+export interface AndroidVideoProgressEvent extends VideoTargetEvent {
   isPlaying: boolean;
   /** From 0.0 to 1.0. */
   position: number;
@@ -115,14 +115,14 @@ interface AndroidVideoProgressEvent extends VideoTargetEvent {
   duration: number;
 }
 
-interface AndroidVideoErrorEvent extends VideoTargetEvent {
+export interface AndroidVideoErrorEvent extends VideoTargetEvent {
   error: {
     errorString: string;
     excepion: string;
   };
 }
 
-interface AndroidVideoLoadEvent extends VideoTargetEvent {
+export interface AndroidVideoLoadEvent extends VideoTargetEvent {
   duration: number;
   audioTracks: {
     id: number;
@@ -138,6 +138,6 @@ interface AndroidVideoLoadEvent extends VideoTargetEvent {
   };
 }
 
-interface AndroidVideoSnapshotEvent extends VideoTargetEvent {
+export interface AndroidVideoSnapshotEvent extends VideoTargetEvent {
   isSuccess: number;
 }

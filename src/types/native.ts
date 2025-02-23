@@ -17,4 +17,5 @@ export interface NativePlayerCommands {
   snapshotPath: string;
   autoAspectRatio: boolean;
   videoAspectRatio: VideoAspectRatio;
+  paused: boolean;
 }
