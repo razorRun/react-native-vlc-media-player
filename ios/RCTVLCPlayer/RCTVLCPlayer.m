@@ -102,7 +102,7 @@ static NSString *const playbackRate = @"rate";
     // [bavv edit start]
     NSString* uriString = [source objectForKey:@"uri"];
     NSURL* uri = [NSURL URLWithString:uriString];
-    int initType = [source objectForKey:@"initType"];
+    int initType = [[source objectForKey:@"initType"] intValue];
     NSDictionary* initOptions = [source objectForKey:@"initOptions"];
 
     if (initType == 1) {
