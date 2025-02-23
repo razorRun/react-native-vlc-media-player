@@ -9,6 +9,7 @@
 #import <MobileVLCKit/MobileVLCKit.h>
 #endif
 #import <AVFoundation/AVFoundation.h>
+
 static NSString *const statusKeyPath = @"status";
 static NSString *const playbackLikelyToKeepUpKeyPath = @"playbackLikelyToKeepUp";
 static NSString *const playbackBufferEmptyKeyPath = @"playbackBufferEmpty";
@@ -173,30 +174,32 @@ static NSString *const playbackRate = @"rate";
 - (void)mediaPlayerStateChanged:(NSNotification *)aNotification
 {
     NSLog(@"userInfo %@",[aNotification userInfo]);
-    NSLog(@"standardUserDefaults %@",defaults);
     if (_player) {
         VLCMediaPlayerState state = _player.state;
         switch (state) {
-            case VLCMediaPlayerStateOpening:
-                 NSLog(@"VLCMediaPlayerStateOpening  %i", _player.numberOfAudioTracks);
-                self.onVideoOpen(@{
-                                     @"target": self.reactTag
-                                     });
-                break;
-            case VLCMediaPlayerStatePaused:
+            case VLCMediaPlayerStateOpening: {
+                     NSLog(@"VLCMediaPlayerStateOpening  %i", _player.numberOfAudioTracks);
+                    self.onVideoOpen(@{
+                                         @"target": self.reactTag
+                                         });
+                    break;
+            }
+            case VLCMediaPlayerStatePaused: {
                 _paused = YES;
                 NSLog(@"VLCMediaPlayerStatePaused %i", _player.numberOfAudioTracks);
                 self.onVideoPaused(@{
                                      @"target": self.reactTag
                                      });
                 break;
-            case VLCMediaPlayerStateStopped:
+            }
+            case VLCMediaPlayerStateStopped: {
                 NSLog(@"VLCMediaPlayerStateStopped %i", _player.numberOfAudioTracks);
                 self.onVideoStopped(@{
                                       @"target": self.reactTag
                                       });
                 break;
-            case VLCMediaPlayerStateBuffering:
+            }
+            case VLCMediaPlayerStateBuffering: {
                 NSLog(@"VLCMediaPlayerStateBuffering %i", _player.numberOfAudioTracks);
                 if (!_videoInfo && _player.numberOfAudioTracks > 0) {
                     _videoInfo = [self getVideoInfo];
@@ -208,7 +211,8 @@ static NSString *const playbackRate = @"rate";
                                         @"target": self.reactTag
                                         });
                 break;
-            case VLCMediaPlayerStatePlaying:
+            }
+            case VLCMediaPlayerStatePlaying: {
                 _paused = NO;
                 NSLog(@"VLCMediaPlayerStatePlaying %i", _player.numberOfAudioTracks);
                 self.onVideoPlaying(@{
@@ -217,7 +221,8 @@ static NSString *const playbackRate = @"rate";
                                       @"duration":[NSNumber numberWithInt:[_player.media.length intValue]]
                                       });
                 break;
-            case VLCMediaPlayerStateEnded:
+            }
+            case VLCMediaPlayerStateEnded: {
                 NSLog(@"VLCMediaPlayerStateEnded %i",  _player.numberOfAudioTracks);
                 int currentTime   = [[_player time] intValue];
                 int remainingTime = [[_player remainingTime] intValue];
@@ -231,15 +236,18 @@ static NSString *const playbackRate = @"rate";
                                     @"position":[NSNumber numberWithFloat:_player.position]
                                     });
                 break;
-            case VLCMediaPlayerStateError:
+            }
+            case VLCMediaPlayerStateError:  {
                 NSLog(@"VLCMediaPlayerStateError %i", _player.numberOfAudioTracks);
                 self.onVideoError(@{
                                     @"target": self.reactTag
                                     });
                 [self _release];
                 break;
-            default:
+            }
+            default: {
                 break;
+            }
         }
     }
 }
