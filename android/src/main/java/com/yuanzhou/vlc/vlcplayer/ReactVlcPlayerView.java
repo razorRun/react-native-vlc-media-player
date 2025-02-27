@@ -486,14 +486,8 @@ class ReactVlcPlayerView extends TextureView implements
     /**
      * 视频进度调整
      *
-     * @param time
+     * @param position
      */
-    public void seekTo(long time) {
-        if (mMediaPlayer != null) {
-            mMediaPlayer.setTime(time);
-        }
-    }
-
     public void setPosition(float position) {
         if (mMediaPlayer != null) {
             if (position >= 0 && position <= 1) {
