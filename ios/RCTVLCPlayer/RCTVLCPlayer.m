@@ -109,10 +109,6 @@ static NSString *const playbackRate = @"rate";
     _player.media = [VLCMedia mediaWithURL:uri];
     
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
-
-    self.onVideoLoadStart(@{
-                           @"target": self.reactTag
-                           });
 }
 
 - (void)setAutoplay:(BOOL)autoplay
@@ -176,6 +172,9 @@ static NSString *const playbackRate = @"rate";
                 self.onVideoOpen(@{
                                      @"target": self.reactTag
                                      });
+                self.onVideoLoadStart(@{
+                                           @"target": self.reactTag
+                                           });
                 break;
             case VLCMediaPlayerStatePaused:
                 _paused = YES;
