@@ -54,7 +54,7 @@ export default class VLCPlayerView extends Component {
     playInBackground: false,
     isGG: false,
     autoplay: true,
-    errorTitle: 'Error play video, please try again'
+    errorTitle: 'error'
   };
 
   componentDidMount() {
@@ -85,6 +85,7 @@ export default class VLCPlayerView extends Component {
   render() {
     let {
       onEnd,
+      onError,
       style,
       isGG,
       type,
@@ -162,7 +163,9 @@ export default class VLCPlayerView extends Component {
           onPlaying={this.onPlaying.bind(this)}
           onBuffering={this.onBuffering.bind(this)}
           onPaused={this.onPaused.bind(this)}
+          progressUpdateInterval={250}
           onError={this._onError}
+          // onError={this.onError.bind(this)}
           onOpen={this._onOpen}
           onLoadStart={this._onLoadStart}
         />
@@ -330,7 +333,7 @@ export default class VLCPlayerView extends Component {
 
   _onError = e => {
     // [bavv add start]
-    let { onVLCError } = this.props;
+    let { onVLCError, onError } = this.props;
     onVLCError && onVLCError();
     // [bavv add end]
     console.log('_onError');
@@ -339,6 +342,7 @@ export default class VLCPlayerView extends Component {
     this.setState({
       isError: true,
     });
+    onError&&onError()
   };
 
   _onOpen = e => {
