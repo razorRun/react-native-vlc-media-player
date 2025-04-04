@@ -55,6 +55,10 @@ export default class CommonVideo extends Component {
 
   static propTypes = {
     /**
+     * 视频播放错误
+     */
+    onError: PropTypes.func,
+    /**
      * 视频播放结束
      */
     onEnd: PropTypes.func,
@@ -187,7 +191,7 @@ export default class CommonVideo extends Component {
   }
 
   render() {
-    let { url, ggUrl, showGG, onGGEnd, onEnd, style, height, title, onLeftPress, showBack, showTitle, closeFullScreen, videoAspectRatio, fullVideoAspectRatio } = this.props;
+    let { url, ggUrl, showGG, onGGEnd, onEnd, onError, style, height, title, onLeftPress, showBack, showTitle, closeFullScreen, videoAspectRatio, fullVideoAspectRatio } = this.props;
     let { isEndGG, isFull, currentUrl } = this.state;
     let currentVideoAspectRatio = '';
     if (isFull) {
@@ -294,6 +298,9 @@ export default class CommonVideo extends Component {
             closeFullScreen={this._closeFullScreen}
             onEnd={() => {
               onEnd && onEnd();
+            }}
+            onError={() => {
+              onError && onError();
             }}
           />
         )}
