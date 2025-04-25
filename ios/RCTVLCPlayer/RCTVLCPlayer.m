@@ -107,6 +107,9 @@ static NSString *const playbackRate = @"rate";
     // [bavv edit end]
 
     _player.media = [VLCMedia mediaWithURL:uri];
+
+    if (_autoplay)
+        [_player play];
     
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
 }
