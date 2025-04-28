@@ -295,6 +295,12 @@ class ReactVlcPlayerView extends TextureView implements
                     map.putString("type", "TimeChanged");
                     eventEmitter.sendEvent(map, VideoEventEmitter.EVENT_SEEK);
                     break;
+                case MediaPlayer.Event.RecordChanged:
+                    map.putString("type", "RecordingPath");
+                    map.putBoolean("isRecording", event.getRecording());
+                    map.putString("recordPath", event.getRecordPath());
+                    eventEmitter.sendEvent(map, VideoEventEmitter.EVENT_RECORDING_STATE);
+                    break;
                 default:
                     map.putString("type", event.type + "");
                     eventEmitter.onVideoStateChange(map);
@@ -638,6 +644,17 @@ class ReactVlcPlayerView extends TextureView implements
         }
     }
 
+    public void startRecording(String recordingPath) {
+        if(mMediaPlayer == null) return;
+        if(recordingPath != null) {
+            mMediaPlayer.record(recordingPath);
+        }
+    }
+
+    public void stopRecording() {
+        if(mMediaPlayer == null) return;
+        mMediaPlayer.record(null);
+    }
 
     public void cleanUpResources() {
         if (surfaceView != null) {

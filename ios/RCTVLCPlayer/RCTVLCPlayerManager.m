@@ -1,6 +1,7 @@
 #import "RCTVLCPlayerManager.h"
 #import "RCTVLCPlayer.h"
 #import "React/RCTBridge.h"
+#import "React/RCTUIManager.h"
 
 @implementation RCTVLCPlayerManager
 
@@ -24,6 +25,7 @@ RCT_EXPORT_VIEW_PROPERTY(onVideoError, RCTDirectEventBlock);
 RCT_EXPORT_VIEW_PROPERTY(onVideoOpen, RCTDirectEventBlock);
 RCT_EXPORT_VIEW_PROPERTY(onVideoLoadStart, RCTDirectEventBlock);
 RCT_EXPORT_VIEW_PROPERTY(onVideoLoad, RCTDirectEventBlock);
+RCT_EXPORT_VIEW_PROPERTY(onRecordingState, RCTDirectEventBlock);
 
 - (dispatch_queue_t)methodQueue
 {
@@ -46,5 +48,27 @@ RCT_CUSTOM_VIEW_PROPERTY(muted, BOOL, RCTVLCPlayer)
 RCT_EXPORT_VIEW_PROPERTY(audioTrack, int);
 RCT_EXPORT_VIEW_PROPERTY(textTrack, int);
 RCT_EXPORT_VIEW_PROPERTY(autoplay, BOOL);
+
+RCT_EXPORT_METHOD(startRecording:(nonnull NSNumber*) reactTag withPath:(NSString *)path) {
+    [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
+        RCTVLCPlayer *view = viewRegistry[reactTag];
+        if (!view || ![view isKindOfClass:[RCTVLCPlayer class]]) {
+            RCTLogError(@"Cannot find RCTVLCPlayer with tag #%@", reactTag);
+            return;
+        }
+        [view startRecording:path];
+    }];
+}
+
+RCT_EXPORT_METHOD(stopRecording:(nonnull NSNumber*) reactTag) {
+    [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
+        RCTVLCPlayer *view = viewRegistry[reactTag];
+        if (!view || ![view isKindOfClass:[RCTVLCPlayer class]]) {
+            RCTLogError(@"Cannot find RCTVLCPlayer with tag #%@", reactTag);
+            return;
+        }
+        [view stopRecording];
+    }];
+}
 
 @end

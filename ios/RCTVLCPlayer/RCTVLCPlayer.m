@@ -251,6 +251,16 @@ static NSString *const playbackRate = @"rate";
     NSLog(@"VLCMediaMetaDataDidChange %i", _player.numberOfAudioTracks);
 }
 
+- (void)mediaPlayer:(VLCMediaPlayer *)player recordingStoppedAtPath:(NSString *)path {
+    if (self.onRecordingState) {
+        self.onRecordingState(@{
+            @"target": self.reactTag,
+            @"isRecording": @NO,
+            @"recordPath": path ?: [NSNull null]
+        });
+    }
+}
+
 //   ===================================
 
 - (void)updateVideoProgress
@@ -351,6 +361,23 @@ static NSString *const playbackRate = @"rate";
 - (void)setTextTrack:(int)track
 {
     [_player setCurrentVideoSubTitleIndex:track];
+}
+
+- (void)startRecording:(NSString*)path
+{
+    [_player startRecordingAtPath:path];
+    if (self.onRecordingState) {
+        self.onRecordingState(@{
+            @"target": self.reactTag,
+            @"isRecording": @YES,
+            @"recordPath": path ?: [NSNull null]
+        });
+    }
+}
+
+- (void)stopRecording
+{
+    [_player stopRecording];
 }
 
 

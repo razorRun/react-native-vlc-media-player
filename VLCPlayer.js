@@ -4,9 +4,9 @@ import ReactNative from "react-native";
 const { Component } = React;
 
 import PropTypes from "prop-types";
-
-const { StyleSheet, requireNativeComponent, NativeModules, View } = ReactNative;
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
+
+const { StyleSheet, requireNativeComponent, NativeModules, View, UIManager } = ReactNative;
 
 export default class VLCPlayer extends Component {
   constructor(props, context) {
@@ -25,6 +25,7 @@ export default class VLCPlayer extends Component {
     this._onOpen = this._onOpen.bind(this);
     this._onLoadStart = this._onLoadStart.bind(this);
     this._onLoad = this._onLoad.bind(this);
+    this._onRecordingState = this._onRecordingState.bind(this);
     this.changeVideoAspectRatio = this.changeVideoAspectRatio.bind(this);
   }
   static defaultProps = {
@@ -33,6 +34,24 @@ export default class VLCPlayer extends Component {
 
   setNativeProps(nativeProps) {
     this._root.setNativeProps(nativeProps);
+  }
+
+  startRecording(path) {
+    UIManager.dispatchViewManagerCommand(
+      ReactNative.findNodeHandle(this),
+      UIManager.getViewManagerConfig('RCTVLCPlayer').Commands
+        .startRecording,
+      [path],
+    );
+  }
+
+  stopRecording() {
+    UIManager.dispatchViewManagerCommand(
+      ReactNative.findNodeHandle(this),
+      UIManager.getViewManagerConfig('RCTVLCPlayer').Commands
+        .stopRecording,
+      [],
+    );
   }
 
   seek(pos) {
@@ -120,6 +139,17 @@ export default class VLCPlayer extends Component {
     }
   }
 
+  _onRecordingState(event) {
+    if (this.lastRecording === event.nativeEvent.recordPath) {
+      return;
+    }
+
+    this.lastRecording = event.nativeEvent.recordPath;
+    if (this.lastRecording && this.props.onRecordingCreated) { 
+      this.props.onRecordingCreated(this.lastRecording);
+    }
+  }
+
   render() {
     /* const {
      source
@@ -169,6 +199,7 @@ export default class VLCPlayer extends Component {
       onVideoStopped: this._onStopped,
       onVideoBuffering: this._onBuffering,
       onVideoLoad: this._onLoad,
+      onRecordingState: this._onRecordingState,
       progressUpdateInterval: this.props.onProgress ? 250 : 0,
     });
 
@@ -220,6 +251,7 @@ VLCPlayer.propTypes = {
   onStopped: PropTypes.func,
   onPlaying: PropTypes.func,
   onPaused: PropTypes.func,
+  onRecordingCreated: PropTypes.func,
 
   /* Required by react-native */
   scaleX: PropTypes.number,

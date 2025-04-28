@@ -166,6 +166,13 @@ export type VLCPlayerCallbackProps = {
    * @param event - Event properties
    */
   onLoad?: (event: VideoInfo) => void;
+
+    /**
+   * Called when a new recording is created
+   *
+   * @param recordingPath - Full path to the recording file
+   */
+    onRecordingCreated?: (recordingPath: string) => void;
 };
 
 export type VLCPlayerProps = VLCPlayerCallbackProps & {
@@ -264,10 +271,32 @@ export type VLCPlayerProps = VLCPlayerCallbackProps & {
 /**
  * A component that can be used to show a playback
  */
-declare class VLCPlayer extends Component<VLCPlayerProps> {}
+declare class VLCPlayer extends Component<VLCPlayerProps> {
+  /**
+   * Start a new recording session at the given path
+   * @param path Directory to create new recording in
+   */
+  startRecording(path: string);
+
+  /**
+   * Stop current recording session
+   */
+  stopRecording();
+}
 
 /**
  * A component that renders a playback with additional
  * features like fullscreen, controls, etc.
  */
-declare class VlCPlayerView extends Component<any> {}
+declare class VlCPlayerView extends Component<any> {
+  /**
+   * Start a new recording session at the given path
+   * @param path Directory to create new recording in
+   */
+  startRecording(path: string);
+
+  /**
+   * Stop current recording session
+   */
+  stopRecording();
+}
