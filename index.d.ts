@@ -167,12 +167,23 @@ export type VLCPlayerCallbackProps = {
    */
   onLoad?: (event: VideoInfo) => void;
 
-    /**
+  /**
    * Called when a new recording is created
    *
    * @param recordingPath - Full path to the recording file
    */
-    onRecordingCreated?: (recordingPath: string) => void;
+  onRecordingCreated?: (recordingPath: string) => void;
+
+  /**
+   * Called when a new snapshot is created
+   *
+   * @param event - Event properties
+   */
+  onSnapshot?: (event: {
+    success: boolean;
+    path?: string;
+    error?: string;
+  }) => void;
 };
 
 export type VLCPlayerProps = VLCPlayerCallbackProps & {
@@ -262,7 +273,7 @@ export type VLCPlayerProps = VLCPlayerCallbackProps & {
 
   /**
    * Enables autoplay
-   * 
+   *
    * @default true
    */
   autoplay?: boolean;
@@ -282,6 +293,12 @@ declare class VLCPlayer extends Component<VLCPlayerProps> {
    * Stop current recording session
    */
   stopRecording();
+
+  /**
+   * Take a screenshot of the current video frame
+   * @param path The file path where to save the screenshot
+   */
+  snapshot(path: string);
 }
 
 /**
@@ -299,4 +316,10 @@ declare class VlCPlayerView extends Component<any> {
    * Stop current recording session
    */
   stopRecording();
+
+  /**
+   * Take a screenshot of the current video frame
+   * @param path The file path where to save the screenshot
+   */
+  snapshot(path: string);
 }

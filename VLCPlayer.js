@@ -13,7 +13,6 @@ export default class VLCPlayer extends Component {
     super(props, context);
     this.seek = this.seek.bind(this);
     this.resume = this.resume.bind(this);
-    this.snapshot = this.snapshot.bind(this);
     this._assignRoot = this._assignRoot.bind(this);
     this._onError = this._onError.bind(this);
     this._onProgress = this._onProgress.bind(this);
@@ -26,6 +25,7 @@ export default class VLCPlayer extends Component {
     this._onLoadStart = this._onLoadStart.bind(this);
     this._onLoad = this._onLoad.bind(this);
     this._onRecordingState = this._onRecordingState.bind(this);
+    this._onSnapshot = this._onSnapshot.bind(this);
     this.changeVideoAspectRatio = this.changeVideoAspectRatio.bind(this);
   }
   static defaultProps = {
@@ -48,9 +48,16 @@ export default class VLCPlayer extends Component {
   stopRecording() {
     UIManager.dispatchViewManagerCommand(
       ReactNative.findNodeHandle(this),
-      UIManager.getViewManagerConfig('RCTVLCPlayer').Commands
-        .stopRecording,
-      [],
+      UIManager.getViewManagerConfig('RCTVLCPlayer').Commands.stopRecording,
+      []
+    );
+  }
+
+  snapshot(path) {
+    UIManager.dispatchViewManagerCommand(
+      ReactNative.findNodeHandle(this),
+      UIManager.getViewManagerConfig('RCTVLCPlayer').Commands.snapshot,
+      [path]
     );
   }
 
@@ -60,10 +67,6 @@ export default class VLCPlayer extends Component {
 
   resume(isResume) {
     this.setNativeProps({ resume: isResume });
-  }
-
-  snapshot(path) {
-    this.setNativeProps({ snapshotPath: path });
   }
 
   autoAspectRatio(isAuto) {
@@ -145,8 +148,14 @@ export default class VLCPlayer extends Component {
     }
 
     this.lastRecording = event.nativeEvent.recordPath;
-    if (this.lastRecording && this.props.onRecordingCreated) { 
+    if (this.lastRecording && this.props.onRecordingCreated) {
       this.props.onRecordingCreated(this.lastRecording);
+    }
+  }
+
+  _onSnapshot(event) {
+    if (event.nativeEvent.success && this.props.onSnapshot) {
+      this.props.onSnapshot(event.nativeEvent);
     }
   }
 
@@ -200,6 +209,7 @@ export default class VLCPlayer extends Component {
       onVideoBuffering: this._onBuffering,
       onVideoLoad: this._onLoad,
       onRecordingState: this._onRecordingState,
+      onSnapshot: this._onSnapshot,
       progressUpdateInterval: this.props.onProgress ? 250 : 0,
     });
 
@@ -212,7 +222,6 @@ VLCPlayer.propTypes = {
   rate: PropTypes.number,
   seek: PropTypes.number,
   resume: PropTypes.bool,
-  snapshotPath: PropTypes.string,
   paused: PropTypes.bool,
 
   autoAspectRatio: PropTypes.bool,

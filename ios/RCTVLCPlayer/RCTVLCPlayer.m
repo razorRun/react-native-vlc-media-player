@@ -380,6 +380,29 @@ static NSString *const playbackRate = @"rate";
     [_player stopRecording];
 }
 
+- (void)snapshot:(NSString*)path
+{
+    @try {
+        if (_player) {
+            [_player saveVideoSnapshotAt:path withWidth:_player.videoSize.width andHeight:_player.videoSize.height];
+            self.onSnapshot(@{
+                @"success": @YES,
+                @"path": path,
+                @"error": [NSNull null],
+                @"target": self.reactTag
+            });
+        } else {
+            @throw [NSException exceptionWithName:@"PlayerNotInitialized" reason:@"Player is not initialized" userInfo:nil];
+        }
+    } @catch (NSException *e) {
+        NSLog(@"Error in snapshot: %@", e);
+        self.onSnapshot(@{
+            @"success": @NO,
+            @"error": [e description],
+            @"target": self.reactTag
+        });
+    }
+}
 
 - (void)setVideoAspectRatio:(NSString *)ratio{
     char *char_content = [ratio cStringUsingEncoding:NSASCIIStringEncoding];

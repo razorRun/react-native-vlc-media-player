@@ -32,7 +32,6 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
     private static final String PROP_RATE = "rate";
     private static final String PROP_VIDEO_ASPECT_RATIO = "videoAspectRatio";
     private static final String PROP_SRC_IS_NETWORK = "isNetwork";
-    private static final String PROP_SNAPSHOT_PATH = "snapshotPath";
     private static final String PROP_AUTO_ASPECT_RATIO = "autoAspectRatio";
     private static final String PROP_CLEAR = "clear";
     private static final String PROP_PROGRESS_UPDATE_INTERVAL = "progressUpdateInterval";
@@ -143,11 +142,6 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
         videoView.setAspectRatio(aspectRatio);
     }
 
-    @ReactProp(name = PROP_SNAPSHOT_PATH)
-    public void setSnapshotPath(final ReactVlcPlayerView videoView, final String snapshotPath) {
-        videoView.doSnapshot(snapshotPath);
-    }
-
     @ReactProp(name = PROP_AUDIO_TRACK)
     public void setAudioTrack(final ReactVlcPlayerView videoView, final int audioTrack) {
         videoView.setAudioTrack(audioTrack);
@@ -166,11 +160,16 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
         videoView.stopRecording();
     }
 
+    public void snapshot(final ReactVlcPlayerView videoView, final String path) {
+        videoView.doSnapshot(path);
+    }
+
     @Override
     public Map<String, Integer> getCommandsMap() {
         return MapBuilder.of(
             "startRecording", 1,
-            "stopRecording", 2
+            "stopRecording", 2,
+            "snapshot", 3
         );
     }
 
@@ -186,6 +185,13 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
 
             case 2:
                 root.stopRecording();
+                break;
+
+            case 3:
+                if (args != null && args.size() > 0 && !args.isNull(0)) {
+                    String path = args.getString(0);
+                    root.doSnapshot(path);
+                }
                 break;
 
             default:
