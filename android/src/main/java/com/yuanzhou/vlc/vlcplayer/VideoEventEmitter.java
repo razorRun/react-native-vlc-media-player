@@ -29,7 +29,6 @@ class VideoEventEmitter {
     public static final String EVENT_PROGRESS = "onVideoProgress";
     public static final String EVENT_SEEK = "onVideoSeek";
     public static final String EVENT_END = "onVideoEnd";
-    public static final String EVENT_SNAPSHOT = "onSnapshot";
     public static final String EVENT_ON_IS_PLAYING= "onVideoPlaying";
     public static final String EVENT_ON_VIDEO_STATE_CHANGE = "onVideoStateChange";
     public static final String EVENT_ON_VIDEO_STOPPED = "onVideoStopped";
@@ -38,13 +37,13 @@ class VideoEventEmitter {
     public static final String EVENT_ON_PAUSED = "onVideoPaused";
     public static final String EVENT_ON_LOAD = "onVideoLoad";
     public static final String EVENT_RECORDING_STATE = "onRecordingState";
+    public static final String EVENT_ON_SNAPSHOT = "onSnapshot";
 
     static final String[] Events = {
             EVENT_LOAD_START,
             EVENT_PROGRESS,
             EVENT_SEEK,
             EVENT_END,
-            EVENT_SNAPSHOT,
             EVENT_ON_IS_PLAYING,
             EVENT_ON_VIDEO_STATE_CHANGE,
             EVENT_ON_OPEN,
@@ -53,7 +52,8 @@ class VideoEventEmitter {
             EVENT_ON_ERROR,
             EVENT_ON_VIDEO_STOPPED,
             EVENT_ON_LOAD,
-            EVENT_RECORDING_STATE
+            EVENT_RECORDING_STATE,
+            EVENT_ON_SNAPSHOT
     };
 
     @Retention(RetentionPolicy.SOURCE)
@@ -62,7 +62,6 @@ class VideoEventEmitter {
             EVENT_PROGRESS,
             EVENT_SEEK,
             EVENT_END,
-            EVENT_SNAPSHOT,
             EVENT_ON_IS_PLAYING,
             EVENT_ON_VIDEO_STATE_CHANGE,
             EVENT_ON_OPEN,
@@ -71,7 +70,8 @@ class VideoEventEmitter {
             EVENT_ON_ERROR,
             EVENT_ON_VIDEO_STOPPED,
             EVENT_ON_LOAD,
-            EVENT_RECORDING_STATE
+            EVENT_RECORDING_STATE,
+            EVENT_ON_SNAPSHOT
     })
 
     @interface VideoEvents {
@@ -115,16 +115,6 @@ class VideoEventEmitter {
         WritableMap event = Arguments.createMap();
         event.putMap(EVENT_PROP_ERROR, error);
         //receiveEvent(EVENT_ERROR, event);
-    }
-
-    /**
-     * 截图回调
-     * @param result
-     */
-    void onSnapshot(int result){
-        WritableMap map = Arguments.createMap();
-        map.putInt("isSuccess",result);
-        receiveEvent(EVENT_SNAPSHOT, map);
     }
 
     /**

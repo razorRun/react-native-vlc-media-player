@@ -191,6 +191,7 @@ Callback props take a function that gets fired on various player events:
 | `onError`            | Called when an error occurs whilst attempting to play media                                                                                                                                                          |
 | `onLoad`             | Called when video info is loaded, Callback containing VideoInfo                                                                                                                                                      |
 | `onRecordingCreated` | Called when a new recording is created as the result of `startRecording()` `stopRecording()`                                                                                                                         |
+| `onSnapshot`         | Called when a new snapshot is created as the result of `snapshot()` - contains `{success: boolean, path?: string, error?: string}`                                                                                   |
 
 #### Methods props
 
@@ -200,6 +201,7 @@ Methods available on the VLC player ref
 | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | `startRecording(directory: string)` | Start recording the current video into the given directory                                                        |
 | `stopRecording()`                   | Stop recording the current video. The final recording file can be obtained from the `onRecordingCreated` callback |
+| `snapshot(path: string)`            | Capture a snapshot of the current video frame to the given file path                                              |
 
 VideoInfo example:
 
