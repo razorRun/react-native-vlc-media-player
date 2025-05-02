@@ -242,6 +242,13 @@ Video coding formats: Cinepak, Dirac, DV, H.263, H.264/MPEG-4 AVC, H.265/MPEG HE
 4. Send PR.
 5. Be happy, Cause you're a Rockstar 🌟 ❤️
 
+## Known Issues
+
+### iOS 17 Simulator Crash
+
+It is a [known issue](https://code.videolan.org/videolan/VLCKit/-/issues/724) that apps can crash on playback in iOS simulator with `EXEC_BAD_ACCESS` errors. This appears to only be on certain iOS 17.x versions (17.4, 17.5).
+If this happens, try running on an iOS 18+ simulator instead.
+
 ## TODO
 
 1. Android video aspect ratio and other params do not work (Events are called but all events come through a single event onVideoStateChange but the JS side does not implement it)
