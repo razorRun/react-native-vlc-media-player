@@ -251,6 +251,16 @@ static NSString *const playbackRate = @"rate";
     NSLog(@"VLCMediaMetaDataDidChange %i", _player.numberOfAudioTracks);
 }
 
+- (void)mediaPlayer:(VLCMediaPlayer *)player recordingStoppedAtPath:(NSString *)path {
+    if (self.onRecordingState) {
+        self.onRecordingState(@{
+            @"target": self.reactTag,
+            @"isRecording": @NO,
+            @"recordPath": path ?: [NSNull null]
+        });
+    }
+}
+
 //   ===================================
 
 - (void)updateVideoProgress
@@ -353,6 +363,46 @@ static NSString *const playbackRate = @"rate";
     [_player setCurrentVideoSubTitleIndex:track];
 }
 
+- (void)startRecording:(NSString*)path
+{
+    [_player startRecordingAtPath:path];
+    if (self.onRecordingState) {
+        self.onRecordingState(@{
+            @"target": self.reactTag,
+            @"isRecording": @YES,
+            @"recordPath": path ?: [NSNull null]
+        });
+    }
+}
+
+- (void)stopRecording
+{
+    [_player stopRecording];
+}
+
+- (void)snapshot:(NSString*)path
+{
+    @try {
+        if (_player) {
+            [_player saveVideoSnapshotAt:path withWidth:_player.videoSize.width andHeight:_player.videoSize.height];
+            self.onSnapshot(@{
+                @"success": @YES,
+                @"path": path,
+                @"error": [NSNull null],
+                @"target": self.reactTag
+            });
+        } else {
+            @throw [NSException exceptionWithName:@"PlayerNotInitialized" reason:@"Player is not initialized" userInfo:nil];
+        }
+    } @catch (NSException *e) {
+        NSLog(@"Error in snapshot: %@", e);
+        self.onSnapshot(@{
+            @"success": @NO,
+            @"error": [e description],
+            @"target": self.reactTag
+        });
+    }
+}
 
 - (void)setVideoAspectRatio:(NSString *)ratio{
     char *char_content = [ratio cStringUsingEncoding:NSASCIIStringEncoding];

@@ -4,16 +4,15 @@ import ReactNative from "react-native";
 const { Component } = React;
 
 import PropTypes from "prop-types";
-
-const { StyleSheet, requireNativeComponent, NativeModules, View } = ReactNative;
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
+
+const { StyleSheet, requireNativeComponent, NativeModules, View, UIManager } = ReactNative;
 
 export default class VLCPlayer extends Component {
   constructor(props, context) {
     super(props, context);
     this.seek = this.seek.bind(this);
     this.resume = this.resume.bind(this);
-    this.snapshot = this.snapshot.bind(this);
     this._assignRoot = this._assignRoot.bind(this);
     this._onError = this._onError.bind(this);
     this._onProgress = this._onProgress.bind(this);
@@ -25,6 +24,8 @@ export default class VLCPlayer extends Component {
     this._onOpen = this._onOpen.bind(this);
     this._onLoadStart = this._onLoadStart.bind(this);
     this._onLoad = this._onLoad.bind(this);
+    this._onRecordingState = this._onRecordingState.bind(this);
+    this._onSnapshot = this._onSnapshot.bind(this);
     this.changeVideoAspectRatio = this.changeVideoAspectRatio.bind(this);
   }
   static defaultProps = {
@@ -35,16 +36,37 @@ export default class VLCPlayer extends Component {
     this._root.setNativeProps(nativeProps);
   }
 
+  startRecording(path) {
+    UIManager.dispatchViewManagerCommand(
+      ReactNative.findNodeHandle(this),
+      UIManager.getViewManagerConfig('RCTVLCPlayer').Commands
+        .startRecording,
+      [path],
+    );
+  }
+
+  stopRecording() {
+    UIManager.dispatchViewManagerCommand(
+      ReactNative.findNodeHandle(this),
+      UIManager.getViewManagerConfig('RCTVLCPlayer').Commands.stopRecording,
+      []
+    );
+  }
+
+  snapshot(path) {
+    UIManager.dispatchViewManagerCommand(
+      ReactNative.findNodeHandle(this),
+      UIManager.getViewManagerConfig('RCTVLCPlayer').Commands.snapshot,
+      [path]
+    );
+  }
+
   seek(pos) {
     this.setNativeProps({ seek: pos });
   }
 
   resume(isResume) {
     this.setNativeProps({ resume: isResume });
-  }
-
-  snapshot(path) {
-    this.setNativeProps({ snapshotPath: path });
   }
 
   autoAspectRatio(isAuto) {
@@ -120,6 +142,23 @@ export default class VLCPlayer extends Component {
     }
   }
 
+  _onRecordingState(event) {
+    if (this.lastRecording === event.nativeEvent.recordPath) {
+      return;
+    }
+
+    this.lastRecording = event.nativeEvent.recordPath;
+    if (this.lastRecording && this.props.onRecordingCreated) {
+      this.props.onRecordingCreated(this.lastRecording);
+    }
+  }
+
+  _onSnapshot(event) {
+    if (event.nativeEvent.success && this.props.onSnapshot) {
+      this.props.onSnapshot(event.nativeEvent);
+    }
+  }
+
   render() {
     /* const {
      source
@@ -169,6 +208,8 @@ export default class VLCPlayer extends Component {
       onVideoStopped: this._onStopped,
       onVideoBuffering: this._onBuffering,
       onVideoLoad: this._onLoad,
+      onRecordingState: this._onRecordingState,
+      onSnapshot: this._onSnapshot,
       progressUpdateInterval: this.props.onProgress ? 250 : 0,
     });
 
@@ -181,7 +222,6 @@ VLCPlayer.propTypes = {
   rate: PropTypes.number,
   seek: PropTypes.number,
   resume: PropTypes.bool,
-  snapshotPath: PropTypes.string,
   paused: PropTypes.bool,
 
   autoAspectRatio: PropTypes.bool,
@@ -220,6 +260,7 @@ VLCPlayer.propTypes = {
   onStopped: PropTypes.func,
   onPlaying: PropTypes.func,
   onPaused: PropTypes.func,
+  onRecordingCreated: PropTypes.func,
 
   /* Required by react-native */
   scaleX: PropTypes.number,

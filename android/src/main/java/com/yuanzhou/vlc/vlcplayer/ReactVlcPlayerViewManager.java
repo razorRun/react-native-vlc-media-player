@@ -3,6 +3,8 @@ package com.yuanzhou.vlc.vlcplayer;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
@@ -30,12 +32,12 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
     private static final String PROP_RATE = "rate";
     private static final String PROP_VIDEO_ASPECT_RATIO = "videoAspectRatio";
     private static final String PROP_SRC_IS_NETWORK = "isNetwork";
-    private static final String PROP_SNAPSHOT_PATH = "snapshotPath";
     private static final String PROP_AUTO_ASPECT_RATIO = "autoAspectRatio";
     private static final String PROP_CLEAR = "clear";
     private static final String PROP_PROGRESS_UPDATE_INTERVAL = "progressUpdateInterval";
     private static final String PROP_TEXT_TRACK = "textTrack";
     private static final String PROP_AUDIO_TRACK = "audioTrack";
+    private static final String PROP_RECORDING_PATH = "recordingPath";
 
 
     @Override
@@ -140,11 +142,6 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
         videoView.setAspectRatio(aspectRatio);
     }
 
-    @ReactProp(name = PROP_SNAPSHOT_PATH)
-    public void setSnapshotPath(final ReactVlcPlayerView videoView, final String snapshotPath) {
-        videoView.doSnapshot(snapshotPath);
-    }
-
     @ReactProp(name = PROP_AUDIO_TRACK)
     public void setAudioTrack(final ReactVlcPlayerView videoView, final int audioTrack) {
         videoView.setAudioTrack(audioTrack);
@@ -153,6 +150,53 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
     @ReactProp(name = PROP_TEXT_TRACK)
     public void setTextTrack(final ReactVlcPlayerView videoView, final int textTrack) {
         videoView.setTextTrack(textTrack);
+    }
+
+    public void startRecording(final ReactVlcPlayerView videoView, final String recordingPath) {
+        videoView.startRecording(recordingPath);
+    }
+
+    public void stopRecording(final ReactVlcPlayerView videoView) {
+        videoView.stopRecording();
+    }
+
+    public void snapshot(final ReactVlcPlayerView videoView, final String path) {
+        videoView.doSnapshot(path);
+    }
+
+    @Override
+    public Map<String, Integer> getCommandsMap() {
+        return MapBuilder.of(
+            "startRecording", 1,
+            "stopRecording", 2,
+            "snapshot", 3
+        );
+    }
+
+    @Override
+    public void receiveCommand(ReactVlcPlayerView root, int commandId, @Nullable ReadableArray args) {
+        switch (commandId) {
+            case 1:
+                if (args != null && args.size() > 0 && !args.isNull(0)) {
+                    String path = args.getString(0);
+                    root.startRecording(path);
+                }
+                break;
+
+            case 2:
+                root.stopRecording();
+                break;
+
+            case 3:
+                if (args != null && args.size() > 0 && !args.isNull(0)) {
+                    String path = args.getString(0);
+                    root.doSnapshot(path);
+                }
+                break;
+
+            default:
+                break;
+        }
     }
 
     private boolean startsWithValidScheme(String uriString) {

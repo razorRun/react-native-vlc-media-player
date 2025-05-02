@@ -2,6 +2,7 @@ package com.yuanzhou.vlc.vlcplayer;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.net.Uri;
@@ -27,6 +28,8 @@ import org.videolan.libvlc.LibVLC;
 import org.videolan.libvlc.Media;
 import org.videolan.libvlc.MediaPlayer;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 
@@ -294,6 +297,12 @@ class ReactVlcPlayerView extends TextureView implements
                 case MediaPlayer.Event.TimeChanged:
                     map.putString("type", "TimeChanged");
                     eventEmitter.sendEvent(map, VideoEventEmitter.EVENT_SEEK);
+                    break;
+                case MediaPlayer.Event.RecordChanged:
+                    map.putString("type", "RecordingPath");
+                    map.putBoolean("isRecording", event.getRecording());
+                    map.putString("recordPath", event.getRecordPath());
+                    eventEmitter.sendEvent(map, VideoEventEmitter.EVENT_RECORDING_STATE);
                     break;
                 default:
                     map.putString("type", event.type + "");
@@ -588,12 +597,58 @@ class ReactVlcPlayerView extends TextureView implements
 
 
     /**
-     * 截图
+     * Take a screenshot of the current video frame
      *
-     * @param path
+     * @param path The file path where to save the screenshot
+     * @return boolean indicating if the screenshot was taken successfully
      */
-    public void doSnapshot(String path) {
-        return;
+    public boolean doSnapshot(String path) {
+        if (mMediaPlayer != null) {
+            try {
+                Bitmap bitmap = getBitmap();
+                if (bitmap == null) {
+                    WritableMap event = Arguments.createMap();
+                    event.putBoolean("success", false);
+                    event.putString("error", "Failed to capture bitmap");
+                    eventEmitter.sendEvent(event, VideoEventEmitter.EVENT_ON_SNAPSHOT);
+                    return false;
+                }
+
+                File file = new File(path);
+                file.getParentFile().mkdirs();
+
+                FileOutputStream out = new FileOutputStream(file);
+
+                String extension = path.substring(path.lastIndexOf(".") + 1);
+                if (extension.equals("png")) {
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                } else {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                }
+                out.flush();
+                out.close();
+
+                bitmap.recycle();
+
+                WritableMap event = Arguments.createMap();
+                event.putBoolean("success", true);
+                event.putString("path", path);
+                eventEmitter.sendEvent(event, VideoEventEmitter.EVENT_ON_SNAPSHOT);
+                return true;
+            } catch (Exception e) {
+                WritableMap event = Arguments.createMap();
+                event.putBoolean("success", false);
+                event.putString("error", e.getMessage());
+                eventEmitter.sendEvent(event, VideoEventEmitter.EVENT_ON_SNAPSHOT);
+                e.printStackTrace();
+                return false;
+            }
+        }
+        WritableMap event = Arguments.createMap();
+        event.putBoolean("success", false);
+        event.putString("error", "MediaPlayer is null");
+        eventEmitter.sendEvent(event, VideoEventEmitter.EVENT_ON_SNAPSHOT);
+        return false;
     }
 
 
@@ -638,6 +693,17 @@ class ReactVlcPlayerView extends TextureView implements
         }
     }
 
+    public void startRecording(String recordingPath) {
+        if(mMediaPlayer == null) return;
+        if(recordingPath != null) {
+            mMediaPlayer.record(recordingPath);
+        }
+    }
+
+    public void stopRecording() {
+        if(mMediaPlayer == null) return;
+        mMediaPlayer.record(null);
+    }
 
     public void cleanUpResources() {
         if (surfaceView != null) {

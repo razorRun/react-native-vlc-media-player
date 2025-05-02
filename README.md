@@ -180,16 +180,28 @@ import Orientation from 'react-native-orientation';
 
 Callback props take a function that gets fired on various player events:
 
-| Prop           | Description                                                                                                                                                                                                          |
-| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `onPlaying`    | Called when media starts playing returns eg `{target: 9, duration: 99750, seekable: true}`                                                                                                                           |
-| `onProgress`   | Callback containing `position` as a fraction, and `duration`, `currentTime` and `remainingTime` in seconds <br />&nbsp; ◦ &nbsp;eg `{  duration: 99750, position: 0.30, currentTime: 30154, remainingTime: -69594 }` |
-| `onPaused`     | Called when media is paused                                                                                                                                                                                          |
-| `onStopped `   | Called when media is stoped                                                                                                                                                                                          |
-| `onBuffering ` | Called when media is buffering                                                                                                                                                                                       |
-| `onEnded`      | Called when media playing ends                                                                                                                                                                                       |
-| `onError`      | Called when an error occurs whilst attempting to play media                                                                                                                                                          |
-| `onLoad`       | Called when video info is loaded, Callback containing VideoInfo                                                                                                                                                      |
+| Prop                 | Description                                                                                                                                                                                                          |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `onPlaying`          | Called when media starts playing returns eg `{target: 9, duration: 99750, seekable: true}`                                                                                                                           |
+| `onProgress`         | Callback containing `position` as a fraction, and `duration`, `currentTime` and `remainingTime` in seconds <br />&nbsp; ◦ &nbsp;eg `{  duration: 99750, position: 0.30, currentTime: 30154, remainingTime: -69594 }` |
+| `onPaused`           | Called when media is paused                                                                                                                                                                                          |
+| `onStopped `         | Called when media is stoped                                                                                                                                                                                          |
+| `onBuffering `       | Called when media is buffering                                                                                                                                                                                       |
+| `onEnded`            | Called when media playing ends                                                                                                                                                                                       |
+| `onError`            | Called when an error occurs whilst attempting to play media                                                                                                                                                          |
+| `onLoad`             | Called when video info is loaded, Callback containing VideoInfo                                                                                                                                                      |
+| `onRecordingCreated` | Called when a new recording is created as the result of `startRecording()` `stopRecording()`                                                                                                                         |
+| `onSnapshot`         | Called when a new snapshot is created as the result of `snapshot()` - contains `{success: boolean, path?: string, error?: string}`                                                                                   |
+
+#### Methods props
+
+Methods available on the VLC player ref
+
+| Prop                                | Description                                                                                                       |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `startRecording(directory: string)` | Start recording the current video into the given directory                                                        |
+| `stopRecording()`                   | Stop recording the current video. The final recording file can be obtained from the `onRecordingCreated` callback |
+| `snapshot(path: string)`            | Capture a snapshot of the current video frame to the given file path                                              |
 
 VideoInfo example:
 
