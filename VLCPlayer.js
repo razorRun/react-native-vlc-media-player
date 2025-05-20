@@ -183,8 +183,14 @@ export default class VLCPlayer extends Component {
     source.isNetwork = isNetwork;
     source.autoplay = this.props.autoplay;
     source.initOptions = source.initOptions || [];
-    //repeat the input media
-    source.initOptions.push("--input-repeat=1000");
+
+    if (this.props.repeat) { 
+      const existingRepeat = source.initOptions.find(item => item.startsWith('--repeat') || item.startsWith('--input-repeat'));
+      if (!existingRepeat) {
+        source.initOptions.push("--repeat");
+      }
+    }
+
     const nativeProps = Object.assign({}, this.props);
     Object.assign(nativeProps, {
       style: [styles.base, nativeProps.style],
