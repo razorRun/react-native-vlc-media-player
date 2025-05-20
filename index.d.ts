@@ -37,7 +37,10 @@ export interface VLCPlayerSource {
    * 
    * `["--network-caching=50", "--rtsp-tcp"]`
    * 
-   * @default ["--input-repeat=1000"]
+   * If `repeat` is set on props this will default to ["--repeat"] unless
+   * another `--repeat` or `--input-repeat` flag is passed.
+   * 
+   * @default []
    */
   initOptions?: string[];
 }
