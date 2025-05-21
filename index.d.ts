@@ -282,10 +282,7 @@ export type VLCPlayerProps = VLCPlayerCallbackProps & {
   autoplay?: boolean;
 };
 
-/**
- * A component that can be used to show a playback
- */
-declare class VLCPlayer extends Component<VLCPlayerProps> {
+declare class PlaybackMethods<T> extends Component<T> {
   /**
    * Start a new recording session at the given path
    * @param path Directory to create new recording in
@@ -299,30 +296,45 @@ declare class VLCPlayer extends Component<VLCPlayerProps> {
 
   /**
    * Take a screenshot of the current video frame
+   *
    * @param path The file path where to save the screenshot
    */
   snapshot(path: string);
+
+  /**
+   * Seek to the given position
+   * 
+   * @param pos Position to seek to (as a percentage of the full duration)
+   */
+  seek(pos: number);
+
+  /**
+   * Resume playback
+   */
+  resume();
+
+  /**
+   * Change auto aspect ratio setting
+   * 
+   * @param useAuto Whether or not to use auto aspect ratio
+   */
+  autoAspectRatio(useAuto: boolean);
+  
+  /**
+   * Update video aspect ratio e.g. `"16:9"`
+   * 
+   * @param ratio Aspect ratio to use
+   */
+  changeVideoAspectRatio(ratio: string);
 }
+
+/**
+ * A component that can be used to show a playback
+ */
+declare class VLCPlayer extends PlaybackMethods<VLCPlayerProps> {}
 
 /**
  * A component that renders a playback with additional
  * features like fullscreen, controls, etc.
  */
-declare class VlCPlayerView extends Component<any> {
-  /**
-   * Start a new recording session at the given path
-   * @param path Directory to create new recording in
-   */
-  startRecording(path: string);
-
-  /**
-   * Stop current recording session
-   */
-  stopRecording();
-
-  /**
-   * Take a screenshot of the current video frame
-   * @param path The file path where to save the screenshot
-   */
-  snapshot(path: string);
-}
+declare class VlCPlayerView extends PlaybackMethods<any> {}
