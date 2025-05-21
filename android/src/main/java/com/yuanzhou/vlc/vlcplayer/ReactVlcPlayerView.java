@@ -301,7 +301,11 @@ class ReactVlcPlayerView extends TextureView implements
                 case MediaPlayer.Event.RecordChanged:
                     map.putString("type", "RecordingPath");
                     map.putBoolean("isRecording", event.getRecording());
-                    map.putString("recordPath", event.getRecordPath());
+                    // Record started emits and event with the record path (but no file).
+                    // Only want to emit when recording has stopped and the recording is created.
+                    if(!event.getRecording() && event.getRecordPath() != null) {
+                        map.putString("recordPath", event.getRecordPath());
+                    }
                     eventEmitter.sendEvent(map, VideoEventEmitter.EVENT_RECORDING_STATE);
                     break;
                 default:

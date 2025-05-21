@@ -369,8 +369,7 @@ static NSString *const playbackRate = @"rate";
     if (self.onRecordingState) {
         self.onRecordingState(@{
             @"target": self.reactTag,
-            @"isRecording": @YES,
-            @"recordPath": path ?: [NSNull null]
+            @"isRecording": @YES
         });
     }
 }
