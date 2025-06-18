@@ -194,12 +194,6 @@ static NSString *const playbackRate = @"rate";
                 break;
             case VLCMediaPlayerStateBuffering:
                 NSLog(@"VLCMediaPlayerStateBuffering %i", _player.numberOfAudioTracks);
-                if (!_videoInfo && _player.numberOfAudioTracks > 0) {
-                    _videoInfo = [self getVideoInfo];
-                    self.onVideoLoad(_videoInfo);
-                }
-
-
                 self.onVideoBuffering(@{
                                         @"target": self.reactTag
                                         });
@@ -269,7 +263,7 @@ static NSString *const playbackRate = @"rate";
         int currentTime   = [[_player time] intValue];
         int remainingTime = [[_player remainingTime] intValue];
         int duration      = [_player.media.length intValue];
-        _videoInfo = [self getVideoInfo];
+        [self updateVideoInfo];
 
         self.onVideoProgress(@{
                                @"target": self.reactTag,
@@ -277,12 +271,11 @@ static NSString *const playbackRate = @"rate";
                                @"remainingTime": [NSNumber numberWithInt:remainingTime],
                                @"duration":[NSNumber numberWithInt:duration],
                                @"position":[NSNumber numberWithFloat:_player.position],
-                               @"info": _videoInfo
                                });
     }
 }
 
-- (NSDictionary *)getVideoInfo
+- (void)updateVideoInfo
 {
     NSMutableDictionary *info = [NSMutableDictionary new];
     info[@"duration"] = _player.media.length.value;
@@ -320,7 +313,10 @@ static NSString *const playbackRate = @"rate";
             info[@"textTracks"] = tracks;
         }
 
-        return info;
+        if (![_videoInfo isEqualToDictionary:info]) {
+            self.onVideoLoad(info);
+            _videoInfo = info;
+        }
 }
 
 - (void)jumpBackward:(int)interval
