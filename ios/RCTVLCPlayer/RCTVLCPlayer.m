@@ -269,13 +269,15 @@ static NSString *const playbackRate = @"rate";
         int currentTime   = [[_player time] intValue];
         int remainingTime = [[_player remainingTime] intValue];
         int duration      = [_player.media.length intValue];
+        _videoInfo = [self getVideoInfo];
 
         self.onVideoProgress(@{
                                @"target": self.reactTag,
                                @"currentTime": [NSNumber numberWithInt:currentTime],
                                @"remainingTime": [NSNumber numberWithInt:remainingTime],
                                @"duration":[NSNumber numberWithInt:duration],
-                               @"position":[NSNumber numberWithFloat:_player.position]
+                               @"position":[NSNumber numberWithFloat:_player.position],
+                               @"info": _videoInfo
                                });
     }
 }
