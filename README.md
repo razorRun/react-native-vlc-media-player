@@ -1,9 +1,5 @@
 # react-native-vlc-media-player
 
-### New feature requests and bug fixes
-
-At the moment I am a bit tied up with other work. As a matter of fact, I don't get much time to develop at all nowadays. But I am more than open to help anyone who wants's to contribute to this repo. And I will be sure to merge any fixes as soon as PR's come up. But if you need someone to fix issues that affect you till I get back to this(ETA Q3 2022), One option is to add a bounty to the following site https://www.bountysource.com/ someone will attend to it.
-
 ## Supported RN Versions
 
 - 0.59 > 0.62 and up
@@ -255,12 +251,10 @@ If this happens, try running on an iOS 18+ simulator instead.
 
 ## Credits
 
+[cornejobarraza](https://github.com/cornejobarraza)
 [ammarahm-ed](https://github.com/ammarahm-ed)
 [Nghi-NV](https://github.com/Nghi-NV)
 [xuyuanzhou](https://github.com/xuyuanzhou)
 
-## Sponsors
-
-Huge thanks to "[smartlife - one of the best custom home automation companies in new zealand](https://www.smartlife.nz/)" for helping me to keep this repo maintained
 
 Author - Roshan Milinda -> [roshan.digital](https://roshan.digital)
