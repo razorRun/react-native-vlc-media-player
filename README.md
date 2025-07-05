@@ -102,7 +102,7 @@ To enable just insert the `react-native-vlc-media-player` plugin to the "plugins
   "expo": {
     "plugins": [
       [
-        "expo-video",
+        "react-native-vlc-media-player",
         {
           "ios": {
               "includeVLCKit": false
