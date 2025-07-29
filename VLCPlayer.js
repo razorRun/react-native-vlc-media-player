@@ -243,6 +243,7 @@ VLCPlayer.propTypes = {
   muted: PropTypes.bool,
   audioTrack: PropTypes.number,
   textTrack: PropTypes.number,
+  acceptInvalidCertificates: PropTypes.bool,
 
   onVideoLoadStart: PropTypes.func,
   onVideoError: PropTypes.func,

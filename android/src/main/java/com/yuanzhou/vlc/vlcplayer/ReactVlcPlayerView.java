@@ -27,6 +27,7 @@ import org.videolan.libvlc.interfaces.IVLCVout;
 import org.videolan.libvlc.LibVLC;
 import org.videolan.libvlc.Media;
 import org.videolan.libvlc.MediaPlayer;
+import org.videolan.libvlc.Dialog;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -66,6 +67,7 @@ class ReactVlcPlayerView extends TextureView implements
     private boolean isHostPaused = false;
     private int preVolume = 100;
     private boolean autoAspectRatio = false;
+    private boolean acceptInvalidCertificates = false;
 
     private float mProgressUpdateInterval = 0;
     private Handler mProgressUpdateHandler = new Handler();
@@ -404,6 +406,39 @@ class ReactVlcPlayerView extends TextureView implements
             mMediaPlayer = new MediaPlayer(libvlc);
             setMutedModifier(mMuted);
             mMediaPlayer.setEventListener(mPlayerListener);
+            
+            // Register dialog callbacks for certificate handling
+            Dialog.setCallbacks(libvlc, new Dialog.Callbacks() {
+                @Override
+                public void onDisplay(Dialog.QuestionDialog dialog) {
+                    handleCertificateDialog(dialog);
+                }
+                
+                @Override
+                public void onDisplay(Dialog.ErrorMessage dialog) {
+                    // Handle error dialogs if needed
+                }
+                
+                @Override
+                public void onDisplay(Dialog.LoginDialog dialog) {
+                    // Handle login dialogs if needed
+                }
+                
+                @Override
+                public void onDisplay(Dialog.ProgressDialog dialog) {
+                    // Handle progress dialogs if needed
+                }
+                
+                @Override
+                public void onCanceled(Dialog dialog) {
+                    // Handle dialog cancellation
+                }
+                
+                @Override
+                public void onProgressUpdate(Dialog.ProgressDialog dialog) {
+                    // Handle progress updates
+                }
+            });
             //this.getHolder().setKeepScreenOn(true);
             IVLCVout vlcOut = mMediaPlayer.getVLCVout();
             if (mVideoWidth > 0 && mVideoHeight > 0) {
@@ -707,6 +742,35 @@ class ReactVlcPlayerView extends TextureView implements
     public void stopRecording() {
         if(mMediaPlayer == null) return;
         mMediaPlayer.record(null);
+    }
+
+    private void handleCertificateDialog(Dialog.QuestionDialog dialog) {
+        String title = dialog.getTitle();
+        String text = dialog.getText();
+        
+        Log.i(TAG, "Certificate dialog - Title: " + title + ", Text: " + text);
+        
+        // Check if it's a certificate validation dialog
+        if (text != null && (text.contains("certificate") || text.contains("SSL") || text.contains("TLS") || text.contains("cert"))) {
+            if (acceptInvalidCertificates) {
+                // Auto-accept invalid certificate
+                dialog.postAction(1); // Action 1 typically means "Accept"
+                Log.i(TAG, "Auto-accepted certificate dialog");
+            } else {
+                // Reject invalid certificate (default secure behavior)
+                dialog.postAction(2); // Action 2 typically means "Reject"
+                Log.i(TAG, "Rejected certificate dialog (acceptInvalidCertificates=false)");
+            }
+        } else {
+            // For non-certificate dialogs, dismiss
+            dialog.dismiss();
+            Log.i(TAG, "Dismissed non-certificate dialog");
+        }
+    }
+    
+    public void setAcceptInvalidCertificates(boolean accept) {
+        this.acceptInvalidCertificates = accept;
+        Log.i(TAG, "Set acceptInvalidCertificates to: " + accept);
     }
 
     public void cleanUpResources() {
