@@ -49,6 +49,7 @@ RCT_CUSTOM_VIEW_PROPERTY(muted, BOOL, RCTVLCPlayer)
 RCT_EXPORT_VIEW_PROPERTY(audioTrack, int);
 RCT_EXPORT_VIEW_PROPERTY(textTrack, int);
 RCT_EXPORT_VIEW_PROPERTY(autoplay, BOOL);
+RCT_EXPORT_VIEW_PROPERTY(acceptInvalidCertificates, BOOL);
 
 RCT_EXPORT_METHOD(startRecording:(nonnull NSNumber*) reactTag withPath:(NSString *)path) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {

@@ -33,6 +33,7 @@ static NSString *const playbackRate = @"rate";
 
     BOOL _paused;
     BOOL _autoplay;
+    BOOL _acceptInvalidCertificates;
 }
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher
@@ -96,6 +97,10 @@ static NSString *const playbackRate = @"rate";
     NSURL* uri = [NSURL URLWithString:uriString];
     int initType = [source objectForKey:@"initType"];
     NSDictionary* initOptions = [source objectForKey:@"initOptions"];
+    
+    // Get acceptInvalidCertificates from source
+    _acceptInvalidCertificates = [[source objectForKey:@"acceptInvalidCertificates"] boolValue];
+    NSLog(@"iOS: Set acceptInvalidCertificates to %@", _acceptInvalidCertificates ? @"YES" : @"NO");
 
     if (initType == 1) {
         _player = [[VLCMediaPlayer alloc] init];
@@ -106,6 +111,15 @@ static NSString *const playbackRate = @"rate";
     _player.drawable = self;
     // [bavv edit end]
 
+    VLCLibrary *library = _player.libraryInstance;
+
+    VLCConsoleLogger *consoleLogger = [[VLCConsoleLogger alloc] init];
+    consoleLogger.level = kVLCLogLevelDebug;
+    library.loggers = @[consoleLogger];
+
+    // Create dialog provider with custom UI to handle dialogs programmatically
+    self.dialogProvider = [[VLCDialogProvider alloc] initWithLibrary:library customUI:YES];
+    self.dialogProvider.customRenderer = self;
     _player.media = [VLCMedia mediaWithURL:uri];
 
     if (_autoplay)
@@ -411,6 +425,83 @@ static NSString *const playbackRate = @"rate";
     if (_player) {
         [[_player audio] setMuted:value];
     }
+}
+
+#pragma mark - VLCCustomDialogRendererProtocol
+
+- (void)showErrorWithTitle:(NSString *)title message:(NSString *)message {
+    NSLog(@"VLC Error - Title: %@, Message: %@", title, message);
+    // Handle error dialog - can show custom UI or just log
+}
+
+- (void)showLoginWithTitle:(NSString *)title 
+                   message:(NSString *)message 
+           defaultUsername:(NSString *)username 
+          askingForStorage:(BOOL)askingForStorage 
+             withReference:(NSValue *)reference {
+    NSLog(@"VLC Login - Title: %@, Message: %@", title, message);
+    // Handle login dialog - implement if needed for your use case
+}
+
+- (void)showQuestionWithTitle:(NSString *)title 
+                      message:(NSString *)message 
+                         type:(VLCDialogQuestionType)type
+                 cancelString:(NSString *)cancel
+               action1String:(NSString *)action1
+               action2String:(NSString *)action2
+               withReference:(NSValue *)reference {
+    
+    NSLog(@"VLC Question - Title: %@, Message: %@", title, message);
+    
+    // Check if this is a certificate-related dialog
+    NSString *fullText = [NSString stringWithFormat:@"%@ %@", title ?: @"", message ?: @""];
+    BOOL isCertificateDialog = [fullText containsString:@"certificate"] || 
+                              [fullText containsString:@"SSL"] || 
+                              [fullText containsString:@"TLS"] ||
+                              [fullText containsString:@"cert"] ||
+                              [fullText containsString:@"security"];
+    
+    if (isCertificateDialog) {
+        if (_acceptInvalidCertificates) {
+            // Accept certificate (usually action1)
+            [self.dialogProvider postAction:1 forDialogReference:reference];
+            NSLog(@"iOS: Auto-accepted certificate dialog");
+        } else {
+            // Reject certificate (cancel)
+            [self.dialogProvider postAction:3 forDialogReference:reference]; // Cancel
+            NSLog(@"iOS: Rejected certificate dialog");
+        }
+    } else {
+        // For other dialogs, default to cancel
+        [self.dialogProvider postAction:3 forDialogReference:reference];
+    }
+}
+
+- (void)showProgressWithTitle:(NSString *)title 
+                      message:(NSString *)message 
+                isIndeterminate:(BOOL)indeterminate 
+                       position:(float)position 
+                 cancelString:(NSString *)cancel 
+                withReference:(NSValue *)reference {
+    NSLog(@"VLC Progress - Title: %@, Message: %@, Position: %.2f", title, message, position);
+    // Handle progress dialog if needed
+}
+
+- (void)updateProgressWithReference:(NSValue *)reference 
+                            message:(NSString *)message 
+                           position:(float)position {
+    // Update progress dialog
+}
+
+- (void)cancelDialogWithReference:(NSValue *)reference {
+    NSLog(@"VLC Dialog cancelled");
+    // Handle dialog cancellation
+}
+
+- (void)setAcceptInvalidCertificates:(BOOL)accept 
+{
+    _acceptInvalidCertificates = accept;
+    NSLog(@"iOS: Set acceptInvalidCertificates to %@", accept ? @"YES" : @"NO");
 }
 
 - (void)_release
