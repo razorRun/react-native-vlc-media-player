@@ -38,6 +38,7 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
     private static final String PROP_TEXT_TRACK = "textTrack";
     private static final String PROP_AUDIO_TRACK = "audioTrack";
     private static final String PROP_RECORDING_PATH = "recordingPath";
+    private static final String PROP_ACCEPT_INVALID_CERTIFICATES = "acceptInvalidCertificates";
 
 
     @Override
@@ -150,6 +151,11 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
     @ReactProp(name = PROP_TEXT_TRACK)
     public void setTextTrack(final ReactVlcPlayerView videoView, final int textTrack) {
         videoView.setTextTrack(textTrack);
+    }
+
+    @ReactProp(name = PROP_ACCEPT_INVALID_CERTIFICATES, defaultBoolean = false)
+    public void setAcceptInvalidCertificates(final ReactVlcPlayerView videoView, final boolean accept) {
+        videoView.setAcceptInvalidCertificates(accept);
     }
 
     public void startRecording(final ReactVlcPlayerView videoView, final String recordingPath) {
