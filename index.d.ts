@@ -280,6 +280,15 @@ export type VLCPlayerProps = VLCPlayerCallbackProps & {
    * @default true
    */
   autoplay?: boolean;
+
+  /**
+   * Set to `true` to automatically accept invalid SSL/TLS certificates
+   * when connecting to HTTPS streams. This bypasses certificate validation
+   * which may pose security risks.
+   *
+   * @default false
+   */
+  acceptInvalidCertificates?: boolean;
 };
 
 declare class PlaybackMethods<T> extends Component<T> {
