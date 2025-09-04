@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 android {
+    namespace 'com.yuanzhou.vlc'
     compileSdkVersion 35
 
     defaultConfig {
