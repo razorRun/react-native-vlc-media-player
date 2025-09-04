@@ -237,9 +237,7 @@ static NSString *const playbackRate = @"rate";
                 break;
             case VLCMediaPlayerStateError:
                 NSLog(@"VLCMediaPlayerStateError %i", _player.numberOfAudioTracks);
-                self.onVideoError(@{
-                                    @"target": self.reactTag
-                                    });
+                // This callback doesn't have any data about the error, we need to rely on the error dialog
                 [self _release];
                 break;
             default:
@@ -431,20 +429,32 @@ static NSString *const playbackRate = @"rate";
 
 - (void)showErrorWithTitle:(NSString *)title message:(NSString *)message {
     NSLog(@"VLC Error - Title: %@, Message: %@", title, message);
-    // Handle error dialog - can show custom UI or just log
+    if (self.onVideoError) {
+        self.onVideoError(@{
+            @"target": self.reactTag,
+            @"title": title ?: [NSNull null],
+            @"message": message ?: [NSNull null]
+        });
+    }
 }
 
-- (void)showLoginWithTitle:(NSString *)title 
-                   message:(NSString *)message 
-           defaultUsername:(NSString *)username 
-          askingForStorage:(BOOL)askingForStorage 
+- (void)showLoginWithTitle:(NSString *)title
+                   message:(NSString *)message
+           defaultUsername:(NSString *)username
+          askingForStorage:(BOOL)askingForStorage
              withReference:(NSValue *)reference {
     NSLog(@"VLC Login - Title: %@, Message: %@", title, message);
-    // Handle login dialog - implement if needed for your use case
+    if (self.onVideoError) {
+        self.onVideoError(@{
+            @"target": self.reactTag,
+            @"title": title ?: [NSNull null],
+            @"message": message ?: [NSNull null]
+        });
+    }
 }
 
-- (void)showQuestionWithTitle:(NSString *)title 
-                      message:(NSString *)message 
+- (void)showQuestionWithTitle:(NSString *)title
+                      message:(NSString *)message
                          type:(VLCDialogQuestionType)type
                  cancelString:(NSString *)cancel
                action1String:(NSString *)action1
