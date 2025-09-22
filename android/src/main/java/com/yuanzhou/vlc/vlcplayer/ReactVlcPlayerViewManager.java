@@ -166,6 +166,10 @@ public class ReactVlcPlayerViewManager extends SimpleViewManager<ReactVlcPlayerV
         videoView.stopRecording();
     }
 
+    public void stopPlayer(final ReactVlcPlayerView videoView) {
+        videoView.stopPlayer();
+    }
+
     public void snapshot(final ReactVlcPlayerView videoView, final String path) {
         videoView.doSnapshot(path);
     }

@@ -29,5 +29,6 @@
 - (void)setMuted:(BOOL)value;
 - (void)startRecording:(NSString*)path;
 - (void)stopRecording;
+- (void)stopPlayer;
 - (void)snapshot:(NSString*)path;
 @end

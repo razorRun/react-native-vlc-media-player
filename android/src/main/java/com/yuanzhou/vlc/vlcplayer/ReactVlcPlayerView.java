@@ -716,6 +716,11 @@ class ReactVlcPlayerView extends TextureView implements
         mMediaPlayer.record(null);
     }
 
+    public void stopPlayer() {
+        if(mMediaPlayer == null) return;
+        mMediaPlayer.stop();
+    }
+
     private void handleCertificateDialog(Dialog.QuestionDialog dialog) {
         String title = dialog.getTitle();
         String text = dialog.getText();

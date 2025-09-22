@@ -304,6 +304,11 @@ declare class PlaybackMethods<T> extends Component<T> {
   stopRecording();
 
   /**
+   * Stop playing 
+   */
+  stopPlayer();
+
+  /**
    * Take a screenshot of the current video frame
    *
    * @param path The file path where to save the screenshot
