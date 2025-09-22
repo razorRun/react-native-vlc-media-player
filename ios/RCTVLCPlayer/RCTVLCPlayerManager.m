@@ -73,6 +73,17 @@ RCT_EXPORT_METHOD(stopRecording:(nonnull NSNumber*) reactTag) {
     }];
 }
 
+RCT_EXPORT_METHOD(stopPlayer:(nonnull NSNumber*) reactTag) {
+    [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
+        RCTVLCPlayer *view = viewRegistry[reactTag];
+        if (!view || ![view isKindOfClass:[RCTVLCPlayer class]]) {
+            RCTLogError(@"Cannot find RCTVLCPlayer with tag #%@", reactTag);
+            return;
+        }
+        [view stopPlayer];
+    }];
+}
+
 RCT_EXPORT_METHOD(snapshot:(nonnull NSNumber*) reactTag withPath:(NSString *)path) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
         RCTVLCPlayer *view = viewRegistry[reactTag];
