@@ -120,7 +120,21 @@ static NSString *const playbackRate = @"rate";
     // Create dialog provider with custom UI to handle dialogs programmatically
     self.dialogProvider = [[VLCDialogProvider alloc] initWithLibrary:library customUI:YES];
     self.dialogProvider.customRenderer = self;
-    _player.media = [VLCMedia mediaWithURL:uri];
+
+    VLCMedia* media = [VLCMedia mediaWithURL:uri];
+
+    NSArray* cookiesArray = [source objectForKey:@"cookies"];
+    for (id cookieDict in cookiesArray) {
+        NSString* value = [cookieDict objectForKey:@"value"];
+        NSString* host = [cookieDict objectForKey:@"host"];
+        NSString* path = [cookieDict objectForKey:@"path"];
+        int cookieStatus = [media storeCookie:value forHost:host path:path];
+        if (cookieStatus != 0) {
+            NSLog(@"Failed to store cookie: %@", cookieStatus);
+        }
+    }
+
+    _player.media = media;
 
     if (_autoplay)
         [_player play];
