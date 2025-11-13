@@ -91,6 +91,7 @@ class ReactVlcPlayerView extends TextureView implements
         this.setSurfaceTextureListener(this);
 
         this.addOnLayoutChangeListener(onLayoutChangeListener);
+        context.addLifecycleEventListener(this);
     }
 
 
