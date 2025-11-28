@@ -37,7 +37,7 @@ repositories {
         url "https://mvnrepository.com/artifact/org.videolan.android"
     }
     google()
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
