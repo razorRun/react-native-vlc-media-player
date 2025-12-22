@@ -210,7 +210,8 @@ class ReactVlcPlayerView extends TextureView implements
                     IVLCVout vlcOut = mMediaPlayer.getVLCVout();
                     vlcOut.setWindowSize(mVideoWidth, mVideoHeight);
                     if (autoAspectRatio) {
-                        mMediaPlayer.setAspectRatio(mVideoWidth + ":" + mVideoHeight);
+                        mMediaPlayer.setAspectRatio(null);
+                        mMediaPlayer.setScale(0);
                     }
                 }
             }
@@ -416,7 +417,8 @@ class ReactVlcPlayerView extends TextureView implements
             if (mVideoWidth > 0 && mVideoHeight > 0) {
                 vlcOut.setWindowSize(mVideoWidth, mVideoHeight);
                 if (autoAspectRatio) {
-                    mMediaPlayer.setAspectRatio(mVideoWidth + ":" + mVideoHeight);
+                    mMediaPlayer.setAspectRatio(null);
+                    mMediaPlayer.setScale(0);
                 }
                 //mMediaPlayer.setAspectRatio(mVideoWidth+":"+mVideoHeight);
             }
