@@ -95,8 +95,8 @@ static NSString *const playbackRate = @"rate";
     // [bavv edit start]
     NSString* uriString = [source objectForKey:@"uri"];
     NSURL* uri = [NSURL URLWithString:uriString];
-    int initType = [source objectForKey:@"initType"];
-    NSDictionary* initOptions = [source objectForKey:@"initOptions"];
+    int initType = [[source objectForKey:@"initType"] intValue];
+    NSArray *initOptions = [source objectForKey:@"initOptions"];
     
     // Get acceptInvalidCertificates from source
     _acceptInvalidCertificates = [[source objectForKey:@"acceptInvalidCertificates"] boolValue];
