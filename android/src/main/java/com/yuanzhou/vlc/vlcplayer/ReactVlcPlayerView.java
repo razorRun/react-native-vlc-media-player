@@ -578,7 +578,8 @@ class ReactVlcPlayerView extends TextureView implements
         mMuted = muted;
         if (mMediaPlayer != null) {
             if (muted) {
-                this.preVolume = mMediaPlayer.getVolume();
+                int currentVolume = mMediaPlayer.getVolume();
+                this.preVolume = currentVolume > 0 ? currentVolume : 100;
                 mMediaPlayer.setVolume(0);
             } else {
                 mMediaPlayer.setVolume(this.preVolume);
