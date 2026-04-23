@@ -43,6 +43,27 @@ export interface VLCPlayerSource {
    * @default []
    */
   initOptions?: string[];
+  /**
+   * Cookie jar to fetch HTTP/HTTPS media with. Cookies for non-applicable
+   * hosts will be ignored. Not supported on MacOS.
+   * 
+   * From VLCKit's documentation:
+   * > Parse a value of an incoming Set-Cookie header (see RFC 6265) and
+   * > append the cookie to the stored cookies if appropriate. The "secure"
+   * > attribute can be added to cookie to limit the scope of the cookie to
+   * > secured channels (https).
+   * 
+   * @example ```js
+   * [{ value: "name=value; Path=/; Domain=example.com", host: "example.com", path: "/" }]
+   * ```
+   * 
+   * @default []
+   */
+  cookies?: {
+    value: string;
+    host: string;
+    path: string;
+  }[];
 }
 
 /**
