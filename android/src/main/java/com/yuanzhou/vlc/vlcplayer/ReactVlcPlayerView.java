@@ -65,6 +65,7 @@ class ReactVlcPlayerView extends TextureView implements
 
     private boolean isPaused = true;
     private boolean isHostPaused = false;
+    private boolean isReleased = false;
     private int preVolume = 100;
     private boolean autoAspectRatio = false;
     private boolean acceptInvalidCertificates = false;
@@ -133,7 +134,7 @@ class ReactVlcPlayerView extends TextureView implements
 
     @Override
     public void onHostPause() {
-        if (!isPaused && mMediaPlayer != null) {
+        if (!isPaused && mMediaPlayer != null && !isReleased) {
             isPaused = true;
             isHostPaused = true;
             mMediaPlayer.pause();
@@ -206,7 +207,7 @@ class ReactVlcPlayerView extends TextureView implements
             if (view.getWidth() > 0 && view.getHeight() > 0) {
                 mVideoWidth = view.getWidth(); // 获取宽度
                 mVideoHeight = view.getHeight(); // 获取高度
-                if (mMediaPlayer != null) {
+                if (mMediaPlayer != null && !isReleased) {
                     IVLCVout vlcOut = mMediaPlayer.getVLCVout();
                     vlcOut.setWindowSize(mVideoWidth, mVideoHeight);
                     if (autoAspectRatio) {
@@ -376,6 +377,7 @@ class ReactVlcPlayerView extends TextureView implements
             }
             // Create media player
             mMediaPlayer = new MediaPlayer(libvlc);
+            isReleased = false;
             setMutedModifier(mMuted);
             mMediaPlayer.setEventListener(mPlayerListener);
             
@@ -488,8 +490,11 @@ class ReactVlcPlayerView extends TextureView implements
     }
 
     private void releasePlayer() {
-        if (libvlc == null)
+        if (libvlc == null) {
+            isReleased = true;
+            mMediaPlayer = null;
             return;
+        }
 
         final IVLCVout vout = mMediaPlayer.getVLCVout();
         vout.removeCallback(callback);
@@ -498,6 +503,8 @@ class ReactVlcPlayerView extends TextureView implements
         mMediaPlayer.release();
         libvlc.release();
         libvlc = null;
+        mMediaPlayer = null;
+        isReleased = true;
 
         if(mProgressUpdateRunnable != null){
             mProgressUpdateHandler.removeCallbacks(mProgressUpdateRunnable);
