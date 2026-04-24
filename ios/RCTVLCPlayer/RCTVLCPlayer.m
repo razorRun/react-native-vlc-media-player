@@ -122,10 +122,13 @@ static NSString *const playbackRate = @"rate";
     self.dialogProvider.customRenderer = self;
     _player.media = [VLCMedia mediaWithURL:uri];
 
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback
+                                 withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                                       error:nil];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+    
     if (_autoplay)
         [_player play];
-    
-    [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
 }
 
 - (void)setAutoplay:(BOOL)autoplay
