@@ -171,7 +171,8 @@ export default class VLCPlayer extends Component {
     /* const {
      source
      } = this.props;*/
-    const source = resolveAssetSource(this.props.source) || {};
+    const source = {
+      ...(resolveAssetSource(this.props.source) || {})};
 
     let uri = source.uri || "";
     if (uri && uri.match(/^\//)) {
