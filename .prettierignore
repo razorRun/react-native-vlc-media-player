@@ -1,0 +1,9 @@
+lib/
+node_modules/
+example/android/
+example/ios/
+example/.expo/
+package-lock.json
+
+# Hand-wrapped prose; reflowing it would bury the actual diffs.
+*.md

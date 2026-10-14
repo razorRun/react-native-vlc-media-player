@@ -1,18 +1,51 @@
+import groovy.json.JsonSlurper
+
 apply plugin: 'com.android.library'
+// No version here on purpose: the Kotlin Gradle plugin comes from the consuming
+// app's root build.gradle (every RN >= 0.71 template puts it on the classpath),
+// so the library always compiles with the app's Kotlin and never pins its own.
+apply plugin: 'org.jetbrains.kotlin.android'
+// Provides the `com.facebook.react:react-android` version. The plugin itself comes
+// from the consuming app's root build.gradle, which every RN >= 0.71 template has.
+apply plugin: 'com.facebook.react'
+
+// Single source of truth for the VLC version: the "vlc" field in package.json.
+// Keep in sync with react-native-vlc-media-player.podspec and
+// expo/ios/withMobileVlcKit.js, which read the same field.
+def packageJson = new JsonSlurper().parseText(file("../package.json").text)
+def vlcVersion = packageJson.vlc.android
+
+// The app's gradle.properties decides; every RN template sets it.
+def isNewArchitectureEnabled() {
+    return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
 android {
     namespace 'com.yuanzhou.vlc'
-    compileSdkVersion 35
+    compileSdk 35
 
     defaultConfig {
-        minSdkVersion 26
-        targetSdkVersion 35
-        versionCode 1
-        versionName "1.0"
+        minSdk 26
         consumerProguardFiles("proguard-rules.pro")
         ndk {
-            abiFilters 'armeabi-v7a','x86_64','arm64-v8a','x86'
+            abiFilters 'armeabi-v7a', 'x86_64', 'arm64-v8a', 'x86'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    // The view manager's base class differs per architecture: src/newarch wires
+    // the codegen delegate, src/oldarch resolves props and commands the legacy
+    // way. Phase 3 deletes src/oldarch and this block.
+    sourceSets {
+        main {
+            java.srcDirs += [isNewArchitectureEnabled() ? "src/newarch" : "src/oldarch"]
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -20,29 +53,21 @@ android {
         }
     }
 }
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-        // maven { url "https://maven.appspector.com/artifactory/android-sdk" }
 
-    }
-    dependencies {
-        classpath("com.android.tools.build:gradle:4.0.2")
+// Kotlin and Java have to target the same bytecode level (compileOptions above),
+// or the build fails with an inconsistent-JVM-target error.
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
     }
 }
 
 repositories {
-    maven {
-        url "https://mvnrepository.com/artifact/org.videolan.android"
-    }
     google()
     mavenCentral()
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "com.facebook.react:react-native:+"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'org.videolan.android:libvlc-all:3.6.3'
+    implementation "com.facebook.react:react-android"
+    implementation "org.videolan.android:libvlc-all:${vlcVersion}"
 }

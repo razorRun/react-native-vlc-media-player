@@ -1,1 +1,1 @@
-module.exports = require("./expo/withVlcMediaPlayer");
+module.exports = require('./expo/withVlcMediaPlayer');

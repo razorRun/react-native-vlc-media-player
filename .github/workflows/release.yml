@@ -1,0 +1,88 @@
+name: Release
+
+# Publishing is no longer a side effect of pushing to master. A release is either
+# an explicit `v*` tag or an explicit manual run, and in both cases CI has to pass
+# first.
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'Version bump to apply before publishing'
+        required: true
+        default: patch
+        type: choice
+        options: [patch, minor, major, prepatch, preminor, premajor, prerelease]
+      preid:
+        description: 'Prerelease identifier for the pre* bumps'
+        required: false
+        default: beta
+        type: string
+      dist_tag:
+        description: 'npm dist-tag to publish under'
+        required: true
+        default: latest
+        type: choice
+        options: [latest, next, beta]
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    uses: ./.github/workflows/ci.yml
+
+  publish:
+    name: Publish to npm
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          registry-url: https://registry.npmjs.org/
+
+      - run: npm ci
+
+      # Tag path: the tag is the source of truth, so it has to agree with
+      # package.json. A mismatch means someone tagged by hand and forgot to bump.
+      - name: Check tag matches package.json
+        if: github.event_name == 'push'
+        run: |
+          tag_version="${GITHUB_REF_NAME#v}"
+          pkg_version="$(node -p "require('./package.json').version")"
+          if [ "$tag_version" != "$pkg_version" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match package.json version $pkg_version"
+            exit 1
+          fi
+
+      # Manual path: bump, commit and tag here. Pushes authenticated with
+      # GITHUB_TOKEN do not trigger workflows, so this cannot re-enter the `push`
+      # trigger above and publish twice.
+      - name: Bump version and tag
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          case "${{ inputs.bump }}" in
+            pre*) npm version "${{ inputs.bump }}" --preid "${{ inputs.preid }}" -m 'chore(release): %s' ;;
+            *)    npm version "${{ inputs.bump }}" -m 'chore(release): %s' ;;
+          esac
+          git push --follow-tags
+
+      - name: Build
+        run: npm run build --if-present
+
+      - run: npm publish --tag "${{ inputs.dist_tag || 'latest' }}" --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}

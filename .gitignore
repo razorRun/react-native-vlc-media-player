@@ -83,6 +83,9 @@ web_modules/
 .nuxt
 dist
 
+# react-native-builder-bob output
+lib/
+
 # Gatsby files
 .cache/
 # Comment in the public line in if your project uses Gatsby and not Next.js
@@ -116,9 +119,37 @@ dist
 
 # Android
 .gradle
-.idea
 build/
 local.properties
+*.iml
+captures/
+.cxx/
+
+# Xcode / iOS
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.xccheckout
+*.moved-aside
+DerivedData/
+*.hmap
+*.ipa
+*.xcuserstate
+**/project.xcworkspace/xcuserdata/
+ios/Pods/
+ios/*.xcworkspace
+
+# IDEs
+.idea/
+.vscode/
+*.iws
+*.ipr
 
 # MacOS
 .DS_Store

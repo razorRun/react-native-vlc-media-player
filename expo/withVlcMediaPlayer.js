@@ -1,5 +1,5 @@
-const withGradleTasks = require("./android/withGradleTasks");
-const withMobileVlcKit = require("./ios/withMobileVlcKit");
+const withGradleTasks = require('./android/withGradleTasks');
+const withMobileVlcKit = require('./ios/withMobileVlcKit');
 
 /**
  * Adds required native code to work with expo development build
@@ -12,10 +12,10 @@ const withMobileVlcKit = require("./ios/withMobileVlcKit");
  * @returns resolved expo configuration
  */
 const withVlcMediaPlayer = (config, options) => {
-    config = withGradleTasks(config, options);
-    config = withMobileVlcKit(config, options);
+  config = withGradleTasks(config, options);
+  config = withMobileVlcKit(config, options);
 
-    return config;
+  return config;
 };
 
 module.exports = withVlcMediaPlayer;
